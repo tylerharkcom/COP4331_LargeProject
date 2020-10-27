@@ -1,4 +1,7 @@
 # COP4331_LargeProject
+## Setup
+
+Installing MongoDB setting up .env is necessary for this to work
 
 ## Installing dependencies
 
