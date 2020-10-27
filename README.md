@@ -2,7 +2,7 @@
 
 ## Local Setup
 
-Installing MongoDB, and setting up the .env file is necessary for this to work
+Installing MongoDB, and setting up the `.env` file is necessary for the server to run
 
 ## Installing dependencies
 
