@@ -4,6 +4,9 @@
 
 Installing MongoDB, and setting up the `.env` file is necessary for the server to run
 
+- Specfically, MONGO_URI needs to be defined in `.env`
+- Site is accesible on localhost:3000
+
 ## Installing dependencies
 
 Running `npm install` will install dependencies using `package.json` and `package.lock`.
