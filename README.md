@@ -1,5 +1,5 @@
 # COP4331_LargeProject
-## Setup
+## Local Setup
 
 Installing MongoDB setting up .env is necessary for this to work
 
