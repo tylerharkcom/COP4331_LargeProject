@@ -1,6 +1,6 @@
 # COP4331_LargeProject
 
-## Local Setup - Installing dependencies
+## Local Setup - Installing Dependencies
 
 Installing MongoDB, and setting up the `.env` file is necessary for the server to run
 
