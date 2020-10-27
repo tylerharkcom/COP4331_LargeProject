@@ -1,4 +1,5 @@
 # COP4331_LargeProject
+
 ## Local Setup
 
 Installing MongoDB, and setting up the .env file is necessary for this to work
@@ -9,6 +10,10 @@ Running `npm install` will install dependencies using `package.json` and `packag
 
 You should be able to run `npm start` to start the server now.
 
-## Static assets
+## Code Organization
 
 Static assets such as favicon.ico can be added to `/static`
+
+All server code goes into `/server`
+
+JSX and other code goes into `/client`
