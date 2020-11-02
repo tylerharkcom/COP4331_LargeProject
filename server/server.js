@@ -28,6 +28,41 @@ app.use((req, res, next) => {
 });
 
 app.post(
+  `/api/register`,
+  wrapAsync(async (req, res) => {
+    const { username, password, fName, lName, email } = req.body;
+    const userInfo = {
+      fName,
+      lName,
+      email,
+      accountCreated: new Date(),
+      lastLogin: new Date(),
+    }; // grouping info per the collection
+    const db = client.db();
+
+    const response = {
+      error: "",
+    };
+
+    if (typeof username != "string") {
+      // validating data to string
+      response.error = "invalid data";
+      res.status(400).json(response);
+      return;
+    }
+    if (typeof password != "string") {
+      response.error = "invalid data";
+      res.status(400).json(response);
+      return;
+    }
+
+    await db.collection("Users").insertOne({ username, password, userInfo });
+
+    res.json(response);
+  })
+);
+
+app.post(
   `/api/login`,
   wrapAsync(async (req, res) => {
     const { username, password } = req.body;
