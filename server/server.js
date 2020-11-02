@@ -7,6 +7,7 @@ client.connect();
 
 const express = require("express");
 const bodyparser = require(`body-parser`);
+const jwt = require(`jsonwebtoken`);
 // const cors = require(`cors`);
 
 const app = express();
