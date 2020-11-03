@@ -38,7 +38,6 @@ function Register()
                         <div class="form-group col-md-6">
                             <label for="registerEmail1">Email address</label>
                             <input type="email" class="form-control" id="registerEmail1" aria-describedby="emailHelp" placeholder="Enter email" ref={(c) => email = c} />
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="verifyEmail1">Verify email address</label>
