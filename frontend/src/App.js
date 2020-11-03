@@ -5,6 +5,7 @@ import './App.css';
 
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
         </Route>
         <Route path="/dashboard" exact>
           <DashboardPage />
+        </Route>
+        <Route path="/register" exact>
+          <RegisterPage />
         </Route>
         <Redirect to="/" />
       </Switch>  

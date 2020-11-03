@@ -7,6 +7,12 @@ function Login()
 
     const [message,setMessage] = useState('');
 
+    const goToRegister = event => {
+        event.preventDefault();
+
+        window.location.href = '/register';
+    }
+
     const doLogin = async event => 
     {
         event.preventDefault();
@@ -60,10 +66,10 @@ function Login()
             </div>
             <div id="registerLink">
                 <label>Don't have an account? <br />
-                <a href="#">Create one here!</a></label>
+                <a id="createAccountLink" href="#" onClick={goToRegister}>Create one here!</a></label>
             </div>
             </form>
-            <span id="loginResult"></span>
+            <span id="loginResult">{message}</span>
         </div>
      </div>
     );

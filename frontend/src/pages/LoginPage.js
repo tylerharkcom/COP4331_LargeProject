@@ -6,7 +6,7 @@ const LoginPage = () =>
 {
 
     return(
-      <div id="loginPage">
+      <div id="loginPage" class="backgroundPage">
         <Login />
       </div>
     );

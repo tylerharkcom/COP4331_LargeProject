@@ -32,7 +32,7 @@ code {
   align-items: center;
 }
 
-#loginWrapper {
+#loginWrapper, #registerWrapper {
   background-color: #464646;
   padding: 10px;
   border: 1px solid #DADADA;
@@ -60,12 +60,7 @@ code {
   background-color: #DADADA;
 }
 
-#loginPage {
-  background-image: url(/src/images/dill.jpg);
-  background-size: contain;
-}
-
-#dashboardPage {
+.backgroundPage {
   background-image: url(/src/images/dill.jpg);
   background-size: contain;
 }

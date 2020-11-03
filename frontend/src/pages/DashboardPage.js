@@ -7,8 +7,9 @@ const DashboardPage = () =>
 {
 
     return(
-      <div id="dashboardPage">
+      <div id="dashboardPage" class="backgroundPage">
         <UserNavBar />
+        <div class="backgroundPage"></div>
       </div>
     );
 };
