@@ -8,12 +8,14 @@ client.connect();
 const express = require("express");
 const bodyparser = require(`body-parser`);
 const jwt = require(`jsonwebtoken`);
-// const cors = require(`cors`);
+const cookieParser = require(`cookie-parser`);
+//const cors = require(`cors`);
 
 const app = express();
-// app.use(cors());
+//app.use(cors());
 app.use(bodyparser.json());
 app.use(express.static(`static`));
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   res.setHeader(`Access-Control-Allow-Origin`, `*`);
@@ -73,7 +75,6 @@ app.post(
       .findOne({ username: username, password: password });
 
     const response = {
-      id: -1,
       fName: "",
       lName: "",
       error: "",
@@ -85,11 +86,21 @@ app.post(
       return;
     }
 
-    response.id = user._id;
+    const token = generateAccessToken({
+      id: user._id,
+    });
+
     response.fName = user.userInfo.fName;
     response.lName = user.userInfo.lName;
 
-    res.status(200).json(response);
+    res
+      .status(200)
+      .cookie(`token`, token, {
+        maxAge: 86400,
+        httpOnly: true,
+      })
+      .json(response)
+      .send();
   })
 );
 
@@ -102,4 +113,27 @@ function wrapAsync(fn) {
       res.status(500).send();
     });
   };
+}
+
+function authenticateToken(req, res, next) {
+  // Gather the jwt access token from the request header
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) {
+    return res.setStatus(401);
+  } // if there isn't any token
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, data) => {
+    console.log(err);
+    if (err) {
+      return res.setStatus(403);
+    }
+    req.user = await db.collection("users").findOne({ _id: ObjectId(data.id) });
+    next(); // pass the execution off to whatever request the client intended
+  });
+}
+
+function generateAccessToken(id) {
+  // expires after 30 mins
+  return jwt.sign(id, process.env.TOKEN_SECRET, { expiresIn: "1800s" });
 }
