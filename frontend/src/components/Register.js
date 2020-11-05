@@ -202,7 +202,10 @@ function Register()
                 setMessage(error);
                 return;
             } else {
-                setMessage("Your account has been created! Please go back to the login page");
+                setMessage("Success! If you are not redirected, please ckick 'Go to login'");
+                setTimeout(function() {
+                    window.location.href = '/';
+                }, 2000);
                 return;
             }
         } catch (e) {
