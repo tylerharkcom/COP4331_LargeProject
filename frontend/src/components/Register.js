@@ -184,8 +184,37 @@ function Register()
 
         loginPassword = sha256(loginPassword.value);
 
-        alert('doRegister');
-        console.log({loginPassword});
+        var obj = { username: loginName.value, password: loginPassword, fName: firstName.value, lName: lastName.value, email: email.value };
+        var js = JSON.stringify(obj);
+        
+        try 
+        {
+            const response = await fetch("http://localhost:5000/api/register", {
+              method: "POST",
+              body: js,
+              headers: { "Content-Type": "application/json" },
+            });
+      
+            var res = JSON.parse(await response.text());
+      
+            if (response.status != 200) {
+                var error = res.error;
+                setMessage(error);
+                return;
+            } else {
+                setMessage("Your account has been created! Please go back to the login page");
+                return;
+            }
+        } catch (e) {
+            alert(e.toString());
+            return;
+        };
+    }
+
+    const goToLogin = event => 
+    {
+        event.preventDefault();
+        window.location.href = '/';
     }
 
     return (
@@ -233,6 +262,8 @@ function Register()
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary" onClick={doRegister}>Register</button>
+                        <button type="reset" style={{marginLeft: "10px", marginRight: "10px"}} class="btn btn-secondary">Reset</button>
+                        <button type="button" style={{marginLeft: "10x"}} class="btn btn-secondary" onClick={goToLogin}>Go to login</button>
                     </div>
                 </form>
                 <span id="registerResult" class="lightText">{message}</span>
