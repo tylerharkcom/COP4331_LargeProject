@@ -73,7 +73,7 @@ function Login() {
           <div id="loginButton">
             <input
               type="submit"
-              class="button"
+              class="btn btn-primary"
               value="Login"
               onClick={doLogin}
             />
