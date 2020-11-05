@@ -256,7 +256,7 @@ function Register()
                                     <li>be at least 8 characters long</li>
                                     <li>contain at least one capital letter, at least one lowercase letter, and at least one digit</li>
                                     <li>contain at least one of the following special characters: @, !, #, $, %, *</li>
-                                </ul>"
+                                </ul>
                             </ReactTooltip>
                         </div>
                     </div>
