@@ -85,7 +85,7 @@ function Login() {
             </label>
           </div>
         </form>
-        <span id="loginResult"></span>
+        <span id="loginResult">{message}</span>
       </div>
     </div>
   );

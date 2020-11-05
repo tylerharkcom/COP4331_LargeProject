@@ -9,12 +9,80 @@ function Register()
     var firstName;
     var lastName;
     var email;
+    var checkEmail;
+    
     
     const [message,setMessage] = useState('');
 
     const doRegister = async event =>
     {
         event.preventDefault();
+        let check = email.value === checkEmail.value;
+        if (!check)
+        {
+            setMessage('The emails do not match!');
+            return;
+        }
+
+        if(loginName.value=="")
+        {
+            setMessage('A username is required');
+            return;
+        }
+
+        if(loginPassword.value=="")
+        {
+            setMessage('A password is required');
+            return;
+        }
+
+        var expression = /\S+@\S+/ ;
+        if(!expression.test(String(email.value).toLowerCase()))
+        {
+            setMessage('Please enter a valid email address');
+            return;
+        }
+
+        expression = /^\w+$/;
+        if(!expression.test(loginName.value))
+        {
+            setMessage('Your username may only contain letters, numbers, and underscores');
+            return;
+        }
+
+        if(loginPassword.value.length<8)
+        {
+            setMessage('Your password must be at least 8 characters long');
+            return;
+        }
+
+        expression = /[!@#$%*]/;
+        if(!expression.test(loginPassword.value))
+        {
+            setMessage('Your password must contain at least one of the following special character: @, !, #, $, %, *');
+            return;
+        }
+
+        expression = /[0-9]/
+        if(!expression.test(loginPassword.value))
+        {
+            setMessage('Your password must contain at least one digit (0-9)');
+            return;
+        }
+
+        expression = /[a-z]/
+        if(!expression.test(loginPassword.value))
+        {
+            setMessage('Your password must contain at least one lowercase letter');
+            return;
+        }
+
+        expression = /[A-Z]/
+        if(!expression.test(loginPassword.value))
+        {
+            setMessage('Your password must contain at least one uppercase letter');
+            return;
+        }
 
         alert('doRegister()');
     }
@@ -41,7 +109,7 @@ function Register()
                         </div>
                         <div class="form-group col-md-6">
                             <label for="verifyEmail1">Verify email address</label>
-                            <input type="email" class="form-control" id="verifyEmail1" aria-describedby="emailHelp" placeholder="Reenter email" ref={(c) => email = c} />
+                            <input type="email" class="form-control" id="verifyEmail1" aria-describedby="emailHelp" placeholder="Reenter email" ref={(c) => checkEmail = c} />
                         </div>
                     </div>
                     <div class="form-row">
@@ -66,6 +134,7 @@ function Register()
                         <button type="submit" class="btn btn-primary" onClick={doRegister}>Register</button>
                     </div>
                 </form>
+                <span id="registerResult" class="lightText">{message}</span>
             </div>
         </div>
     );
