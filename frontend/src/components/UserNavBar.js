@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from "react";
 
 function UserNavBar()
 {
 
-    var user={}
+    const user = JSON.parse(localStorage.getItem("user_data"));
+    const [fName, setfName] = useState('');
+    const [lName, setlName] = useState('');
+
+    const GetName = event =>
+    {
+        event.preventDefault();
+        setfName(user.firstName);
+        setlName(user.lastName);
+    }
 
     const doLogout = event => 
     {
@@ -30,8 +39,8 @@ function UserNavBar()
                     <a class="nav-link" href="#">My Recipes</a>
                 </li>
                 </ul>
-                <span class="navbar-text">
-                Welcome, John Doe 
+                <span class="navbar-text" onLoad={GetName}>
+                Welcome, {fName} {lName} 
                 </span>
                 <form class="form-inline">
                     <button type="button" id="logoutButton" class="button" 
