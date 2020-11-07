@@ -125,7 +125,7 @@ function authenticateToken(req, res, next) {
     } // check for cookies, or
   } // if there isn't any token
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, data) => {
+  jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
     console.log(err);
     if (err) {
       return res.setStatus(403);
