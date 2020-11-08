@@ -25,19 +25,19 @@ function Register()
             return;
         }
 
-        if(firstName.value==""||lastName.value=="")
+        if(firstName.value===""||lastName.value==="")
         {
             setMessage('Please enter your first and last name');
             return;
         }
 
-        if(loginName.value=="")
+        if(loginName.value==="")
         {
             setMessage('A username is required');
             return;
         }
 
-        if(loginPassword.value=="")
+        if(loginPassword.value==="")
         {
             setMessage('A password is required');
             return;
@@ -106,7 +106,7 @@ function Register()
       
             var res = JSON.parse(await response.text());
       
-            if (response.status != 200) {
+            if (response.status !== 200) {
                 var error = res.error;
                 setMessage(error);
                 return;
