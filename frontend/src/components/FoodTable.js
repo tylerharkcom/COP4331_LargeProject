@@ -1,5 +1,7 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
+import Form from 'react-bootstrap/Form';
+import FormControl from 'react-bootstrap/FormControl'
 import Icon from 'react-crud-icons';
 import '../../node_modules/react-crud-icons/dist/css/react-crud-icons.css'
 
@@ -20,18 +22,34 @@ function FoodTable() {
         alert('Thought you could delete food, did ya?');
     }
 
+    const searchFood = event => {
+        event.preventDefault();
+        alert("You're not getting any results, buddy!");
+    }
+
     return(
         <div id="fridgeTable">
             <div id="fridgeCRUD">
-                <button 
-                    className="btn btn-secondary"
-                    onClick={addFood}
-                >Add food</button>
-                <button
-                    className="btn btn-secondary"
-                    onClick={deleteFood}
-                    style={{paddingLeft: "5px"}}
-                >Delete</button>
+                <Form inline>
+                    <div style={{marginLeft: "5px"}}>
+                        <button 
+                            className="btn btn-secondary"
+                            onClick={addFood}
+                        >
+                            Add food
+                        </button>
+                    </div>
+                    <div style={{marginLeft: "5px"}}>
+                        <button
+                            className="btn btn-secondary"
+                            onClick={deleteFood}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                    <FormControl type="text" placeholder="Search" className=" mr-sm-2" />
+                    <button className="btn btn-secondary" type="submit" onClick={searchFood}>Search</button>
+                </Form>
             </div>
             <Table striped bordered hover variant="dark">
                 <thead>
