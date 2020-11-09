@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
 import ReactDOM from 'react-dom';
 import './index.css';
 import '../node_modules/popper.js/dist/popper.min.js'

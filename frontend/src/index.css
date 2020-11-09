@@ -30,6 +30,15 @@ code {
   color: #DADADA;
 }
 
+.backgroundPage {
+  background-image: url(/src/images/dill.jpg);
+  background-size: contain;
+}
+
+.fillBackground {
+  height: 100vh;
+}
+
 #loginButton {
   display: flex;
   justify-content: center;
@@ -64,8 +73,12 @@ code {
   background-color: #DADADA;
 }
 
-.backgroundPage {
-  background-image: url(/src/images/dill.jpg);
-  background-size: contain;
+#fridgeTable {
+  padding-top: 25px;
 }
+
+#fridgeCRUD {
+  padding-bottom: 10px;
+}
+
 

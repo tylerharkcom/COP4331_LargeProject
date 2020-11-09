@@ -1,15 +1,17 @@
 import React from 'react';
 
 import UserNavBar from '../components/UserNavBar';
-import UserDashboard from '../components/UserDashboard';
+import FoodTable from '../components/FoodTable';
 
 const DashboardPage = () =>
 {
 
     return(
-      <div id="dashboardPage" class="backgroundPage">
+      <div id="dashboardPage" className="backgroundPage fillBackground">
         <UserNavBar />
-        <div class="backgroundPage"></div>
+        <div className="container-fluid">
+          <FoodTable />
+        </div>
       </div>
     );
 };

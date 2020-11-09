@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import sha256 from '../sha256';
 
 function Login() {
   var loginName;
   var loginPassword;
 
+  const [user, setUser] = useState({ firstName: "", lastName: "" });
   const [message, setMessage] = useState("");
+  useEffect(() => {
+    localStorage.setItem("user_data", JSON.stringify(user));
+  });
 
     const goToRegister = event => {
         event.preventDefault();
@@ -29,11 +33,10 @@ function Login() {
 
       var res = JSON.parse(await response.text());
 
-      if (response.status != 200) {
+      if (response.status !== 200) {
         setMessage(res.error);
       } else {
-        var user = { firstName: res.fName, lastName: res.lName };
-        localStorage.setItem("user_data", JSON.stringify(user));
+        setUser({ firstName: res.fName, lastName: res.lName })
 
         setMessage("");
         window.location.href = "/dashboard";
