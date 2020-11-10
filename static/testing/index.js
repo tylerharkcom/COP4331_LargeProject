@@ -1,14 +1,12 @@
-fetch("/api/register", {
+fetch(`/api/addFood`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
   },
   body: JSON.stringify({
-    username: "c",
-    password: "c",
-    fName: "me",
-    lName: "meagain",
-    email: "memeagain@gmail.com",
+    item: "ham",
+    brand: "publix",
+    expDate: new Date(),
   }),
 })
   .then((r) => r.json())

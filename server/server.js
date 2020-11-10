@@ -35,14 +35,15 @@ function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   let token = authHeader && authHeader.split(" ")[1];
   if (token == null) {
-    if (!req.cookies) {
-      return res.status(401).send();
+    if (req.cookies.token == null) {
+      return next();
     }
+    console.log(req.cookies);
     token = req.cookies.token;
   } // if there isn't any token
 
   jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
-    //console.log(err);
+    console.log(err);
     if (err) {
       return res.status(403).send();
     }
@@ -140,10 +141,11 @@ app.post(
         maxAge: 86400,
         httpOnly: true,
       })
-      .json(response)
-      .send();
+      .json(response);
   })
 );
+
+app.use(authenticateToken);
 
 app.post(
   `/api/logout`,
@@ -155,7 +157,6 @@ app.post(
 
 app.post(
   `/api/addFood`,
-  authenticateToken,
   wrapAsync((req, res, next) => {
     const fridgeItem = req.body;
 
