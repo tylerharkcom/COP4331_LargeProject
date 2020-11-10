@@ -70,6 +70,14 @@ app.post(
       error: "",
     };
 
+    const emailCheck = await db.collection("Users").findOne({ email });
+
+    if (email) {
+      response.error = "Email already taken";
+      res.status(400).json(response);
+      return;
+    }
+
     if (typeof username != "string") {
       // validating data to string
       response.error = "invalid data";
@@ -83,6 +91,10 @@ app.post(
     }
 
     await db.collection("Users").insertOne({ username, password, userInfo });
+    const user = await db
+      .collection("Users")
+      .findOne({ username: username, password: password });
+    await db.collection("Fridge").insertOne({ userId: user._id });
 
     res.json(response);
   })
@@ -102,6 +114,7 @@ app.post(
     const response = {
       fName: "",
       lName: "",
+      email: "",
       error: "",
     };
 
@@ -112,11 +125,12 @@ app.post(
     }
 
     const token = generateAccessToken({
-      id: user._id,
+      id: user._id.toHexString(),
     });
 
     response.fName = user.userInfo.fName;
     response.lName = user.userInfo.lName;
+    response.email = user.userInfo.email;
 
     res
       .status(200)
@@ -132,7 +146,23 @@ app.post(
 app.post(
   `/api/logout`,
   wrapAsync((req, res, next) => {
-    req.cookie.token = ``;
+    req.cookies.token = ``;
+    res.status(200).send();
+  })
+);
+
+app.post(
+  `/api/addFood`,
+  wrapAsync((req, res, next) => {
+    const fridgeItem = req.body;
+
+    const db = client.db();
+
+    db.collection("Fridge").updateOne(
+      { userId: req.user },
+      { $push: { fridge: fridgeItem } }
+    );
+
     res.status(200).send();
   })
 );
