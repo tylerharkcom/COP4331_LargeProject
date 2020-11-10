@@ -17,6 +17,29 @@ app.use(bodyparser.json());
 app.use(express.static(`static`));
 app.use(cookieParser());
 
+function authenticateToken(req, res, next) {
+  // Gather the jwt access token from the request header
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) {
+    return res.setStatus(401);
+  } // if there isn't any token
+
+  jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
+    console.log(err);
+    if (err) {
+      return res.setStatus(403);
+    }
+    req.user = await db.collection("users").findOne({ _id: ObjectId(data.id) });
+    next(); // pass the execution off to whatever request the client intended
+  });
+}
+
+function generateAccessToken(id) {
+  // expires after 30 mins
+  return jwt.sign(id, process.env.TOKEN_SECRET, { expiresIn: "1800s" });
+}
+
 app.use((req, res, next) => {
   res.setHeader(`Access-Control-Allow-Origin`, `*`);
   res.setHeader(
@@ -47,6 +70,14 @@ app.post(
       error: "",
     };
 
+    const emailCheck = await db.collection("Users").findOne({ email });
+
+    if (email) {
+      response.error = "Email already taken";
+      res.status(400).json(response);
+      return;
+    }
+
     if (typeof username != "string") {
       // validating data to string
       response.error = "invalid data";
@@ -60,10 +91,16 @@ app.post(
     }
 
     await db.collection("Users").insertOne({ username, password, userInfo });
+    const user = await db
+      .collection("Users")
+      .findOne({ username: username, password: password });
+    await db.collection("Fridge").insertOne({ userId: user._id });
 
     res.json(response);
   })
 );
+
+app.use(authenticateToken);
 
 app.post(
   `/api/login`,
@@ -77,6 +114,7 @@ app.post(
     const response = {
       fName: "",
       lName: "",
+      email: "",
       error: "",
     };
 
@@ -87,11 +125,12 @@ app.post(
     }
 
     const token = generateAccessToken({
-      id: user._id,
+      id: user._id.toHexString(),
     });
 
     response.fName = user.userInfo.fName;
     response.lName = user.userInfo.lName;
+    response.email = user.userInfo.email;
 
     res
       .status(200)
@@ -104,6 +143,30 @@ app.post(
   })
 );
 
+app.post(
+  `/api/logout`,
+  wrapAsync((req, res, next) => {
+    req.cookies.token = ``;
+    res.status(200).send();
+  })
+);
+
+app.post(
+  `/api/addFood`,
+  wrapAsync((req, res, next) => {
+    const fridgeItem = req.body;
+
+    const db = client.db();
+
+    db.collection("Fridge").updateOne(
+      { userId: req.user },
+      { $push: { fridge: fridgeItem } }
+    );
+
+    res.status(200).send();
+  })
+);
+
 app.listen(process.env.PORT || 5000, () => {});
 
 function wrapAsync(fn) {
@@ -113,29 +176,4 @@ function wrapAsync(fn) {
       res.status(500).send();
     });
   };
-}
-
-function authenticateToken(req, res, next) {
-  // Gather the jwt access token from the request header
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) {
-    if (!req.cookies) {
-      return res.setStatus(401);
-    } // check for cookies, or
-  } // if there isn't any token
-
-  jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
-    console.log(err);
-    if (err) {
-      return res.setStatus(403);
-    }
-    req.user = await db.collection("users").findOne({ _id: ObjectId(data.id) });
-    next(); // pass the execution off to whatever request the client intended
-  });
-}
-
-function generateAccessToken(id) {
-  // expires after 30 mins
-  return jwt.sign(id, process.env.TOKEN_SECRET, { expiresIn: "1800s" });
 }
