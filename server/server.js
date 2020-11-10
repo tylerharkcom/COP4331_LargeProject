@@ -35,24 +35,18 @@ function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   let token = authHeader && authHeader.split(" ")[1];
   if (token == null) {
-<<<<<<< HEAD
     if (!req.cookies) {
       return res.status(401).send();
     }
     token = req.cookies.token;
-=======
+
     return res.status(401);
->>>>>>> 3c713ba8f47f0d20c5a8ac072a084a506b7eb149
   } // if there isn't any token
 
   jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
     //console.log(err);
     if (err) {
-<<<<<<< HEAD
       return res.status(403).send();
-=======
-      return res.status(403);
->>>>>>> 3c713ba8f47f0d20c5a8ac072a084a506b7eb149
     }
     const db = client.db();
     req.user = await db.collection("Users").findOne({ _id: data.id });
