@@ -39,8 +39,6 @@ function authenticateToken(req, res, next) {
       return res.status(401).send();
     }
     token = req.cookies.token;
-
-    return res.status(401);
   } // if there isn't any token
 
   jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
@@ -157,6 +155,7 @@ app.post(
 
 app.post(
   `/api/addFood`,
+  authenticateToken,
   wrapAsync((req, res, next) => {
     const fridgeItem = req.body;
 
