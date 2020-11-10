@@ -169,7 +169,7 @@ function MyAccount()
     return (
         <div id="accountDiv" class= "center">
             <div id = "accountWrapper"> 
-                <h1 class="pageTitle">FoodBuddy</h1>
+                <h1 className="pageTitle">FoodBuddy</h1>
                 <Card style={{ width: '18rem' }}>
                     <Card.Header>First Name</Card.Header>
                         <ListGroup variant="flush">
@@ -181,62 +181,61 @@ function MyAccount()
                     <Card.Header>Login Name</Card.Header>
                         <ListGroup.Item>{loginName}</ListGroup.Item>
                     </ListGroup>
-                    <Button variant="primary">Update Account Information</Button>
+                    <button type="submit" className="btn btn-secondary">Update Info</button>
+                    <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
                 </Card>
-               
-                <Button variant="primary" onClick={handleShow}> 
-                Update password
-                </Button>
-
+        
                 <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                     <Modal.Title>Update password</Modal.Title>
-                    </Modal.Header>
-                    <Form>
-                        <Form.Group controlId="currentPassword">
-                            <Form.Label>Current password</Form.Label>
-                            <Form.Control 
-                                type="" 
-                                placeholder="Current password"
-                                ref={(c) => (currPassword = c)} 
+                    <div id="updatePassWrapper">
+                        <Modal.Header closeButton>
+                            <Modal.Title>Update password</Modal.Title>
+                        </Modal.Header>
+                        <Form>
+                            <Form.Group controlId="currentPassword">
+                                <Form.Label>Current password</Form.Label>
+                                <Form.Control 
+                                    type="" 
+                                    placeholder="Current password"
+                                    ref={(c) => (currPassword = c)} 
+                                />
+                                <Form.Text className="text-muted">
+                                </Form.Text>
+                            </Form.Group>
+                            <Form.Label htmlFor="newPassword1">New Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                id="newPassword1"
+                                aria-describedby="passwordHelpBlock"
+                                ref={(c) => (newPassword1 = c)}     
                             />
-                            <Form.Text className="text-muted">
+                            <Form.Text id="passwordHelpBlock" muted>
+                                Your new password should:
+                                <ul>
+                                    <li>be at least 8 characters long</li>
+                                    <li>contain at least one capital letter, at least one lowercase letter, and at least one digit</li>
+                                    <li>contain at least one of the following special characters: @, !, #, $, %, *</li>
+                                </ul>
                             </Form.Text>
-                        </Form.Group>
-                        <Form.Label htmlFor="newPassword1">New Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            id="newPassword1"
-                            aria-describedby="passwordHelpBlock"
-                            ref={(c) => (newPassword1 = c)}     
-                        />
-                        <Form.Text id="passwordHelpBlock" muted>
-                            Your new password should:
-                            <ul>
-                                <li>be at least 8 characters long</li>
-                                <li>contain at least one capital letter, at least one lowercase letter, and at least one digit</li>
-                                <li>contain at least one of the following special characters: @, !, #, $, %, *</li>
-                            </ul>
-                        </Form.Text>
-                        <Form.Group controlId="newPassword2">
-                            <Form.Label>Please enter your new password again</Form.Label>
-                            <Form.Control 
-                                type="newPW"
-                                ref={(c) => (newPassword2 = c)}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Confirm password change(add onclick->)"  />
-                        </Form.Group> 
-                        <Button variant="primary" type="submit"  onClick={updatePasswordCheck}> 
-                            Update Password
-                        </Button>
-                    </Form>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Close
-                        </Button>
-                    </Modal.Footer>
+                            <Form.Group controlId="newPassword2">
+                                <Form.Label>Please enter your new password again</Form.Label>
+                                <Form.Control 
+                                    type="newPW"
+                                    ref={(c) => (newPassword2 = c)}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="formBasicCheckbox">
+                                <Form.Check type="checkbox" label="Confirm password change(add onclick->)"  />
+                            </Form.Group> 
+                            <Button variant="primary" type="submit"  onClick={updatePasswordCheck}> 
+                                Update Password
+                            </Button>
+                        </Form>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+                    </div>
                 </Modal>
             </div>   
         </div>

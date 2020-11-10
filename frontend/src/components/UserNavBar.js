@@ -20,19 +20,31 @@ function UserNavBar()
         window.location.href = '/';
     };    
 
+    const goToFridge = event => 
+    {
+        event.preventDefault();
+        window.location.href = '/dashboard';
+    }
+
+    const goToAccount = event =>
+    {
+        event.preventDefault();
+        window.location.href = '/account';
+    }
+
     return( 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <a className="navbar-brand">FoodBuddy</a>
             <div className="collapse navbar-collapse" id="navbarText">
                 <ul className="navbar-nav mr-auto">
                 <li className="nav-item active">
-                    <a className="nav-link" href="#">My Fridge <span className="sr-only">(current)</span></a>
+                    <a className="nav-link" onClick={goToFridge}>My Fridge <span className="sr-only">(current)</span></a>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="#">My Meals</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#">My Account</a>
+                    <a className="nav-link" onClick={goToAccount}>My Account</a>
                 </li>
                 </ul>
                 <span className="navbar-text" style={{marginRight: "5px"}}>

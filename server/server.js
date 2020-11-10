@@ -22,13 +22,13 @@ function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (token == null) {
-    return res.setStatus(401);
+    return res.status(401);
   } // if there isn't any token
 
   jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
     console.log(err);
     if (err) {
-      return res.setStatus(403);
+      return res.status(403);
     }
     req.user = await db.collection("users").findOne({ _id: ObjectId(data.id) });
     next(); // pass the execution off to whatever request the client intended
@@ -100,7 +100,7 @@ app.post(
   })
 );
 
-app.use(authenticateToken);
+// app.use(authenticateToken);
 
 app.post(
   `/api/login`,
