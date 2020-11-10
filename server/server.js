@@ -17,6 +17,29 @@ app.use(bodyparser.json());
 app.use(express.static(`static`));
 app.use(cookieParser());
 
+function authenticateToken(req, res, next) {
+  // Gather the jwt access token from the request header
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) {
+    return res.setStatus(401);
+  } // if there isn't any token
+
+  jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
+    console.log(err);
+    if (err) {
+      return res.setStatus(403);
+    }
+    req.user = await db.collection("users").findOne({ _id: ObjectId(data.id) });
+    next(); // pass the execution off to whatever request the client intended
+  });
+}
+
+function generateAccessToken(id) {
+  // expires after 30 mins
+  return jwt.sign(id, process.env.TOKEN_SECRET, { expiresIn: "1800s" });
+}
+
 app.use((req, res, next) => {
   res.setHeader(`Access-Control-Allow-Origin`, `*`);
   res.setHeader(
@@ -65,6 +88,8 @@ app.post(
   })
 );
 
+app.use(authenticateToken);
+
 app.post(
   `/api/login`,
   wrapAsync(async (req, res) => {
@@ -104,6 +129,14 @@ app.post(
   })
 );
 
+app.post(
+  `/api/logout`,
+  wrapAsync((req, res, next) => {
+    req.cookie.token = ``;
+    res.status(200).send();
+  })
+);
+
 app.listen(process.env.PORT || 5000, () => {});
 
 function wrapAsync(fn) {
@@ -113,29 +146,4 @@ function wrapAsync(fn) {
       res.status(500).send();
     });
   };
-}
-
-function authenticateToken(req, res, next) {
-  // Gather the jwt access token from the request header
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) {
-    if (!req.cookies) {
-      return res.setStatus(401);
-    } // check for cookies, or
-  } // if there isn't any token
-
-  jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
-    console.log(err);
-    if (err) {
-      return res.setStatus(403);
-    }
-    req.user = await db.collection("users").findOne({ _id: ObjectId(data.id) });
-    next(); // pass the execution off to whatever request the client intended
-  });
-}
-
-function generateAccessToken(id) {
-  // expires after 30 mins
-  return jwt.sign(id, process.env.TOKEN_SECRET, { expiresIn: "1800s" });
 }
