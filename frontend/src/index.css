@@ -45,10 +45,15 @@ code {
   align-items: center;
 }
 
-#loginWrapper, #registerWrapper {
+#loginWrapper, #registerWrapper, #accountWrapper {
   background-color: #464646;
   padding: 10px;
   border: 1px solid #DADADA;
+}
+
+#updatePassWrapper {
+  background-color: #DADADA;
+  padding: 10px;
 }
 
 #loginWrapper:hover {
