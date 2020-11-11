@@ -18,7 +18,6 @@ const router = Router();
 
 app.use(express.static(`static`));
 app.use(`/api`, router);
-app.use(express.static(`frontend/public`));
 app.use(express.static(`frontend/build`));
 
 router.use(cors());
