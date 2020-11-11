@@ -86,11 +86,22 @@ function Login() {
           <div id="registerLink">
             <label>
               Don't have an account? <br />
-              <a href="#" onClick={goToRegister}>Create one here!</a>
+              <input 
+                        name="register" 
+                        type="button" 
+                        className="link-button-light" 
+                        value="Create an account" 
+                        onClick={goToRegister}
+                />
             </label>
           </div>
         </form>
-        <span id="loginResult">{message}</span>
+        <span 
+          id="loginResult" 
+          className="lightText"
+        >
+          {message}
+        </span>
       </div>
     </div>
   );

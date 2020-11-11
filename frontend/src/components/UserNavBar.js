@@ -41,7 +41,7 @@ function UserNavBar()
                     <input 
                         name="fridge" 
                         type="button" 
-                        className="link-button" 
+                        className="link-button-dark" 
                         value="My Fridge" 
                         onClick={goToFridge}
                     />
@@ -50,7 +50,7 @@ function UserNavBar()
                     <input 
                         name="meals" 
                         type="button" 
-                        className="link-button" 
+                        className="link-button-dark" 
                         value="My Meals" 
                     />
                 </li>
@@ -58,7 +58,7 @@ function UserNavBar()
                     <input 
                         name="account" 
                         type="button" 
-                        className="link-button" 
+                        className="link-button-dark" 
                         value="My Account" 
                         onClick={goToAccount}
                     />

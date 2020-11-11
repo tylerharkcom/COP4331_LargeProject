@@ -39,14 +39,34 @@ code {
   height: 100vh;
 }
 
-.link-button {
+.link-button-dark {
   display: block;
   padding: 0.5rem 1rem;
   border: none;
   background-color: transparent;
   font-size: 1em;
-  color: #AAA;
+  color: lightblue;
   cursor: pointer;
+}
+
+.link-button-dark:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.link-button-light {
+  display: block;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: transparent;
+  font-size: 1em;
+  color: blue;
+  cursor: pointer;
+}
+
+.link-button-light:hover {
+  color: darkblue;
+  text-decoration: underline;
 }
 
 #loginButton {
