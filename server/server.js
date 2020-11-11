@@ -9,10 +9,10 @@ const express = require("express");
 const bodyparser = require(`body-parser`);
 const jwt = require(`jsonwebtoken`);
 const cookieParser = require(`cookie-parser`);
-//const cors = require(`cors`);
+const cors = require(`cors`);
 
 const app = express();
-//app.use(cors());
+app.use(cors());
 app.use(bodyparser.json());
 app.use(express.static(`static`));
 app.use(cookieParser());
@@ -35,12 +35,13 @@ function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   let token = authHeader && authHeader.split(" ")[1];
   if (token == null) {
-    if (req.cookies.token == null) {
-      return next();
-    }
     console.log(req.cookies);
     token = req.cookies.token;
   } // if there isn't any token
+
+  if (!token) {
+    return res.status(403).send();
+  }
 
   jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
     console.log(err);
@@ -48,8 +49,13 @@ function authenticateToken(req, res, next) {
       return res.status(403).send();
     }
     const db = client.db();
+    console.log(data);
     req.user = await db.collection("Users").findOne({ _id: data.id });
-    next(); // pass the execution off to whatever request the client intended
+    if (req.user) {
+      return next();
+    }
+    return res.status(403).send();
+    // pass the execution off to whatever request the client intended
   });
 }
 
@@ -161,7 +167,7 @@ app.post(
     const fridgeItem = req.body;
 
     const db = client.db();
-
+    console.log(req.cookies);
     await db
       .collection("Fridge")
       .updateOne({ userId: req.user }, { $push: { fridge: fridgeItem } });
