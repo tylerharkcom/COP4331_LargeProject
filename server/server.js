@@ -121,7 +121,6 @@ router.post(
 router.post(
   `/login`,
   wrapAsync(async (req, res) => {
-    console.log(process.cwd() + `/frontend/build/index.html`);
     const { username, password } = req.body;
     const db = client.db();
     const user = await db
@@ -181,8 +180,11 @@ router.post(
     res.status(200).json();
   })
 );
+console.log(process.cwd() + `/frontend/build/index.html`);
+app.get("*", (req, res) => {
+  res.sendFile("frontend/public/index.html");
+});
 
-app.get("*", (req, res) => res.sendFile("frontend/public/index.html"));
 app.listen(process.env.PORT || 5000, () => {});
 
 function wrapAsync(fn) {
