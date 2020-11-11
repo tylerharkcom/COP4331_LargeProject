@@ -149,7 +149,7 @@ app.use(authenticateToken);
 
 app.post(
   `/api/logout`,
-  wrapAsync((req, res, next) => {
+  wrapAsync(async (req, res, next) => {
     req.cookies.token = ``;
     res.status(200).send();
   })
@@ -157,15 +157,14 @@ app.post(
 
 app.post(
   `/api/addFood`,
-  wrapAsync((req, res, next) => {
+  wrapAsync(async (req, res, next) => {
     const fridgeItem = req.body;
 
     const db = client.db();
 
-    db.collection("Fridge").updateOne(
-      { userId: req.user },
-      { $push: { fridge: fridgeItem } }
-    );
+    await db
+      .collection("Fridge")
+      .updateOne({ userId: req.user }, { $push: { fridge: fridgeItem } });
 
     res.status(200).send();
   })

@@ -5,7 +5,7 @@ fetch(`/api/addFood`, {
   },
   body: JSON.stringify({
     item: "ham",
-    brand: "publix",
+    brand: "walmart",
     expDate: new Date(),
   }),
 })
