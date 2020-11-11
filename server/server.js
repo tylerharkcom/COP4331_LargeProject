@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const MongoClient = require("mongodb").MongoClient;
+const { ObjectId } = require("mongodb").ObjectId;
 
 const client = new MongoClient(process.env.MONGO_URI);
 client.connect();
@@ -10,14 +11,21 @@ const bodyparser = require(`body-parser`);
 const jwt = require(`jsonwebtoken`);
 const cookieParser = require(`cookie-parser`);
 const cors = require(`cors`);
+const { Router } = require("express");
 
 const app = express();
-app.use(cors());
-app.use(bodyparser.json());
-app.use(express.static(`static`));
-app.use(cookieParser());
+const router = Router();
 
-app.use((req, res, next) => {
+app.use(express.static(`static`));
+app.use(`/api`, router);
+app.use(express.static(`frontend/public`));
+app.use(express.static(`frontend/build`));
+
+router.use(cors());
+router.use(bodyparser.json());
+router.use(cookieParser());
+
+router.use((req, res, next) => {
   res.setHeader(`Access-Control-Allow-Origin`, `*`);
   res.setHeader(
     `Access-Control-Allow-Headers`,
@@ -35,7 +43,6 @@ function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   let token = authHeader && authHeader.split(" ")[1];
   if (token == null) {
-    console.log(req.cookies);
     token = req.cookies.token;
   } // if there isn't any token
 
@@ -49,8 +56,7 @@ function authenticateToken(req, res, next) {
       return res.status(403).send();
     }
     const db = client.db();
-    console.log(data);
-    req.user = await db.collection("Users").findOne({ _id: data.id });
+    req.user = await db.collection("Users").findOne({ _id: ObjectId(data.id) });
     if (req.user) {
       return next();
     }
@@ -64,8 +70,8 @@ function generateAccessToken(id) {
   return jwt.sign(id, process.env.TOKEN_SECRET, { expiresIn: "1800s" });
 }
 
-app.post(
-  `/api/register`,
+router.post(
+  `/register`,
   wrapAsync(async (req, res) => {
     const { username, password, fName, lName, email } = req.body;
     const userInfo = {
@@ -111,8 +117,8 @@ app.post(
   })
 );
 
-app.post(
-  `/api/login`,
+router.post(
+  `/login`,
   wrapAsync(async (req, res) => {
     const { username, password } = req.body;
     const db = client.db();
@@ -151,31 +157,30 @@ app.post(
   })
 );
 
-app.use(authenticateToken);
+router.use(authenticateToken);
 
-app.post(
-  `/api/logout`,
+router.post(
+  `/logout`,
   wrapAsync(async (req, res, next) => {
     req.cookies.token = ``;
     res.status(200).send();
   })
 );
 
-app.post(
-  `/api/addFood`,
+router.post(
+  `/addFood`,
   wrapAsync(async (req, res, next) => {
     const fridgeItem = req.body;
 
     const db = client.db();
-    console.log(req.cookies);
-    await db
+    const success = await db
       .collection("Fridge")
-      .updateOne({ userId: req.user }, { $push: { fridge: fridgeItem } });
-
+      .updateOne({ userId: req.user._id }, { $push: { fridge: fridgeItem } });
     res.status(200).json();
   })
 );
 
+app.get("*", (req, res) => res.sendFile("frontend/public/index.html"));
 app.listen(process.env.PORT || 5000, () => {});
 
 function wrapAsync(fn) {
