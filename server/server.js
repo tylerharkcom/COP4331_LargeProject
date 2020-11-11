@@ -166,7 +166,7 @@ app.post(
       .collection("Fridge")
       .updateOne({ userId: req.user }, { $push: { fridge: fridgeItem } });
 
-    res.status(200).send();
+    res.status(200).json();
   })
 );
 
