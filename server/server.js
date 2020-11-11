@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const projectRoot = process.cwd();
+
 const MongoClient = require("mongodb").MongoClient;
 const { ObjectId } = require("mongodb").ObjectId;
 
