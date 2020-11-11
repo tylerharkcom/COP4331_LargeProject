@@ -39,6 +39,16 @@ code {
   height: 100vh;
 }
 
+.link-button {
+  display: block;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: transparent;
+  font-size: 1em;
+  color: #AAA;
+  cursor: pointer;
+}
+
 #loginButton {
   display: flex;
   justify-content: center;

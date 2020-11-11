@@ -37,14 +37,31 @@ function UserNavBar()
             <a className="navbar-brand">FoodBuddy</a>
             <div className="collapse navbar-collapse" id="navbarText">
                 <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                    <a className="nav-link" onClick={goToFridge}>My Fridge <span className="sr-only">(current)</span></a>
+                <li className="nav-item">
+                    <input 
+                        name="fridge" 
+                        type="button" 
+                        className="link-button" 
+                        value="My Fridge" 
+                        onClick={goToFridge}
+                    />
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#">My Meals</a>
+                    <input 
+                        name="meals" 
+                        type="button" 
+                        className="link-button" 
+                        value="My Meals" 
+                    />
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" onClick={goToAccount}>My Account</a>
+                    <input 
+                        name="account" 
+                        type="button" 
+                        className="link-button" 
+                        value="My Account" 
+                        onClick={goToAccount}
+                    />
                 </li>
                 </ul>
                 <span className="navbar-text" style={{marginRight: "5px"}}>
