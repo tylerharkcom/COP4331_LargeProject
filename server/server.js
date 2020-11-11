@@ -180,8 +180,9 @@ router.post(
     res.status(200).json();
   })
 );
-console.log(process.cwd() + `/frontend/build/index.html`);
+
 app.get("*", (req, res) => {
+  console.log(process.cwd() + `/frontend/build/index.html`);
   res.sendFile("frontend/public/index.html");
 });
 
