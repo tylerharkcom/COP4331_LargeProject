@@ -98,7 +98,7 @@ function Register()
         
         try 
         {
-            const response = await fetch("http://localhost:5000/api/register", {
+            const response = await fetch("/api/register", {
               method: "POST",
               body: js,
               headers: { "Content-Type": "application/json" },
@@ -130,39 +130,88 @@ function Register()
     }
 
     return (
-        <div id="registerDiv" class="center">
+        <div 
+            id="registerDiv" 
+            className="center"
+        >
             <div id="registerWrapper">
                 <h1 class="pageTitle">FoodBuddy</h1>
-                <form id="registerForm" onSubmit={doRegister}>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
+                <form 
+                    id="registerForm" 
+                    onSubmit={doRegister}
+                >
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
                             <label for="registerFirstName">First name</label>
-                            <input type="text" class="form-control" id="registerFirstName" placeholder="Enter your first name" ref={(c) => firstName = c} />
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="registerFirstName" 
+                                placeholder="Enter your first name" 
+                                ref={(c) => firstName = c} 
+                            />
                         </div>
-                        <div class="form-group col-md-6">
+                        <div className="form-group col-md-6">
                             <label for="registerLastName">Last name</label>
-                            <input type="text" class="form-control" id="registerLastName" placeholder="Enter your last name" ref={(c) => lastName = c} />
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="registerLastName" 
+                                placeholder="Enter your last name" 
+                                ref={(c) => lastName = c} 
+                            />
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
                             <label for="registerEmail1">Email address</label>
-                            <input type="email" class="form-control" id="registerEmail1" aria-describedby="emailHelp" placeholder="Enter email" ref={(c) => email = c} />
+                            <input 
+                                type="email" 
+                                className="form-control" 
+                                id="registerEmail1" 
+                                aria-describedby="emailHelp" 
+                                placeholder="Enter email" 
+                                ref={(c) => email = c} 
+                            />
                         </div>
-                        <div class="form-group col-md-6">
+                        <div className="form-group col-md-6">
                             <label for="verifyEmail1">Verify email address</label>
-                            <input type="email" class="form-control" id="verifyEmail1" aria-describedby="emailHelp" placeholder="Reenter email" ref={(c) => checkEmail = c} />
+                            <input 
+                                type="email" 
+                                className="form-control" 
+                                id="verifyEmail1" 
+                                aria-describedby="emailHelp" 
+                                placeholder="Reenter email" 
+                                ref={(c) => checkEmail = c} 
+                            />
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
+                    <div className="form-row">
+                        <div className="form-group col-md-6">
                             <label for="registerLoginName">Username</label>
-                            <input type="username" class="form-control" id="registerLoginName" placeholder="Username" ref={(c) => loginName = c} />
+                            <input 
+                                type="username" 
+                                className="form-control" 
+                                id="registerLoginName" 
+                                placeholder="Username" 
+                                ref={(c) => loginName = c} 
+                            />
                         </div>
-                        <div class="form-group col-md-6">
+                        <div className="form-group col-md-6">
                             <label for="registerLoginPassword1">Password</label>
-                            <input type="password" class="form-control" id="registerLoginPassword1" data-tip data-for="passwordTip" placeholder="Password" ref={(c) => loginPassword = c} />
-                            <ReactTooltip id="passwordTip" place="bottom" effect="solid">
+                            <input 
+                                type="password" 
+                                className="form-control" 
+                                id="registerLoginPassword1" 
+                                data-tip data-for="passwordTip" 
+                                placeholder="Password" 
+                                ref={(c) => loginPassword = c} 
+                            />
+                            <ReactTooltip 
+                                id="passwordTip" 
+                                place="bottom" 
+                                effect="solid"
+                            >
                                 Your password should:
                                 <ul>
                                     <li>be at least 8 characters long</li>
@@ -173,12 +222,36 @@ function Register()
                         </div>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary" onClick={doRegister}>Register</button>
-                        <button type="reset" style={{marginLeft: "10px", marginRight: "10px"}} class="btn btn-secondary">Reset</button>
-                        <button type="button" style={{marginLeft: "10x"}} class="btn btn-secondary" onClick={goToLogin}>Go to login</button>
+                        <button 
+                            type="submit" 
+                            className="btn btn-primary" 
+                            onClick={doRegister}
+                        >
+                            Register
+                        </button>
+                        <button 
+                            type="reset" 
+                            style={{marginLeft: "10px", marginRight: "10px"}} 
+                            className="btn btn-secondary"
+                        >
+                            Reset
+                        </button>
+                        <button 
+                            type="button" 
+                            style={{marginLeft: "10x"}} 
+                            className="btn btn-secondary" 
+                            onClick={goToLogin}
+                        >
+                            Go to login
+                        </button>
                     </div>
                 </form>
-                <span id="registerResult" class="lightText">{message}</span>
+                <span 
+                    id="registerResult" 
+                    classNme="lightText"
+                >
+                    {message}
+                </span>
             </div>
         </div>
     );

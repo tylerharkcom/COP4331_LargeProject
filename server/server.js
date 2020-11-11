@@ -90,7 +90,7 @@ router.post(
 
     const emailCheck = await db.collection("Users").findOne({ email });
 
-    if (email) {
+    if (emailCheck) {
       response.error = "Email already taken";
       res.status(400).json(response);
       return;
