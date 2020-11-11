@@ -1,0 +1,27 @@
+{
+    "login": [
+        {
+            "username": "myusername",
+            "password": "mypassword"
+        }
+    ]
+    "register": [
+        {
+            "fName": "Stanley",
+            "lName": "Minervini",
+            "username": "some_username",
+            "password": "hashed_and_salted_password",
+            "email": "fakeEmail@gmail.com"
+        }
+    ]
+    "logout" : [
+
+    ]
+    "addFood" : [
+        {
+            "item": "coffee",
+            "brand": "starbux",
+            "expDate": "12/24/2020" 
+        }
+    ]
+}
