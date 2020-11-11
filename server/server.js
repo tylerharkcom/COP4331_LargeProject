@@ -121,6 +121,7 @@ router.post(
 router.post(
   `/login`,
   wrapAsync(async (req, res) => {
+    console.log(process.cwd() + `/frontend/build/index.html`);
     const { username, password } = req.body;
     const db = client.db();
     const user = await db
