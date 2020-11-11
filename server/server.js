@@ -182,8 +182,7 @@ router.post(
 );
 
 app.get("*", (req, res) => {
-  console.log(process.cwd() + `/frontend/build/index.html`);
-  res.sendFile(process.cwd() + "frontend/public/index.html");
+  res.sendFile(projectRoot + "/frontend/build/index.html");
 });
 
 app.listen(process.env.PORT || 5000, () => {});
