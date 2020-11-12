@@ -52,6 +52,12 @@ function UserNavBar()
         window.location.href = '/account';
     }
 
+    const goToRecipes = event =>
+    {
+        event.preventDefault();
+        window.location.href = '/recipes';
+    }
+
 
     return( 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -73,6 +79,7 @@ function UserNavBar()
                         type="button" 
                         className="link-button-dark" 
                         value="My Meals" 
+                        onClick={goToRecipes}
                     />
                 </li>
                 <li className="nav-item">
