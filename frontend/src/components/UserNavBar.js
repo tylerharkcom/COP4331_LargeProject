@@ -25,9 +25,8 @@ function UserNavBar()
               body: js,
               headers: { "Content-Type": "application/json" },
             });
-      
-            var res = JSON.parse(await response.text());
-      
+            
+            
             if (response.status !== 200) {
               return;
             } else {
