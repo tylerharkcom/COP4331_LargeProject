@@ -16,17 +16,15 @@ function UserNavBar()
     {
         event.preventDefault();
         
-        var obj = {};
-        var js = JSON.stringify(obj);
 
         try {
             const response = await fetch("/api/logout", {
               method: "POST",
-              body: js,
+              body: null,
               headers: { "Content-Type": "application/json" },
             });
             
-            
+
             if (response.status !== 200) {
               return;
             } else {
