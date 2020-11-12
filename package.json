@@ -17,6 +17,8 @@
     "nodemon": "^2.0.6",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.0"
+    "react-scripts": "^4.0.0",
+    "react-switch": "^5.0.1",
+    "react-toggle": "^4.1.1"
   }
 }
