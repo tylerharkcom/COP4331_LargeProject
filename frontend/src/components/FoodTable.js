@@ -1,11 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
+import TableRow from './TableRow';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl'
-import Icon from 'react-crud-icons';
-import '../../node_modules/react-crud-icons/dist/css/react-crud-icons.css'
 
 function FoodTable() {
+
+    const [food, setFood] = useState({
+        foods: [
+            {
+                id: 1,
+                name: 'Kiwis',
+                dateAdded: '11/11/20',
+                dateExp: '11/22/20'
+            },
+            {
+                id: 2,
+                name: 'Chicken breast',
+                dateAdded: '11/11/20',
+                dateExp: '11/14/20'
+            },
+            {
+                id: 3,
+                name: 'Blackberries',
+                dateAdded: '11/11/20',
+                dateExp: '11/20/20'
+            }
+        ]
+    });
+
+    const selectRowHandler = (event, foodIndex) => {
+        console.log(event.target.checked)
+        let select = event.target.checked ? 'selected' : 'deselected';
+        alert(foodIndex+' row '+select);
+    }
 
     const editFood = event => {
         event.preventDefault();
@@ -26,6 +54,42 @@ function FoodTable() {
         event.preventDefault();
         alert("You're not getting any results, buddy!");
     }
+
+    let printTable = (
+        <div>
+            <Table striped bordered hover variant="dark">
+                <thead>
+                    <tr>
+                    <th>
+                        <div id="selectAll" class="checkbox">
+                            <label>
+                            <input type="checkbox" /> Select All
+                            </label>
+                        </div>
+                    </th>
+                    <th>Food</th>
+                    <th>Date expires</th>
+                    <th>Date added</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        food.foods.map((p, index) => {
+                            return <TableRow 
+                                name={p.name} 
+                                selected={(event) => selectRowHandler(event, index)} 
+                                dateAdded={p.dateAdded} 
+                                dateExp={p.dateExp}
+                                editFood={editFood}
+                                deleteFood={deleteFood}
+                            />
+                        })
+                    }
+                </tbody>
+            </Table>
+        </div>
+    );
 
     return(
         <div id="fridgeTable">
@@ -51,47 +115,7 @@ function FoodTable() {
                     <button className="btn btn-secondary" type="submit" onClick={searchFood}>Search</button>
                 </Form>
             </div>
-            <Table striped bordered hover variant="dark">
-                <thead>
-                    <tr>
-                    <th>
-                        <div id="selectAll" class="checkbox">
-                            <label>
-                            <input type="checkbox" /> Select All
-                            </label>
-                        </div>
-                    </th>
-                    <th>Food</th>
-                    <th>Date expires</th>
-                    <th>Date added</th>
-                    <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td>
-                        <input type="checkbox" />
-                    </td>
-                    <td>Kiwis</td>
-                    <td>11/20</td>
-                    <td>11/6</td>
-                    <td>
-                        <Icon
-                            name = "edit"
-                            size = "small"
-                            theme = "dark"
-                            onClick = {editFood}
-                        />
-                        <Icon
-                            name = "delete"
-                            size = "small"
-                            theme = "dark"
-                            onClick = {deleteFood}
-                        />
-                    </td>
-                    </tr>
-                </tbody>
-            </Table>
+            {printTable}
         </div>
     );
 };

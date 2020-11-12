@@ -12,12 +12,32 @@ function UserNavBar()
         setlName(user.lastName);
     });
 
-    const doLogout = event => 
+    const doLogout = async event => 
     {
-	    event.preventDefault();
-		// call to API to reset JWT
-        localStorage.clear();
-        window.location.href = '/';
+        event.preventDefault();
+        
+        var obj = {};
+        var js = JSON.stringify(obj);
+
+        try {
+            const response = await fetch("/api/logout", {
+              method: "POST",
+              body: js,
+              headers: { "Content-Type": "application/json" },
+            });
+      
+            var res = JSON.parse(await response.text());
+      
+            if (response.status !== 200) {
+              return;
+            } else {
+                localStorage.clear();
+                window.location.href = '/';
+            }
+        } catch (e) {
+            alert(e.toString());
+            return;
+        }
     };    
 
     const goToFridge = event => 
@@ -32,19 +52,37 @@ function UserNavBar()
         window.location.href = '/account';
     }
 
+
     return( 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <a className="navbar-brand">FoodBuddy</a>
             <div className="collapse navbar-collapse" id="navbarText">
                 <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                    <a className="nav-link" onClick={goToFridge}>My Fridge <span className="sr-only">(current)</span></a>
+                <li className="nav-item">
+                    <input 
+                        name="fridge" 
+                        type="button" 
+                        className="link-button-dark" 
+                        value="My Fridge" 
+                        onClick={goToFridge}
+                    />
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#">My Meals</a>
+                    <input 
+                        name="meals" 
+                        type="button" 
+                        className="link-button-dark" 
+                        value="My Meals" 
+                    />
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" onClick={goToAccount}>My Account</a>
+                    <input 
+                        name="account" 
+                        type="button" 
+                        className="link-button-dark" 
+                        value="My Account" 
+                        onClick={goToAccount}
+                    />
                 </li>
                 </ul>
                 <span className="navbar-text" style={{marginRight: "5px"}}>
