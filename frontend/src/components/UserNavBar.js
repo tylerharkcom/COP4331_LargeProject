@@ -12,12 +12,32 @@ function UserNavBar()
         setlName(user.lastName);
     });
 
-    const doLogout = event => 
+    const doLogout = async event => 
     {
-	    event.preventDefault();
-		// call to API to reset JWT
-        localStorage.clear();
-        window.location.href = '/';
+        event.preventDefault();
+        
+        var obj = {};
+        var js = JSON.stringify(obj);
+
+        try {
+            const response = await fetch("/api/logout", {
+              method: "POST",
+              body: js,
+              headers: { "Content-Type": "application/json" },
+            });
+      
+            var res = JSON.parse(await response.text());
+      
+            if (response.status !== 200) {
+              return;
+            } else {
+                localStorage.clear();
+                window.location.href = '/';
+            }
+        } catch (e) {
+            alert(e.toString());
+            return;
+        }
     };    
 
     const goToFridge = event => 
@@ -31,6 +51,7 @@ function UserNavBar()
         event.preventDefault();
         window.location.href = '/account';
     }
+
 
     return( 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

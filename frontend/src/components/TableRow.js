@@ -10,7 +10,9 @@ const TableRow = (props) =>
         <tr>
             <td>
                 <Checkbox 
-                    checked={props.selected}
+                    checked={(event) => {
+                        props.selected(event)}
+                    }
                     id={props.id}
                 />
             </td>

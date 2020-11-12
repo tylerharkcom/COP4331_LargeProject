@@ -29,9 +29,10 @@ function FoodTable() {
         ]
     });
 
-    const selectRowHandler = (foodIndex) => {
-        console.log(foodIndex);
-        alert(foodIndex+' row selected');
+    const selectRowHandler = (event, foodIndex) => {
+        console.log(event.target.checked)
+        let select = event.target.checked ? 'selected' : 'deselected';
+        alert(foodIndex+' row '+select);
     }
 
     const editFood = event => {
@@ -77,7 +78,7 @@ function FoodTable() {
                         food.foods.map((p, index) => {
                             return <TableRow 
                                 name={p.name} 
-                                selected={() => selectRowHandler(index)} 
+                                selected={(event) => selectRowHandler(event, index)} 
                                 dateAdded={p.dateAdded} 
                                 dateExp={p.dateExp}
                                 editFood={editFood}
