@@ -72,7 +72,7 @@ function MyAccount()
         var obj = { password: pwd };
         var js = JSON.stringify(obj);
         try {
-            const response = await fetch("/api/login", {
+            const response = await fetch("/api/updatePassword", {
               method: "POST",
               body: js,
               headers: { "Content-Type": "application/json" },
