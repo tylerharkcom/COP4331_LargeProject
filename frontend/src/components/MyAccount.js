@@ -179,7 +179,7 @@ function MyAccount()
         
                 <Modal show={show} onHide={handleClose}>
                     <div id="updatePassWrapper">
-                        <Modal.Header closeButton>
+                        <Modal.Header>
                             <Modal.Title>Update password</Modal.Title>
                         </Modal.Header>
                         <Form>
