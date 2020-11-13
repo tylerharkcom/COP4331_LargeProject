@@ -219,6 +219,16 @@ router.post(
       return;
     }
 
+    const passwordCheck = await db
+      .collection("Users")
+      .findOne({ password: newPassword });
+
+    if (!passwordCheck || req.user._id != passwordCheck._id) {
+      response.error = "This password is not correct";
+      res.status(400).json(response);
+      return;
+    }
+
     const db = client.db();
     try {
       await db
