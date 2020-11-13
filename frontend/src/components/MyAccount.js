@@ -15,7 +15,6 @@ import Overlay from 'react-bootstrap/Overlay';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Switch from 'react-switch';
 import sha256 from '../sha256';
-import UpdatePassword from "./updatePassword";
 
  
 function MyAccount() 
