@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import RegisterPage from './pages/RegisterPage';
 import AccountPage from './pages/AccountPage';
+import RecipePage from './pages/RecipePage';
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
         </Route>
         <Route path ="/account" exact>
           <AccountPage />
+        </Route>
+        <Route path ="/recipes" exact>
+          <RecipePage />
         </Route>
         <Redirect to="/" />
       </Switch>  

@@ -16,18 +16,15 @@ function UserNavBar()
     {
         event.preventDefault();
         
-        var obj = {};
-        var js = JSON.stringify(obj);
 
         try {
             const response = await fetch("/api/logout", {
               method: "POST",
-              body: js,
+              body: null,
               headers: { "Content-Type": "application/json" },
             });
-      
-            var res = JSON.parse(await response.text());
-      
+            
+
             if (response.status !== 200) {
               return;
             } else {
@@ -52,6 +49,12 @@ function UserNavBar()
         window.location.href = '/account';
     }
 
+    const goToRecipes = event =>
+    {
+        event.preventDefault();
+        window.location.href = '/recipes';
+    }
+
 
     return( 
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -73,6 +76,7 @@ function UserNavBar()
                         type="button" 
                         className="link-button-dark" 
                         value="My Meals" 
+                        onClick={goToRecipes}
                     />
                 </li>
                 <li className="nav-item">

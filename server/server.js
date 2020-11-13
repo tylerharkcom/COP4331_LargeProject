@@ -68,7 +68,7 @@ function authenticateToken(req, res, next) {
 
 function generateAccessToken(id) {
   // expires after 30 mins
-  return jwt.sign(id, process.env.TOKEN_SECRET, { expiresIn: "1800s" });
+  return jwt.sign(id, process.env.TOKEN_SECRET, { expiresIn: "3600s" });
 }
 
 router.post(
@@ -89,9 +89,16 @@ router.post(
     };
 
     const emailCheck = await db.collection("Users").findOne({ email });
+    const usernameCheck = await db.collection("Users").findOne({ username });
 
     if (emailCheck) {
       response.error = "Email already taken";
+      res.status(400).json(response);
+      return;
+    }
+
+    if (usernameCheck) {
+      response.error = "Username already taken";
       res.status(400).json(response);
       return;
     }
@@ -151,7 +158,7 @@ router.post(
     res
       .status(200)
       .cookie(`token`, token, {
-        maxAge: 86400,
+        maxAge: 3600,
         httpOnly: true,
       })
       .json(response);
@@ -178,6 +185,61 @@ router.post(
       .collection("Fridge")
       .updateOne({ userId: req.user._id }, { $push: { fridge: fridgeItem } });
     res.status(200).json();
+  })
+);
+
+router.post(
+  `/loadFridge`,
+  wrapAsync(async (req, res, next) => {
+    const db = client.db();
+
+    const fridge = await db
+      .collection("Fridge")
+      .findOne({ userId: req.user._id });
+
+    let response = fridge;
+    response._id = "Id not avail";
+    response.userId = "userId not avail";
+
+    if (!fridge) {
+      res.status(404);
+      return;
+    }
+    res.json(response);
+  })
+);
+
+router.post(
+  `/updatePassword`,
+  wrapAsync(async (req, res, next) => {
+    const newPassword = req.body;
+
+    if (!newPassword) {
+      res.send(400).json();
+      return;
+    }
+
+    const passwordCheck = await db
+      .collection("Users")
+      .findOne({ password: newPassword });
+
+    if (!passwordCheck || req.user._id != passwordCheck._id) {
+      response.error = "This password is not correct";
+      res.status(400).json(response);
+      return;
+    }
+
+    const db = client.db();
+    try {
+      await db
+        .collection("Users")
+        .updateOne({ _id: req.user._id }, { $set: { password: newPassword } });
+    } catch (e) {
+      console.log(e);
+      res.send(400).json();
+      return;
+    }
+    res.json();
   })
 );
 
