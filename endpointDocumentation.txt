@@ -4,6 +4,12 @@
             "username": "myusername",
             "password": "mypassword"
         }
+        {
+            "fName": "Stanley",
+            "lName": "lastName",
+            "email": "myemail@gmail.com",
+            "error": "some error"
+        }
     ]
     "register": [
         {
@@ -13,15 +19,48 @@
             "password": "hashed_and_salted_password",
             "email": "fakeEmail@gmail.com"
         }
-    ]
-    "logout" : [
-
-    ]
-    "addFood" : [
         {
+            "error": "some error"
+        }
+    ]
+    "logout": [
+        {
+
+        }
+        {
+
+        }
+    ]
+    "addFood": [
+        { 
             "item": "coffee",
             "brand": "starbux",
             "expDate": "12/24/2020" 
+        }
+        {
+
+        }
+    ]
+    "loadFridge": [
+        {
+
+        }
+        {
+            fridge {
+                object { 
+                    "item" : "cookie",
+                    "brand": "oreo",
+                    "expDate": "10/10/1000"
+                }
+            }
+        }
+    ]
+    "updatePassword": [
+        {
+            "password": "newPassword"
+        }
+        {
+            
         }
     ]
 }
