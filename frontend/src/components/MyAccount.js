@@ -18,6 +18,7 @@ import Overlay from 'react-bootstrap/Overlay';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Switch from 'react-switch';
 import sha256 from '../sha256';
+import UpdatePassword from "./updatePassword";
 
  
 function MyAccount() 
@@ -26,8 +27,7 @@ function MyAccount()
     var newPassword2;
     var currPassword;
     var showSubmit; 
-    const pwRequirements = 'Your new password should: be at least 8 characters long contain at least one capital letter, at least one lowercase letter, and at least one digit contain at least one of the following special characters: @, !, #, $, %, *';
-                            
+    const pwRequirements = 'bop';
 
     const [show, setShow] = useState(false);
    // const [showSubmit,handleChange] = useToggle();
@@ -129,6 +129,7 @@ function MyAccount()
             setMessageNewPW('Your new passwords do not match');
             return;
         }
+        alert('Passwords match: Prepare to crash rq');
         // Check if current password is correct
         var pwd = sha256(currPassword.value);
         var obj = {username: loginName.value, password: pwd};
@@ -213,17 +214,20 @@ function MyAccount()
                                     ref={(c) => (newPassword2 = c)}
                                 />
                             </Form.Group>
+                            <Modal.Footer>
                             <span id="newPasswordMSG" >{messageNewPW}</span>
-                            
+                            <div class="form-group align-right"></div>
+
                             <Button id="UpdatePWBut" show={showSubmit} variant="primary" type="submit"  onClick={updatePasswordCheck}> 
                                 Update Password
                             </Button>
-                        </Form>
-                        <Modal.Footer>
+                            
                             <Button variant="secondary" onClick={handleClose}>
                                 Close
                             </Button>
-                        </Modal.Footer>
+                            </Modal.Footer>
+                        </Form>
+                        
                     </div>
                 </Modal>
             </div>   
