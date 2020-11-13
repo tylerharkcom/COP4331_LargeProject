@@ -147,14 +147,13 @@ function MyAccount()
             setMessageNewPW('Your new passwords do not match');
             return;
         }
-        alert('Passwords match: Prepare to crash rq');
         // Check if current password is correct
         var pwd = sha256(currPassword.value);
         var obj = {username: loginName.value, password: pwd};
         var js = JSON.stringify(obj);
         
         try {
-            const response = await fetch("http://localhost:5000/api/login", {
+            const response = await fetch("http://localhost:5000/api/updatePassword", {
               method: "POST",
               body: js,
               headers: { "Content-Type": "application/json" },
@@ -231,18 +230,19 @@ function MyAccount()
                                     type="password"
                                     ref={(c) => (newPassword2 = c)}
                                 />
+                                <span id="newPasswordMSG" >{messageNewPW}</span>
                             </Form.Group>
                             <Modal.Footer>
-                            <span id="newPasswordMSG" >{messageNewPW}</span>
-                            <div class="form-group align-right"></div>
-
-                            <Button id="UpdatePWBut" show={showSubmit} variant="primary" type="submit"  onClick={updatePasswordCheck}> 
-                                Update Password
-                            </Button>
                             
-                            <Button variant="secondary" onClick={handleClose}>
-                                Close
-                            </Button>
+                            <div class="form-group align-right">
+
+                                <Button id="UpdatePWBut" variant="primary" type="submit"  onClick={updatePasswordCheck}> 
+                                    Update Password
+                                </Button>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                            </div>
                             </Modal.Footer>
                         </Form>
                         
