@@ -89,9 +89,16 @@ router.post(
     };
 
     const emailCheck = await db.collection("Users").findOne({ email });
+    const usernameCheck = await db.collection("Users").findOne({ username });
 
     if (emailCheck) {
       response.error = "Email already taken";
+      res.status(400).json(response);
+      return;
+    }
+
+    if (usernameCheck) {
+      response.error = "Username already taken";
       res.status(400).json(response);
       return;
     }
