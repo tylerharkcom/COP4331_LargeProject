@@ -1,10 +1,7 @@
 // TODO
-// 1. Make PW hidden -- Done
-// 2. Connect UpdatePWButton to PW check func --done
-// 3. Replace Pw requirement paragraph w Tooltip --done
-// 4. Add error message for curr & new PW's -- done
-// 5. When checkbox gets clicked, Update pw appears --Hard
-// 6. Resize tooltip & style it so it looks nice
+// 1. When checkbox gets clicked, Update pw appears --Hard
+// 2. Resize tooltip & style it so it looks nice -- Get confirmation
+// 3. Test PW reset
 
 import React, { useState, useEffect } from "react";
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -27,7 +24,7 @@ function MyAccount()
     var newPassword2;
     var currPassword;
     var showSubmit; 
-    const pwRequirements = 'bop';
+    const pwRequirements = 'bop this can be removed once i check its dependents';
 
     const [show, setShow] = useState(false);
    // const [showSubmit,handleChange] = useToggle();
@@ -71,8 +68,29 @@ function MyAccount()
     
     const updatePassword = async (event) => {
         //Api call to update PW
-        alert('Kevins Famous Chili'); // filler
-    }
+        var pwd = sha256(newPassword1.value);
+        var obj = { password: pwd };
+        var js = JSON.stringify(obj);
+        try {
+            const response = await fetch("/api/login", {
+              method: "POST",
+              body: js,
+              headers: { "Content-Type": "application/json" },
+            });
+            var res = JSON.parse(await response.text());
+
+            if (response.status !== 200) {
+              alert(res.error);
+            } 
+            else {
+                alert('Password change successful!');
+                handleClose();
+            } // filler
+        } catch (e) {
+            alert(e.toString());
+            return;
+        }
+        };
     // Launched from the Modal, find out how to launch from button click
     const updatePasswordCheck =  async (event) => {
         event.preventDefault();
