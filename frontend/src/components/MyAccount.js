@@ -76,6 +76,7 @@ function MyAccount()
             alert('After fetch');
 
             if (response.status !== 200) {
+                alert('In error msg');
               alert(res.error);
             } 
             else {
