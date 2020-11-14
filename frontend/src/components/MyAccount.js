@@ -27,9 +27,17 @@ function MyAccount()
     const pwRequirements = 'bop this can be removed once i check its dependents';
 
     const [show, setShow] = useState(false);
-   // const [showSubmit,handleChange] = useToggle();
     const [messageCurr,setMessageCurr] = useState('');
     const [messageNewPW,setMessageNewPW] = useState('');
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    
+    const user = JSON.parse(localStorage.getItem("user_data"));
+    const [fName, setfName] = useState('');
+    const [lName, setlName] = useState('');
+    const [email, setEmail] = useState('');
+    const [loginName, setLoginName] = useState('');
 
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" style={{width: "150%", }} {...props}>
@@ -41,17 +49,6 @@ function MyAccount()
                                 </ul>
         </Tooltip>
       );
-    // const handleChange = () => {
-    //     setShowUpdate()
-    // };
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    
-    const user = JSON.parse(localStorage.getItem("user_data"));
-    const [fName, setfName] = useState('');
-    const [lName, setlName] = useState('');
-    const [email, setEmail] = useState('');
-    const [loginName, setLoginName] = useState('');
 
     useEffect(() => {
         setfName(user.firstName);
@@ -83,7 +80,7 @@ function MyAccount()
                 console.log("Password change successful!"); 
             }
         } catch (e) {
-            alert(e.toString());
+            console.log(e.toString());
             return;
         }
         };
@@ -171,7 +168,8 @@ function MyAccount()
                 return;
             }
           } catch (e) {
-            alert(e.toString());
+            console.log("2nd catch");
+            console.log(e.toString());
             return;
           }
         
