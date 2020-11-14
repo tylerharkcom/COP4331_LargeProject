@@ -90,10 +90,13 @@ function MyAccount()
             return;
         }
         };
-    // Launched from the Modal, find out how to launch from button click
+    
+
     const updatePasswordCheck =  async (event) => {
         event.preventDefault();
         // Check if new password meets criteria
+        setMessageCurr('');
+        setMessageNewPW('');
         if(currPassword.value==="")
         {
             setMessageCurr('Your current password is required');
@@ -146,6 +149,7 @@ function MyAccount()
             setMessageNewPW('Your new passwords do not match');
             return;
         }
+        alert('All Reqs met');
         // Check if current password is correct
         var pwd = sha256(currPassword.value);
         var obj = {username: loginName.value, password: pwd};
@@ -157,16 +161,17 @@ function MyAccount()
               body: js,
               headers: { "Content-Type": "application/json" },
             });
-      
+            alert('After fetch');
             var res = JSON.parse(await response.text());
       
             if (response.status !== 200) {
               setMessageNewPW(res.error);
             } else {
-              updatePassword();
-      
-              setMessageNewPW("Password successfully updated!");
-              window.location.href = "/account";
+                alert('Before Update password');
+                updatePassword();
+                alert('After update pw');
+                setMessageNewPW("Password successfully updated!");
+                window.location.href = "/account";
             }
           } catch (e) {
             alert(e.toString());
