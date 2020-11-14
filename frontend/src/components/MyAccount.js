@@ -150,7 +150,7 @@ function MyAccount()
         alert('current pw : ' + currPassword.value);
         // Check if current password is correct
         var pwd = sha256(currPassword.value);
-        var obj = {username: loginName.value, password: pwd};
+        var obj = {username: user.loginName, password: pwd};
         var js = JSON.stringify(obj);
         
         try {
