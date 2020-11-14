@@ -172,7 +172,10 @@ function MyAccount()
                 updatePassword();
                 alert('After update pw');
                 setMessageNewPW("Password successfully updated!");
-                window.location.href = "/account";
+                setTimeout(function() {
+                    window.location.href = '/account';
+                }, 2000);
+                return;
             }
           } catch (e) {
             alert(e.toString());
@@ -184,7 +187,7 @@ function MyAccount()
     return (
         <div id="accountDiv" class= "center">
             <div id = "accountWrapper"> 
-                <h1 className="pageTitle">FoodBuddy</h1>
+                <h1 className="pageTitle">Account Information</h1>
                 <Card style={{ width: '18rem' }}>
                     <Card.Header>First Name</Card.Header>
                         <ListGroup variant="flush">
