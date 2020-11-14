@@ -201,7 +201,7 @@ function MyAccount()
                                 Name :
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Label plaintext readOnly defaultValue={(fName.value).concat(' ',lName.value)} />
+                            <Form.Label plaintext readOnly defaultValue={fName.concat(' ',lName)} />
                             </Col>
                         </Form.Group>
                     </Form>
@@ -211,7 +211,7 @@ function MyAccount()
                                 <span font-weight = "bold" >Email :</span>
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Label plaintext readOnly defaultValue={email.value} />
+                            <Form.Label plaintext readOnly defaultValue={email} />
                             </Col>
                         </Form.Group>
                     </Form>
@@ -221,7 +221,7 @@ function MyAccount()
                                 Username :
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Label plaintext readOnly defaultValue={loginName.value} />
+                            <Form.Label plaintext readOnly defaultValue={loginName} />
                             </Col>
                         </Form.Group>
                     </Form>
