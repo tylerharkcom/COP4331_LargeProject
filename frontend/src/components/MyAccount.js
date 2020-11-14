@@ -91,7 +91,7 @@ function MyAccount()
         event.preventDefault();
         // Check if new password meets criteria
         setMessageCurr('');
-        setMessageNewPW(currPassword.value); // Just to check if its getting sent right
+        // Just to check if its getting sent right
         
         if(currPassword.value==="")
         {
@@ -146,8 +146,8 @@ function MyAccount()
             return;
         }
         alert('All Reqs met');
-        alert(loginName.value);
-        alert(currPassword.value);
+        alert('login name : ' + loginName.value);
+        alert('current pw : ' + currPassword.value);
         // Check if current password is correct
         var pwd = sha256(currPassword.value);
         var obj = {username: loginName.value, password: pwd};
