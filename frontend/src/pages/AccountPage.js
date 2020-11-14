@@ -7,8 +7,10 @@ const AccountPage = () =>
 {
     return(
     <div id="accountPage" className="backgroundPage fillBackground">            
-        <UserNavBar />
-        <MyAccount />
+       <div>
+            <UserNavBar />
+        </div> 
+            <MyAccount />
     </div>
     );
 };

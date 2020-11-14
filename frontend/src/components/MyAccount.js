@@ -153,10 +153,11 @@ function MyAccount()
         alert('All Reqs met');
         // Check if current password is correct
         var pwd = sha256(currPassword.value);
-        var obj = {username: loginName.value, password: currPassword};
+        var obj = {username: loginName.value, password: pwd};
         var js = JSON.stringify(obj);
         
         try {
+            alert('Before fetch');
             const response = await fetch("/api/login", {
               method: "POST",
               body: js,
