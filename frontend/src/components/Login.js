@@ -36,7 +36,7 @@ function Login() {
       if (response.status !== 200) {
         setMessage(res.error);
       } else {
-        setUser({ firstName: res.fName, lastName: res.lName })
+        setUser({ firstName: res.fName, lastName: res.lName, loginName: loginName.value, email: res.email })
 
         setMessage("");
         window.location.href = "/dashboard";

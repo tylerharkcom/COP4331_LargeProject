@@ -2,6 +2,7 @@
 // 1. When checkbox gets clicked, Update pw appears --Hard
 // 2. Resize tooltip & style it so it looks nice -- Get confirmation
 // 3. Test PW reset
+// 4. Remove 
 
 import React, { useState, useEffect } from "react";
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -156,7 +157,7 @@ function MyAccount()
         var js = JSON.stringify(obj);
         
         try {
-            const response = await fetch("http://localhost:5000/api/login", {
+            const response = await fetch("/api/login", {
               method: "POST",
               body: js,
               headers: { "Content-Type": "application/json" },
@@ -195,7 +196,7 @@ function MyAccount()
                     <Card.Header>Login Name</Card.Header>
                         <ListGroup.Item>{loginName}</ListGroup.Item>
                     </ListGroup>
-                    <button type="submit" className="btn btn-secondary">Update Info</button>
+                {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> */}
                     <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
                 </Card>
         
@@ -240,7 +241,7 @@ function MyAccount()
                             
                             <div class="form-group align-right">
 
-                                <Button id="UpdatePWBut" variant="primary" type="submit"  onClick={updatePasswordCheck}> 
+                                <Button  id="UpdatePWBut" variant="primary" type="submit"  onClick={updatePasswordCheck}> 
                                     Update Password
                                 </Button>
                                 <Button variant="secondary" onClick={handleClose}>
