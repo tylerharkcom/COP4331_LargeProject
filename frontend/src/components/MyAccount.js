@@ -91,7 +91,7 @@ function MyAccount()
         event.preventDefault();
         // Check if new password meets criteria
         setMessageCurr('');
-        setMessageNewPW(currPassword); // Just to check if its getting sent right
+        setMessageNewPW(currPassword.value); // Just to check if its getting sent right
         
         if(currPassword.value==="")
         {
@@ -183,7 +183,7 @@ function MyAccount()
     return (
         <div id="accountDiv" class= "center">
             <div id = "accountWrapper"> 
-                <h1 className="pageTitle">Account Information(4)</h1>
+                <h1 className="pageTitle">Account Information(5)</h1>
                 <Card style={{ width: '18rem' }}>
                     <Card.Header>First Name</Card.Header>
                         <ListGroup variant="flush">
