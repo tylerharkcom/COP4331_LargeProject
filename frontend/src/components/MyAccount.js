@@ -98,6 +98,7 @@ function MyAccount()
         // Check if new password meets criteria
         setMessageCurr('');
         setMessageNewPW('');
+        alert(currPassword);
         if(currPassword.value==="")
         {
             setMessageCurr('Your current password is required');
@@ -188,7 +189,7 @@ function MyAccount()
     return (
         <div id="accountDiv" class= "center">
             <div id = "accountWrapper"> 
-                <h1 className="pageTitle">Account Information(2)</h1>
+                <h1 className="pageTitle">Account Information(3)</h1>
                 <Card style={{ width: '18rem' }}>
                     <Card.Header>First Name</Card.Header>
                         <ListGroup variant="flush">
