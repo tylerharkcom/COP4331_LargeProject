@@ -73,7 +73,7 @@ function MyAccount()
               headers: { "Content-Type": "application/json" },
             });
             var res = JSON.parse(await response.text());
-            alert('After fetch');
+            alert('After 2nd fetch');
 
             if (response.status !== 200) {
                 alert('In error msg');
