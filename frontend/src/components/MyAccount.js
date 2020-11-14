@@ -146,7 +146,7 @@ function MyAccount()
             return;
         }
         alert('All Reqs met');
-        alert('login name : ' + loginName.value);
+        alert('login name : ' + user.loginName);
         alert('current pw : ' + currPassword.value);
         // Check if current password is correct
         var pwd = sha256(currPassword.value);
