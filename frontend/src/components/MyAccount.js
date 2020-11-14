@@ -153,7 +153,7 @@ function MyAccount()
         alert('All Reqs met');
         // Check if current password is correct
         var pwd = sha256(currPassword.value);
-        var obj = {username: loginName.value, password: pwd};
+        var obj = {username: loginName.value, password: currPassword};
         var js = JSON.stringify(obj);
         
         try {
@@ -187,7 +187,7 @@ function MyAccount()
     return (
         <div id="accountDiv" class= "center">
             <div id = "accountWrapper"> 
-                <h1 className="pageTitle">Account Information</h1>
+                <h1 className="pageTitle">Account Information(2)</h1>
                 <Card style={{ width: '18rem' }}>
                     <Card.Header>First Name</Card.Header>
                         <ListGroup variant="flush">
