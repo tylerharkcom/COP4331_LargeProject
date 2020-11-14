@@ -59,13 +59,13 @@ function MyAccount()
         setLoginName(user.loginName);
     });
 
-    const refreshPage = async (event) => {
+    const refreshPage = async () => {
         alert('Theres always going to be another mountain'); //filler
        //  window.location.reload(false);  // Deprecated 
        // Maybe create an updateField
     }
     
-    const updatePassword = async (event) => {
+    const updatePassword = async () => {
         //Api call to update PW
         var pwd = sha256(newPassword1.value);
         var obj = { password: pwd };
@@ -152,7 +152,7 @@ function MyAccount()
         var js = JSON.stringify(obj);
         
         try {
-            const response = await fetch("http://localhost:5000/api/updatePassword", {
+            const response = await fetch("http://localhost:5000/api/login", {
               method: "POST",
               body: js,
               headers: { "Content-Type": "application/json" },
