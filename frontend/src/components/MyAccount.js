@@ -64,6 +64,7 @@ function MyAccount()
         //Api call to update PW
         var pwd = sha256(newPassword1.value);
         var obj = { password: pwd };
+        alert('Entered updatePW');
         var js = JSON.stringify(obj);
         try {
             const response = await fetch("/api/updatePassword", {
@@ -72,6 +73,7 @@ function MyAccount()
               headers: { "Content-Type": "application/json" },
             });
             var res = JSON.parse(await response.text());
+            alert('After fetch');
 
             if (response.status !== 200) {
               alert(res.error);
@@ -183,7 +185,7 @@ function MyAccount()
     return (
         <div id="accountDiv" class= "center">
             <div id = "accountWrapper"> 
-                <h1 className="pageTitle">Account Information(5)</h1>
+                <h1 className="pageTitle">Account Information(6)</h1>
                 <Card style={{ width: '18rem' }}>
                     <Card.Header>First Name</Card.Header>
                         <ListGroup variant="flush">
