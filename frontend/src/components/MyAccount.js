@@ -33,7 +33,7 @@ function MyAccount()
 
     const renderTooltip = (props) => (
         <Tooltip id="button-tooltip" style={{width: "150%", }} {...props}>
-           Your new password should:
+            Your new password should:
                                 <ul>
                                     <li>be at least 8 characters long</li>
                                     <li>contain at least one capital letter, at least one lowercase letter, and at least one digit</li>
@@ -81,7 +81,6 @@ function MyAccount()
             } 
             else {
                 alert('Password change successful!');
-                handleClose();
             } // filler
         } catch (e) {
             alert(e.toString());
@@ -92,10 +91,9 @@ function MyAccount()
 
     const updatePasswordCheck =  async (event) => {
         event.preventDefault();
-        // Check if new password meets criteria
         setMessageCurr('');
-        // Just to check if its getting sent right
-        
+        setMessageNewPW('');
+        // Check if new password meets criteria
         if(currPassword.value==="")
         {
             setMessageCurr('Your current password is required');
@@ -148,16 +146,13 @@ function MyAccount()
             setMessageNewPW('Your new passwords do not match');
             return;
         }
-        alert('All Reqs met');
-        alert('login name : ' + user.loginName);
-        alert('current pw : ' + currPassword.value);
+        
         // Check if current password is correct
         var pwd = sha256(currPassword.value);
         var obj = {username: user.loginName, password: pwd};
         var js = JSON.stringify(obj);
         
         try {
-            alert('Before fetch');
             const response = await fetch("/api/login", {
               method: "POST",
               body: js,
@@ -172,8 +167,7 @@ function MyAccount()
                 alert('Before Update password');
                 updatePassword();
                 alert('After update pw');
-                setMessageNewPW("Password successfully updated!");
-                window.location.href = '/account'; 
+                handleClose();
                 return;
             }
           } catch (e) {
@@ -186,8 +180,8 @@ function MyAccount()
     return (
         <div id="accountDiv" class= "center">
             <div id = "accountWrapper"> 
-                <h1 className="pageTitle">Account Information(6)</h1>
-                <Card style={{ width: '18rem' }}>
+                <h1 className="pageTitle">Account Information(7)</h1>
+                <Card class="text-center" style={{ width: '27rem' }}>
                     <Card.Header>First Name</Card.Header>
                         <ListGroup variant="flush">
                         <ListGroup.Item>{fName}</ListGroup.Item>
