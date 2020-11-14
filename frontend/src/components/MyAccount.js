@@ -23,7 +23,6 @@ function MyAccount()
     var newPassword1;
     var newPassword2;
     var currPassword;
-    var showSubmit; 
     const pwRequirements = 'bop this can be removed once i check its dependents';
 
     const [show, setShow] = useState(false);
@@ -164,7 +163,7 @@ function MyAccount()
                 console.log("Before Update password");
                 updatePassword();
                 console.log("After update pw");
-                handleClose();
+                
                 return;
             }
           } catch (e) {
@@ -202,7 +201,7 @@ function MyAccount()
                                 Name :
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Label plaintext readOnly defaultValue={fName.concat(' ',lName)} />
+                            <Form.Label plaintext readOnly defaultValue={(fName.value).concat(' ',lName.value)} />
                             </Col>
                         </Form.Group>
                     </Form>
@@ -212,7 +211,7 @@ function MyAccount()
                                 <span font-weight = "bold" >Email :</span>
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Label plaintext readOnly defaultValue={email} />
+                            <Form.Label plaintext readOnly defaultValue={email.value} />
                             </Col>
                         </Form.Group>
                     </Form>
@@ -222,7 +221,7 @@ function MyAccount()
                                 Username :
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Label plaintext readOnly defaultValue={loginName} />
+                            <Form.Label plaintext readOnly defaultValue={loginName.value} />
                             </Col>
                         </Form.Group>
                     </Form>
