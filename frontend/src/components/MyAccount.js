@@ -146,6 +146,8 @@ function MyAccount()
             return;
         }
         alert('All Reqs met');
+        alert(loginName.value);
+        alert(currPassword.value);
         // Check if current password is correct
         var pwd = sha256(currPassword.value);
         var obj = {username: loginName.value, password: pwd};
@@ -168,9 +170,7 @@ function MyAccount()
                 updatePassword();
                 alert('After update pw');
                 setMessageNewPW("Password successfully updated!");
-                setTimeout(function() {
-                    window.location.href = '/account';
-                }, 2000);
+                window.location.href = '/account'; 
                 return;
             }
           } catch (e) {
