@@ -11,8 +11,8 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Tooltip from 'react-bootstrap/Tooltip';
-import Popover from 'react-bootstrap/Popover';
-import Overlay from 'react-bootstrap/Overlay';
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Switch from 'react-switch';
 import sha256 from '../sha256';
@@ -61,10 +61,10 @@ function MyAccount()
     });
     
     const updatePassword = async () => {
+        console.log('Entered updatePassword');
         //Api call to update PW
         var pwd = sha256(newPassword1.value);
         var obj = { password: pwd };
-        alert('Entered updatePW');
         var js = JSON.stringify(obj);
         try {
             const response = await fetch("/api/updatePassword", {
@@ -73,15 +73,15 @@ function MyAccount()
               headers: { "Content-Type": "application/json" },
             });
             var res = JSON.parse(await response.text());
-            alert('After 2nd fetch');
+            console.log("After 2nd fetch");
 
             if (response.status !== 200) {
-                alert('In error msg');
+                console.log("In error msg");
               alert(res.error);
             } 
             else {
-                alert('Password change successful!');
-            } // filler
+                console.log("Password change successful!"); 
+            }
         } catch (e) {
             alert(e.toString());
             return;
@@ -158,15 +158,15 @@ function MyAccount()
               body: js,
               headers: { "Content-Type": "application/json" },
             });
-            alert('After fetch');
+            console.log("After fetch");
             var res = JSON.parse(await response.text());
       
             if (response.status !== 200) {
               setMessageNewPW(res.error);
             } else {
-                alert('Before Update password');
+                console.log("Before Update password");
                 updatePassword();
-                alert('After update pw');
+                console.log("After update pw");
                 handleClose();
                 return;
             }
@@ -177,11 +177,12 @@ function MyAccount()
         
     }
 
+ 
     return (
         <div id="accountDiv" class= "center">
             <div id = "accountWrapper"> 
-                <h1 className="pageTitle">Account Information(7)</h1>
-                <Card class="text-center" style={{ width: '27rem' }}>
+                <h1 className="pageTitle">Account Information</h1>
+   {/*             <Card class="text-center" style={{ width: '27rem' }}>
                     <Card.Header>First Name</Card.Header>
                         <ListGroup variant="flush">
                         <ListGroup.Item>{fName}</ListGroup.Item>
@@ -192,6 +193,43 @@ function MyAccount()
                     <Card.Header>Login Name</Card.Header>
                         <ListGroup.Item>{loginName}</ListGroup.Item>
                     </ListGroup>
+                {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> /}
+                    <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
+                </Card>
+*/}
+                <Card class="text-center" style={{ width: '27rem' }}>
+                    <Form>
+                        <Form.Group as={Row}>
+                            <Form.Label className="text-center" column sm="4">
+                                Name :
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Label plaintext readOnly defaultValue={fName.concat(' ',lName)} />
+                            </Col>
+                        </Form.Group>
+                    </Form>
+                    <Form>
+                        <Form.Group as={Row}>
+                            <Form.Label className="text-center" column sm="4">
+                                <span font-weight = "bold" >Email :</span>
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Label plaintext readOnly defaultValue={email} />
+                            </Col>
+                        </Form.Group>
+                    </Form>
+                    <Form>
+                        <Form.Group as={Row}>
+                            <Form.Label className="text-center" column sm="4">
+                                Username :
+                            </Form.Label>
+                            <Col sm="8">
+                            <Form.Label plaintext readOnly defaultValue={loginName} />
+                            </Col>
+                        </Form.Group>
+                    </Form>
+                    
+                
                 {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> */}
                     <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
                 </Card>
