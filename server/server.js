@@ -42,9 +42,9 @@ router.use((req, res, next) => {
 function authenticateToken(req, res, next) {
   // Gather the jwt access token from the request header
   const authHeader = req.headers["authorization"];
-  let token = authHeader && authHeader.split(" ")[1];
+  //let token = authHeader && authHeader.split(" ")[1];
+  let token = (token = req.cookies.token);
   if (token == null) {
-    token = req.cookies.token;
   } // if there isn't any token
 
   const response = {
