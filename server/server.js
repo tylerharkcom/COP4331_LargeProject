@@ -51,8 +51,9 @@ function authenticateToken(req, res, next) {
     error: "",
   };
 
+  response.error = "plain text error";
   if (!token) {
-    return res.status(403).send();
+    return res.status(403).json(response);
   }
 
   jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {

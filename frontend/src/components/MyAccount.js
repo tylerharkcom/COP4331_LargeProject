@@ -68,6 +68,7 @@ function MyAccount() {
     try {
       const response = await fetch("/api/updatePassword", {
         method: "POST",
+        credentials: "include",
         body: js,
         headers: { "Content-Type": "application/json" },
       });
