@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import TableRow from './TableRow';
 import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl'
+import FormControl from 'react-bootstrap/FormControl';
+import Modal from 'react-bootstrap/Modal';
+import Card from 'react-bootstrap/Card';
 
 const FoodTable = () => {
-
+    const [search, setSearch] = useState('');
+    const [show, setShow] = useState(false);
     const [food, setFood] = useState({
         foods: [
             {
@@ -57,8 +60,12 @@ const FoodTable = () => {
 
     const getRecipeHandler = (event, name) => {
         event.preventDefault();
-        console.log(name);
-        alert("searching API for "+name);
+        setShow(true);
+        setSearch(name);
+    }
+
+    const closeRecipeHandler = () => {
+        setShow(false);
     }
 
    
@@ -124,6 +131,21 @@ const FoodTable = () => {
     return(
         <div id="fridgeTable">
             {printTable}
+            <Modal 
+                show={show}
+                onHide={closeRecipeHandler}
+                animation={true}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Recipe Name</Modal.Title>
+                </Modal.Header>
+                    <Modal.Body>Recipe Picture</Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-secondary" onClick={closeRecipeHandler}>
+                            Done
+                        </button>
+                    </Modal.Footer>
+            </Modal>
         </div>
     );
 };
