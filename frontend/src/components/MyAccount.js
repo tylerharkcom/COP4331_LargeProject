@@ -304,9 +304,8 @@ function MyAccount() {
       </div>
     );
   };
-
-  export default MyAccount;
 }
+export default MyAccount;
 //   <Form.Check type="checkbox" label="Confirm password change(4add onclick->)" onClick={handleChange} />
 // Safekeep, from line 245 ^^
 //{
