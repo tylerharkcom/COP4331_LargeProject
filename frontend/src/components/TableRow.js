@@ -6,35 +6,28 @@ import '../../node_modules/react-crud-icons/dist/css/react-crud-icons.css'
 const TableRow = (props) =>
 {
     let food = props.name;
-    let icons = null;
-
-    if (props.icon){
-        icons = (
-            <div>
-                <Icon
-                    name = "edit"
-                    size = "small"
-                    theme = "dark"
-                    onClick = {props.editFood}
-                />
-                <Icon
-                    name = "delete"
-                    size = "small"
-                    theme = "dark"
-                    onClick = {props.deleteFood}
-                />
-            </div>
-        )
-    } else {
-        icons = (
+    let icons = (
+        <div>
+            <Icon
+                name = "edit"
+                size = "small"
+                theme = "dark"
+                onClick = {props.editFood}
+            />
+            <Icon
+                name = "delete"
+                size = "small"
+                theme = "dark"
+                onClick = {props.deleteFood}
+            />
             <button 
                 className = "btn btn-secondary"
                 onClick = {(event) => props.getRecipe(event, food)}
             >
                 Get Recipe
             </button>
-        )
-    }
+        </div>
+    );
 
     return (
         <tr>

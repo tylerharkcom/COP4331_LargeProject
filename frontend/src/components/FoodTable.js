@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import TableRow from './TableRow';
 import Form from 'react-bootstrap/Form';
-import FormControl from 'react-bootstrap/FormControl'
+import FormControl from 'react-bootstrap/FormControl';
+import Modal from 'react-bootstrap/Modal';
+import Card from 'react-bootstrap/Card';
+import CardDeck from 'react-bootstrap/CardDeck';
 
-const FoodTable = (props) => {
-
+const FoodTable = () => {
+    const [search, setSearch] = useState('');
+    const [show, setShow] = useState(false);
     const [food, setFood] = useState({
         foods: [
             {
@@ -57,107 +61,114 @@ const FoodTable = (props) => {
 
     const getRecipeHandler = (event, name) => {
         event.preventDefault();
-        console.log(name);
-        alert("searching API for "+name);
+        setShow(true);
+        setSearch(name);
     }
 
-    let printTable = null;
-
-    if(props.crud){
-        printTable = (
-            <div>
-                <div id="fridgeCRUD">
-                    <Form inline>
-                        <div style={{marginLeft: "5px"}}>
-                            <button 
-                                className="btn btn-secondary"
-                                onClick={addFood}
-                            >
-                                Add food
-                            </button>
-                        </div>
-                        <div style={{marginLeft: "5px"}}>
-                            <button
-                                className="btn btn-secondary"
-                                onClick={deleteFood}
-                            >
-                                Delete
-                            </button>
-                        </div>
-                        <FormControl type="text" placeholder="Search" className=" mr-sm-2" />
-                        <button className="btn btn-secondary" type="submit" onClick={searchFood}>Search</button>
-                    </Form>
-                </div>
-                <Table striped bordered hover variant="dark">
-                    <thead>
-                        <tr>
-                        <th>
-                            <div id="selectAll" class="checkbox">
-                                <label>
-                                <input type="checkbox" /> Select All
-                                </label>
-                            </div>
-                        </th>
-                        <th>Food</th>
-                        <th>Date expires</th>
-                        <th>Date added</th>
-                        <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            food.foods.map((p, index) => {
-                                return <TableRow 
-                                    name={p.name} 
-                                    selected={(event) => selectRowHandler(event, index)} 
-                                    dateAdded={p.dateAdded} 
-                                    dateExp={p.dateExp}
-                                    editFood={editFood}
-                                    deleteFood={deleteFood}
-                                    icon={true}
-                                />
-                            })
-                        }
-                    </tbody>
-                </Table>
-            </div>
-        );
-    } else {
-        printTable = (
-            <div>
-                <Table striped bordered hover variant="dark">
-                    <thead>
-                        <tr>
-                        <th>
-                        </th>
-                        <th>Food</th>
-                        <th>Date expires</th>
-                        <th>Date added</th>
-                        <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            food.foods.map((p, index) => {
-                                return <TableRow 
-                                    name={p.name} 
-                                    selected={(event) => selectRowHandler(event, index)} 
-                                    dateAdded={p.dateAdded} 
-                                    dateExp={p.dateExp}
-                                    getRecipe={(event, name) => getRecipeHandler(event, name)}
-                                    icon={false}
-                                />
-                            })
-                        }
-                    </tbody>
-                </Table>
-            </div>
-        )
+    const closeRecipeHandler = () => {
+        setShow(false);
     }
+
+   
+    let printTable = (
+        <div>
+            <div id="fridgeCRUD">
+                <Form inline>
+                    <div style={{marginLeft: "5px"}}>
+                        <button 
+                            className="btn btn-secondary"
+                            onClick={addFood}
+                        >
+                            Add food
+                        </button>
+                    </div>
+                    <div style={{marginLeft: "5px"}}>
+                        <button
+                            className="btn btn-secondary"
+                            onClick={deleteFood}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                    <FormControl type="text" placeholder="Search" className=" mr-sm-2" />
+                    <button className="btn btn-secondary" type="submit" onClick={searchFood}>Search</button>
+                </Form>
+            </div>
+            <Table striped bordered hover variant="dark">
+                <thead>
+                    <tr>
+                    <th>
+                        <div id="selectAll" class="checkbox">
+                            <label>
+                            <input type="checkbox" /> Select All
+                            </label>
+                        </div>
+                    </th>
+                    <th>Food</th>
+                    <th>Date expires</th>
+                    <th>Date added</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        food.foods.map((p, index) => {
+                            return <TableRow 
+                                name={p.name} 
+                                selected={(event) => selectRowHandler(event, index)} 
+                                dateAdded={p.dateAdded} 
+                                dateExp={p.dateExp}
+                                editFood={editFood}
+                                deleteFood={deleteFood}
+                                getRecipe={(event, name) => getRecipeHandler(event, name)}
+                            />
+                        })
+                    }
+                </tbody>
+            </Table>
+        </div>
+    );
 
     return(
         <div id="fridgeTable">
             {printTable}
+            <Modal 
+                size='xl'
+                show={show}
+                onHide={closeRecipeHandler}
+                animation={true}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Results for {search}</Modal.Title>
+                </Modal.Header>
+                    <Modal.Body>
+                        <CardDeck>
+                            <Card 
+                                bg='dark'
+                                text='light'
+                            >   
+                                <Card.Title>Recipe Name</Card.Title>
+                                <Card.Body>
+                                    <Card.Text>Recipe photo and meal type</Card.Text>
+                                </Card.Body>
+                            </Card>
+                            <Card 
+                                bg='dark'
+                                text='light'
+                            >   
+                                <Card.Title>Recipe Name</Card.Title>
+                                <Card.Body>
+                                    <Card.Text>Recipe photo and meal type</Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </CardDeck>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-secondary" onClick={closeRecipeHandler}>
+                            Done
+                        </button>
+                    </Modal.Footer>
+            </Modal>
         </div>
     );
 };
