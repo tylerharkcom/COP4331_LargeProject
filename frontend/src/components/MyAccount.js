@@ -22,7 +22,7 @@ function MyAccount()
     var newPassword1;
     var newPassword2;
     var currPassword;
-    const pwRequirements = '';
+    const pwRequirements = ' ';
 
     const [show, setShow] = useState(false);
     const [messageCurr,setMessageCurr] = useState('');
@@ -191,7 +191,7 @@ function MyAccount()
                    <button hidden type="submit" className="btn btn-secondary">Update Info</button> /}
                     <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
                 </Card>
- */}
+ */} 
                 <Card class="text-center" style={{ width: '27rem' }}>
                     <Form>
                         <Form.Group as={Row}>
