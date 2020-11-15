@@ -212,10 +212,22 @@ router.post(
 router.post(
   `/updatePassword`,
   wrapAsync(async (req, res, next) => {
-    const newPassword = req.body;
+    const { password, newPassword } = req.body;
 
     if (!newPassword) {
       res.send(400).json();
+      return;
+    }
+    const db = client.db();
+
+    const response = {
+      error: "",
+    };
+
+    if (password != req.user.password) {
+      response.error =
+        "The current password was incorrect. Please enter correct current password.";
+      res.status(400).json(response);
       return;
     }
 
@@ -229,7 +241,6 @@ router.post(
       return;
     }
 
-    const db = client.db();
     try {
       await db
         .collection("Users")
@@ -239,7 +250,7 @@ router.post(
       res.send(400).json();
       return;
     }
-    res.json();
+    res.json(response);
   })
 );
 
