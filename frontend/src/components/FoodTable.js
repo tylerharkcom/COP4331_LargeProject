@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
+import CardDeck from 'react-bootstrap/CardDeck';
 
 const FoodTable = () => {
     const [search, setSearch] = useState('');
@@ -132,14 +133,36 @@ const FoodTable = () => {
         <div id="fridgeTable">
             {printTable}
             <Modal 
+                size='xl'
                 show={show}
                 onHide={closeRecipeHandler}
                 animation={true}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Recipe Name</Modal.Title>
+                    <Modal.Title>Results for {search}</Modal.Title>
                 </Modal.Header>
-                    <Modal.Body>Recipe Picture</Modal.Body>
+                    <Modal.Body>
+                        <CardDeck>
+                            <Card 
+                                bg='dark'
+                                text='light'
+                            >   
+                                <Card.Title>Recipe Name</Card.Title>
+                                <Card.Body>
+                                    <Card.Text>Recipe photo and meal type</Card.Text>
+                                </Card.Body>
+                            </Card>
+                            <Card 
+                                bg='dark'
+                                text='light'
+                            >   
+                                <Card.Title>Recipe Name</Card.Title>
+                                <Card.Body>
+                                    <Card.Text>Recipe photo and meal type</Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </CardDeck>
+                    </Modal.Body>
                     <Modal.Footer>
                         <button className="btn btn-secondary" onClick={closeRecipeHandler}>
                             Done
