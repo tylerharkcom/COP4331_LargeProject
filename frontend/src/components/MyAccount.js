@@ -5,8 +5,8 @@
 // 4. Remove 
 
 import React, { useState, useEffect } from "react";
-import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -14,7 +14,6 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Switch from 'react-switch';
 import sha256 from '../sha256';
 
  
@@ -58,7 +57,7 @@ function MyAccount()
     );
     
     const updatePassword = async () => {
-        console.log('Entered updatePassword');
+        alert('Entered updatePassword');
         //Api call to update PW
         var pwd = sha256(newPassword1.value);
         var obj = { password: pwd };
@@ -70,14 +69,14 @@ function MyAccount()
               headers: { "Content-Type": "application/json" },
             });
             var res = JSON.parse(await response.text());
-            console.log("After 2nd fetch");
+            alert("After 2nd fetch");
 
             if (response.status !== 200) {
-                console.log("In error msg");
+                alert("In error msg");
               alert(res.error);
             } 
             else {
-                console.log("Password change successful!"); 
+                alert("Password change successful!"); 
             }
         } catch (e) {
             console.log(e.toString());
@@ -91,6 +90,7 @@ function MyAccount()
         setMessageCurr('');
         setMessageNewPW('');
         // Check if new password meets criteria
+        try {
         if(currPassword.value==="")
         {
             setMessageCurr('Your current password is required');
@@ -145,11 +145,38 @@ function MyAccount()
         }
         
         // Check if current password is correct
-        var pwd = sha256(currPassword.value);
-        var obj = {username: user.loginName, password: pwd};
-        var js = JSON.stringify(obj);
+        // var pwd = sha256(currPassword);
+        // var obj = {username: user.loginName, password: pwd};
+        // var js = JSON.stringify(obj);
         
-        try {
+        var currPwd = sha256(currPassword.value);
+        var newPwd = sha256(newPassword1.value);
+        var obj = { password: currPwd , newPassword: newPwd };
+        var js = JSON.stringify(obj);
+       // try {
+            const response = await fetch("/api/updatePassword", {
+              method: "POST",
+              body: js,
+              headers: { "Content-Type": "application/json" },
+            });
+            var res = JSON.parse(await response.text());
+            alert("After 2nd fetch");
+
+            if (response.status !== 200) {
+                alert("In error msg");
+              alert(res.error);
+            } 
+            else {
+                alert("Password change successful!"); 
+            }
+        } catch (e) {
+            console.log(e.toString());
+            return;
+        }
+        }
+        //try {
+
+        /*
             const response = await fetch("/api/login", {
               method: "POST",
               body: js,
@@ -173,14 +200,14 @@ function MyAccount()
             return;
           }
         
-    }
+    }*/
 
  
     return (
         <div id="accountDiv" class= "center">
             <div id = "accountWrapper"> 
                 <h1 className="pageTitle">Account Information</h1>
-   {/*             <Card class="text-center" style={{ width: '27rem' }}>
+                <Card class="text-center" style={{ width: '27rem' }}>
                     <Card.Header>First Name</Card.Header>
                         <ListGroup variant="flush">
                         <ListGroup.Item>{fName}</ListGroup.Item>
@@ -194,7 +221,7 @@ function MyAccount()
                 {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> /}
                     <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
                 </Card>
-*/}
+{/* 
                 <Card class="text-center" style={{ width: '27rem' }}>
                     <Form>
                         <Form.Group as={Row}>
@@ -232,7 +259,7 @@ function MyAccount()
                             </Col>
                         </Form.Group>
                     </Form>
-                    
+                    */}
                 
                 {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> */}
                     <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
