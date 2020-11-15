@@ -144,10 +144,6 @@ function MyAccount()
             return;
         }
         
-        // Check if current password is correct
-        // var pwd = sha256(currPassword);
-        // var obj = {username: user.loginName, password: pwd};
-        // var js = JSON.stringify(obj);
         alert('Start of sha');
         var currPwd = sha256(currPassword.value);
         var newPwd = sha256(newPassword1.value);
@@ -160,54 +156,28 @@ function MyAccount()
               headers: { "Content-Type": "application/json" },
             });
             var res = JSON.parse(await response.text());
-            alert("After 2nd fetch");
-
             if (response.status !== 200) {
                 alert("In error msg");
               alert(res.error);
             } 
             else {
                 alert("Password change successful!"); 
+                handleClose();
             }
         } catch (e) {
             console.log(e.toString());
             return;
         }
         }
-        //try {
-
-        /*
-            const response = await fetch("/api/login", {
-              method: "POST",
-              body: js,
-              headers: { "Content-Type": "application/json" },
-            });
-            console.log("After fetch");
-            var res = JSON.parse(await response.text());
-      
-            if (response.status !== 200) {
-              setMessageNewPW(res.error);
-            } else {
-                console.log("Before Update password");
-                updatePassword();
-                console.log("After update pw");
-                
-                return;
-            }
-          } catch (e) {
-            console.log("2nd catch");
-            console.log(e.toString());
-            return;
-          }
-        
-    }*/
+           
+    
 
  
     return (
         <div id="accountDiv" class= "center">
             <div id = "accountWrapper"> 
                 <h1 className="pageTitle">Account Information</h1>
-                <Card class="text-center" style={{ width: '27rem' }}>
+             {/*    <Card class="text-center" style={{ width: '27rem' }}>
                     <Card.Header>First Name</Card.Header>
                         <ListGroup variant="flush">
                         <ListGroup.Item>{fName}</ListGroup.Item>
@@ -218,15 +188,15 @@ function MyAccount()
                     <Card.Header>Login Name</Card.Header>
                         <ListGroup.Item>{loginName}</ListGroup.Item>
                     </ListGroup>
-                {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> /}
+                   <button hidden type="submit" className="btn btn-secondary">Update Info</button> /}
                     <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
                 </Card>
-{/* 
+ */}
                 <Card class="text-center" style={{ width: '27rem' }}>
                     <Form>
                         <Form.Group as={Row}>
                             <Form.Label className="text-center" column sm="4">
-                                Name :
+                              <b> Name : </b>
                             </Form.Label>
                             <Col sm="8">
                             <Form.Label plaintext readOnly>
@@ -238,7 +208,7 @@ function MyAccount()
                     <Form>
                         <Form.Group as={Row}>
                             <Form.Label className="text-center" column sm="4">
-                                <span fontweight = "bold" >Email :</span>
+                                <b> Email : </b>
                             </Form.Label>
                             <Col sm="8">
                             <Form.Label plaintext readOnly>
@@ -250,7 +220,7 @@ function MyAccount()
                     <Form>
                         <Form.Group as={Row}>
                             <Form.Label className="text-center" column sm="4">
-                                Username :
+                               <b> Username : </b>
                             </Form.Label>
                             <Col sm="8">
                             <Form.Label plaintext readOnly>
@@ -259,7 +229,7 @@ function MyAccount()
                             </Col>
                         </Form.Group>
                     </Form>
-                    */}
+                    
                 
                 {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> */}
                     <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
