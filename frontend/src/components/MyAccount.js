@@ -22,7 +22,7 @@ function MyAccount()
     var newPassword1;
     var newPassword2;
     var currPassword;
-    const pwRequirements = 'bop this can be removed once i check its dependents';
+    const pwRequirements = '';
 
     const [show, setShow] = useState(false);
     const [messageCurr,setMessageCurr] = useState('');
@@ -148,7 +148,7 @@ function MyAccount()
         // var pwd = sha256(currPassword);
         // var obj = {username: user.loginName, password: pwd};
         // var js = JSON.stringify(obj);
-        
+        alert('Start of sha');
         var currPwd = sha256(currPassword.value);
         var newPwd = sha256(newPassword1.value);
         var obj = { password: currPwd , newPassword: newPwd };
