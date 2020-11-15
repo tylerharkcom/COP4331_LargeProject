@@ -53,6 +53,7 @@ function authenticateToken(req, res, next) {
 
   response.error = "plain text error";
   if (!token) {
+    response.error = "the error is here tho";
     return res.status(403).json(response);
   }
 
