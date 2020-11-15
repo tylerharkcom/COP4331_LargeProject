@@ -10,7 +10,7 @@ const DashboardPage = () =>
       <div id="dashboardPage" className="backgroundPage fillBackground">
         <UserNavBar />
         <div className="container-fluid">
-          <FoodTable crud={true} />
+          <FoodTable />
         </div>
       </div>
     );

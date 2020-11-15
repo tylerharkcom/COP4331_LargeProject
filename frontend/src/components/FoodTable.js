@@ -4,7 +4,7 @@ import TableRow from './TableRow';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl'
 
-const FoodTable = (props) => {
+const FoodTable = () => {
 
     const [food, setFood] = useState({
         foods: [
@@ -61,99 +61,65 @@ const FoodTable = (props) => {
         alert("searching API for "+name);
     }
 
-    let printTable = null;
-
-    if(props.crud){
-        printTable = (
-            <div>
-                <div id="fridgeCRUD">
-                    <Form inline>
-                        <div style={{marginLeft: "5px"}}>
-                            <button 
-                                className="btn btn-secondary"
-                                onClick={addFood}
-                            >
-                                Add food
-                            </button>
-                        </div>
-                        <div style={{marginLeft: "5px"}}>
-                            <button
-                                className="btn btn-secondary"
-                                onClick={deleteFood}
-                            >
-                                Delete
-                            </button>
-                        </div>
-                        <FormControl type="text" placeholder="Search" className=" mr-sm-2" />
-                        <button className="btn btn-secondary" type="submit" onClick={searchFood}>Search</button>
-                    </Form>
-                </div>
-                <Table striped bordered hover variant="dark">
-                    <thead>
-                        <tr>
-                        <th>
-                            <div id="selectAll" class="checkbox">
-                                <label>
-                                <input type="checkbox" /> Select All
-                                </label>
-                            </div>
-                        </th>
-                        <th>Food</th>
-                        <th>Date expires</th>
-                        <th>Date added</th>
-                        <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            food.foods.map((p, index) => {
-                                return <TableRow 
-                                    name={p.name} 
-                                    selected={(event) => selectRowHandler(event, index)} 
-                                    dateAdded={p.dateAdded} 
-                                    dateExp={p.dateExp}
-                                    editFood={editFood}
-                                    deleteFood={deleteFood}
-                                    icon={true}
-                                />
-                            })
-                        }
-                    </tbody>
-                </Table>
+   
+    let printTable = (
+        <div>
+            <div id="fridgeCRUD">
+                <Form inline>
+                    <div style={{marginLeft: "5px"}}>
+                        <button 
+                            className="btn btn-secondary"
+                            onClick={addFood}
+                        >
+                            Add food
+                        </button>
+                    </div>
+                    <div style={{marginLeft: "5px"}}>
+                        <button
+                            className="btn btn-secondary"
+                            onClick={deleteFood}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                    <FormControl type="text" placeholder="Search" className=" mr-sm-2" />
+                    <button className="btn btn-secondary" type="submit" onClick={searchFood}>Search</button>
+                </Form>
             </div>
-        );
-    } else {
-        printTable = (
-            <div>
-                <Table striped bordered hover variant="dark">
-                    <thead>
-                        <tr>
-                        <th>
-                        </th>
-                        <th>Food</th>
-                        <th>Date expires</th>
-                        <th>Date added</th>
-                        <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            food.foods.map((p, index) => {
-                                return <TableRow 
-                                    name={p.name} 
-                                    selected={(event) => selectRowHandler(event, index)} 
-                                    dateAdded={p.dateAdded} 
-                                    dateExp={p.dateExp}
-                                    getRecipe={(event, name) => getRecipeHandler(event, name)}
-                                    icon={false}
-                                />
-                            })
-                        }
-                    </tbody>
-                </Table>
-            </div>
-        )
-    }
+            <Table striped bordered hover variant="dark">
+                <thead>
+                    <tr>
+                    <th>
+                        <div id="selectAll" class="checkbox">
+                            <label>
+                            <input type="checkbox" /> Select All
+                            </label>
+                        </div>
+                    </th>
+                    <th>Food</th>
+                    <th>Date expires</th>
+                    <th>Date added</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        food.foods.map((p, index) => {
+                            return <TableRow 
+                                name={p.name} 
+                                selected={(event) => selectRowHandler(event, index)} 
+                                dateAdded={p.dateAdded} 
+                                dateExp={p.dateExp}
+                                editFood={editFood}
+                                deleteFood={deleteFood}
+                                getRecipe={(event, name) => getRecipeHandler(event, name)}
+                            />
+                        })
+                    }
+                </tbody>
+            </Table>
+        </div>
+    );
 
     return(
         <div id="fridgeTable">
