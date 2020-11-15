@@ -111,7 +111,7 @@ function Register()
                 setMessage(error);
                 return;
             } else {
-                setMessage("Success! If you are not redirected, please click 'Go to login'");
+                setMessage("Success! If you are not redirected, please ckick 'Go to login'");
                 setTimeout(function() {
                     window.location.href = '/';
                 }, 2000);
