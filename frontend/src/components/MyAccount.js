@@ -65,6 +65,7 @@ function MyAccount() {
     var pwd = sha256(newPassword1.value);
     var obj = { password: pwd };
     var js = JSON.stringify(obj);
+
     try {
       const response = await fetch("/api/updatePassword", {
         method: "POST",
@@ -155,71 +156,47 @@ function MyAccount() {
       var newPwd = sha256(newPassword1.value);
       var obj = { password: currPwd, newPassword: newPwd };
       var js = JSON.stringify(obj);
-      // try {
-      const response = await fetch("/api/updatePassword", {
-        method: "POST",
-        credentials: "include",
-        body: js,
-        headers: { "Content-Type": "application/json" },
-      });
-      var res = JSON.parse(await response.text());
-      alert("After 2nd fetch");
+      try {
+        const response = await fetch("/api/updatePassword", {
+          method: "POST",
+          credentials: "include",
+          body: js,
+          headers: { "Content-Type": "application/json" },
+        });
+        var res = JSON.parse(await response.text());
+        alert("After 2nd fetch");
 
-      if (response.status !== 200) {
-        alert("In error msg");
-        alert(res.error);
-      } else {
-        alert("Password change successful!");
+        if (response.status !== 200) {
+          alert("In error msg");
+          alert(res.error);
+        } else {
+          alert("Password change successful!");
+        }
+      } catch (e) {
+        console.log(e.toString());
+        return;
       }
     } catch (e) {
       console.log(e.toString());
       return;
     }
-  };
-  //try {
 
-  /*
-            const response = await fetch("/api/login", {
-              method: "POST",
-              body: js,
-              headers: { "Content-Type": "application/json" },
-            });
-            console.log("After fetch");
-            var res = JSON.parse(await response.text());
-      
-            if (response.status !== 200) {
-              setMessageNewPW(res.error);
-            } else {
-                console.log("Before Update password");
-                updatePassword();
-                console.log("After update pw");
-                
-                return;
-            }
-          } catch (e) {
-            console.log("2nd catch");
-            console.log(e.toString());
-            return;
-          }
-        
-    }*/
-
-  return (
-    <div id="accountDiv" class="center">
-      <div id="accountWrapper">
-        <h1 className="pageTitle">Account Information</h1>
-        <Card class="text-center" style={{ width: "27rem" }}>
-          <Card.Header>First Name</Card.Header>
-          <ListGroup variant="flush">
-            <ListGroup.Item>{fName}</ListGroup.Item>
-            <Card.Header>Last Name</Card.Header>
-            <ListGroup.Item>{lName}</ListGroup.Item>
-            <Card.Header>Email</Card.Header>
-            <ListGroup.Item>{email}</ListGroup.Item>
-            <Card.Header>Login Name</Card.Header>
-            <ListGroup.Item>{loginName}</ListGroup.Item>
-          </ListGroup>
-          {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> /}
+    return (
+      <div id="accountDiv" class="center">
+        <div id="accountWrapper">
+          <h1 className="pageTitle">Account Information</h1>
+          <Card class="text-center" style={{ width: "27rem" }}>
+            <Card.Header>First Name</Card.Header>
+            <ListGroup variant="flush">
+              <ListGroup.Item>{fName}</ListGroup.Item>
+              <Card.Header>Last Name</Card.Header>
+              <ListGroup.Item>{lName}</ListGroup.Item>
+              <Card.Header>Email</Card.Header>
+              <ListGroup.Item>{email}</ListGroup.Item>
+              <Card.Header>Login Name</Card.Header>
+              <ListGroup.Item>{loginName}</ListGroup.Item>
+            </ListGroup>
+            {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> /}
                     <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
                 </Card>
 {/* 
@@ -262,74 +239,78 @@ function MyAccount() {
                     </Form>
                     */}
 
-          {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> */}
-          <button
-            type="submit"
-            className="btn btn-secondary"
-            onClick={handleShow}
-          >
-            Update Password
-          </button>
-        </Card>
+            {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> */}
+            <button
+              type="submit"
+              className="btn btn-secondary"
+              onClick={handleShow}
+            >
+              Update Password
+            </button>
+          </Card>
 
-        <Modal show={show} onHide={handleClose}>
-          <div id="updatePassWrapper">
-            <Modal.Header>
-              <Modal.Title>Update password</Modal.Title>
-            </Modal.Header>
-            <Form>
-              <Form.Group controlId="currentPassword">
-                <Form.Label>Current password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Current password"
-                  ref={(c) => (currPassword = c)}
-                />
-                <Form.Text className="text-muted"></Form.Text>
-                <span id="currPasswordMSG">{messageCurr}</span>
-              </Form.Group>
-              <Form.Label htmlFor="newPassword1">New Password</Form.Label>
-              <OverlayTrigger placement="bottom" overlay={renderTooltip}>
-                <Form.Control
-                  type="password"
-                  id="newPassword1"
-                  aria-describedby={pwRequirements}
-                  ref={(c) => (newPassword1 = c)}
-                />
-              </OverlayTrigger>
-              <Form.Group controlId="newPassword2">
-                <Form.Label>Please enter your new password again</Form.Label>
-                <Form.Control type="password" ref={(c) => (newPassword2 = c)} />
-                <span id="newPasswordMSG">{messageNewPW}</span>
-              </Form.Group>
-              <Modal.Footer>
-                <div class="form-group align-right">
-                  <Button
-                    id="UpdatePWBut"
-                    variant="primary"
-                    type="submit"
-                    onClick={updatePasswordCheck}
-                  >
-                    Update Password
-                  </Button>
-                  <Button variant="secondary" onClick={handleClose}>
-                    Close
-                  </Button>
-                </div>
-              </Modal.Footer>
-            </Form>
-          </div>
-        </Modal>
+          <Modal show={show} onHide={handleClose}>
+            <div id="updatePassWrapper">
+              <Modal.Header>
+                <Modal.Title>Update password</Modal.Title>
+              </Modal.Header>
+              <Form>
+                <Form.Group controlId="currentPassword">
+                  <Form.Label>Current password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Current password"
+                    ref={(c) => (currPassword = c)}
+                  />
+                  <Form.Text className="text-muted"></Form.Text>
+                  <span id="currPasswordMSG">{messageCurr}</span>
+                </Form.Group>
+                <Form.Label htmlFor="newPassword1">New Password</Form.Label>
+                <OverlayTrigger placement="bottom" overlay={renderTooltip}>
+                  <Form.Control
+                    type="password"
+                    id="newPassword1"
+                    aria-describedby={pwRequirements}
+                    ref={(c) => (newPassword1 = c)}
+                  />
+                </OverlayTrigger>
+                <Form.Group controlId="newPassword2">
+                  <Form.Label>Please enter your new password again</Form.Label>
+                  <Form.Control
+                    type="password"
+                    ref={(c) => (newPassword2 = c)}
+                  />
+                  <span id="newPasswordMSG">{messageNewPW}</span>
+                </Form.Group>
+                <Modal.Footer>
+                  <div class="form-group align-right">
+                    <Button
+                      id="UpdatePWBut"
+                      variant="primary"
+                      type="submit"
+                      onClick={updatePasswordCheck}
+                    >
+                      Update Password
+                    </Button>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                  </div>
+                </Modal.Footer>
+              </Form>
+            </div>
+          </Modal>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  };
 
-export default MyAccount;
+  export default MyAccount;
+}
 //   <Form.Check type="checkbox" label="Confirm password change(4add onclick->)" onClick={handleChange} />
 // Safekeep, from line 245 ^^
-{
-  /* <Form.Group controlId="toggleConfirm">
+//{
+/* <Form.Group controlId="toggleConfirm">
                             <Toggle
                                 id = 'toggleConfirmId'
                                 defaultChecked={false}
@@ -338,4 +319,4 @@ export default MyAccount;
                             
 
                             </Form.Group>  */
-} // Safekeep from under newpw2
+//} // Safekeep from under newpw2
