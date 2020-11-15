@@ -54,7 +54,8 @@ function MyAccount()
         setlName(user.lastName);
         setEmail(user.email);
         setLoginName(user.loginName);
-    });
+        },[user.firstName, user.lastName, user.email, user.loginName] 
+    );
     
     const updatePassword = async () => {
         console.log('Entered updatePassword');
@@ -201,17 +202,21 @@ function MyAccount()
                                 Name :
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Label plaintext readOnly defaultValue={fName.concat(' ',lName)} />
+                            <Form.Label plaintext readOnly>
+                                {fName.concat(' ',lName)}
+                            </Form.Label>
                             </Col>
                         </Form.Group>
                     </Form>
                     <Form>
                         <Form.Group as={Row}>
                             <Form.Label className="text-center" column sm="4">
-                                <span font-weight = "bold" >Email :</span>
+                                <span fontweight = "bold" >Email :</span>
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Label plaintext readOnly defaultValue={email} />
+                            <Form.Label plaintext readOnly>
+                                {email}
+                            </Form.Label>
                             </Col>
                         </Form.Group>
                     </Form>
@@ -221,7 +226,9 @@ function MyAccount()
                                 Username :
                             </Form.Label>
                             <Col sm="8">
-                            <Form.Label plaintext readOnly defaultValue={loginName} />
+                            <Form.Label plaintext readOnly>
+                                {loginName}
+                            </Form.Label>
                             </Col>
                         </Form.Group>
                     </Form>
