@@ -45,23 +45,32 @@ function authenticateToken(req, res, next) {
   //let token = authHeader && authHeader.split(" ")[1];
   let token = req.cookies.token;
   if (token == null) {
+    token = req.cookies.token;
   } // if there isn't any token
 
+  const response = {
+    error: "",
+  };
+
+  response.error = "plain text error";
   if (!token) {
-    return res.status(403).send();
+    response.error = "the error is here tho";
+    return res.status(403).json(response);
   }
 
   jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
     console.log(err);
     if (err) {
-      return res.status(403).send();
+      response.error = err;
+      return res.status(403).json(response);
     }
     const db = client.db();
     req.user = await db.collection("Users").findOne({ _id: ObjectId(data.id) });
     if (req.user) {
       return next();
     }
-    return res.status(403).send();
+    response.error = "req.user was not real";
+    return res.status(403).json(response);
     // pass the execution off to whatever request the client intended
   });
 }
