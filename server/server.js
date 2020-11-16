@@ -47,7 +47,7 @@ function authenticateToken(req, res, next) {
   if (token == null) {
     token = req.cookies.token;
   } // if there isn't any token
-
+  console.log(req.cookies.token);
   const response = {
     error: "",
   };
