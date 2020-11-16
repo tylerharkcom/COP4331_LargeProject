@@ -167,7 +167,7 @@ router.post(
     res
       .status(200)
       .cookie(`token`, token, {
-        maxAge: 3600,
+        maxAge: 3600000,
         httpOnly: true,
       })
       .json(response);
