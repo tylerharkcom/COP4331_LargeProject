@@ -14,6 +14,8 @@ const jwt = require(`jsonwebtoken`);
 const cookieParser = require(`cookie-parser`);
 const cors = require(`cors`);
 const { Router } = require("express");
+const sgMail = require('@sendgrid/mail');
+const fs = require('fs');
 
 const app = express();
 const router = Router();
@@ -47,7 +49,7 @@ function authenticateToken(req, res, next) {
   if (token == null) {
     token = req.cookies.token;
   } // if there isn't any token
-  console.log(req.cookies.token);
+
   const response = {
     error: "",
   };
@@ -190,10 +192,17 @@ router.post(
     const fridgeItem = req.body;
 
     const db = client.db();
-    const success = await db
-      .collection("Fridge")
-      .updateOne({ userId: req.user._id }, { $push: { fridge: fridgeItem } });
-    res.status(200).json();
+
+    try {
+      await db
+        .collection("Fridge")
+        .updateOne({ userId: req.user._id }, { $push: { fridge: fridgeItem } });
+    } catch (e) {
+      console.log(e);
+      res.send(400).json();
+      return;
+    }
+    res.json();
   })
 );
 
@@ -256,9 +265,95 @@ router.post(
         .updateOne({ _id: req.user._id }, { $set: { password: newPassword } });
     } catch (e) {
       console.log(e);
-      res.send(400).json();
+      response.error = e;
+      res.status(400).json(response);
       return;
     }
+    res.json(response);
+  })
+);
+
+router.post(
+  `/deleteFood`,
+  wrapAsync(async (req, res, next) => {
+    const item = req.body;
+
+    const response = {
+      error: "",
+    };
+
+    const db = client.db();
+
+    try {
+      await db
+        .collection("Fridge")
+        .updateOne({ userId: req.user._id }, { $pull: { fridge: { item } } });
+    } catch (e) {
+      console.log(e);
+      response.error = e;
+      res.status(400).json(response);
+      return;
+    }
+    res.json(response);
+  })
+);
+
+const file = fs.readFile(projectRoot + "/server/index.html", "utf-8", (data, err) => {
+  if (err) {
+    console.log(err);
+  }
+
+  // Uncomment for debugging
+  else {
+    console.log(data);
+  }
+});
+
+router.post(
+  '/resetPass',
+  wrapAsync(async (req, res, next) => {
+
+    const {email, username} = req.body;
+
+    const response = {
+      error: ""
+    };
+
+    if (!username) {
+      response.error = "No username entered";
+      res.status(400).json(response);
+      return;
+    }
+
+    if (!email) {
+      response.error = "No email entered";
+      res.status(400).json(response);
+      return;
+    }
+
+    const db = client.db();
+    const user = await db.collection("Users").findOne({username: username, email: email});
+
+    if (!user) {
+      response.error = "Account not found with these credentials";
+      res.status(400).json(response);
+      return;
+    }
+
+    const msg = {
+       // Only temporary until we get
+      // the email domain authenticated.
+      // Also, probably should use
+      // an environemnt variable here.
+      from: "yousefeid707@gmail.com",
+      to: email,
+      subject: "Password Reset",
+      text:`Hello there, ${username}! It seems you've forgotten your FoodBuddy password. If that's you, follow the link`,
+      html: file
+    };
+    
+    sgMail.send(msg);
+
     res.json(response);
   })
 );
