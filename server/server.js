@@ -179,8 +179,8 @@ router.use(authenticateToken);
 router.post(
   `/logout`,
   wrapAsync(async (req, res, next) => {
-    req.cookies.token = ``;
-    res.status(200).send();
+    res.clearCookie(`token`);
+    res.json();
   })
 );
 
