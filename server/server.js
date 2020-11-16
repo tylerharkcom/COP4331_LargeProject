@@ -200,7 +200,7 @@ router.post(
       res.send(400).json();
       return;
     }
-    res.json(response);
+    res.json();
   })
 );
 
@@ -263,7 +263,8 @@ router.post(
         .updateOne({ _id: req.user._id }, { $set: { password: newPassword } });
     } catch (e) {
       console.log(e);
-      res.send(400).json();
+      response.error = e;
+      res.send(400).json(response);
       return;
     }
     res.json(response);

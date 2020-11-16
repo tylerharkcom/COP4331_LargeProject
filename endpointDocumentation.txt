@@ -60,7 +60,15 @@
             "password": "newPassword"
         }
         {
-            
+            "error": "error"
+        }
+    ]
+    "deleteFood": [
+        {
+            "item": "bread"
+        }
+        {
+            "error": "server error"
         }
     ]
 }
