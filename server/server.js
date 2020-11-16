@@ -47,7 +47,7 @@ function authenticateToken(req, res, next) {
   if (token == null) {
     token = req.cookies.token;
   } // if there isn't any token
-  console.log(req.cookies.token);
+
   const response = {
     error: "",
   };
@@ -190,10 +190,17 @@ router.post(
     const fridgeItem = req.body;
 
     const db = client.db();
-    const success = await db
-      .collection("Fridge")
-      .updateOne({ userId: req.user._id }, { $push: { fridge: fridgeItem } });
-    res.status(200).json();
+
+    try {
+      await db
+        .collection("Fridge")
+        .updateOne({ userId: req.user._id }, { $push: { fridge: fridgeItem } });
+    } catch (e) {
+      console.log(e);
+      res.send(400).json();
+      return;
+    }
+    res.json(response);
   })
 );
 
@@ -257,6 +264,31 @@ router.post(
     } catch (e) {
       console.log(e);
       res.send(400).json();
+      return;
+    }
+    res.json(response);
+  })
+);
+
+router.post(
+  `/deleteFood`,
+  wrapAsync(async (req, res, next) => {
+    const item = req.body;
+
+    const response = {
+      error: "",
+    };
+
+    const db = client.db();
+
+    try {
+      await db
+        .collection("Fridge")
+        .updateOne({ userId: req.user._id }, { $pull: { fridge: { item } } });
+    } catch (e) {
+      console.log(e);
+      response.error = e;
+      res.send(400).json(response);
       return;
     }
     res.json(response);
