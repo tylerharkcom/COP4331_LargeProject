@@ -244,7 +244,7 @@ router.post(
       .collection("Users")
       .findOne({ password: newPassword });
 
-    if (!passwordCheck || req.user._id != passwordCheck._id) {
+    if (passwordCheck) {
       response.error = "This password is not correct";
       res.status(400).json(response);
       return;
