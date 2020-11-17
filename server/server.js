@@ -298,16 +298,6 @@ router.post(
   })
 );
 
-const file = fs.readFile(projectRoot + "/server/index.html", "utf-8", (data, err) => {
-  if (err) {
-    console.log(err);
-  }
-
-  // Uncomment for debugging
-  else {
-    console.log(data);
-  }
-});
 
 router.post(
   '/resetPass',
@@ -340,6 +330,16 @@ router.post(
       return;
     }
 
+    const file = fs.readFile(projectRoot + "/server/index.html", "utf-8", (data, err) => {
+      if (err) {
+        console.log(err);
+      }
+
+      // Uncomment for debugging
+      else {
+        console.log(data);
+      }
+    });
     const msg = {
        // Only temporary until we get
       // the email domain authenticated.
