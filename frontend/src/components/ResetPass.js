@@ -6,7 +6,7 @@ import ReactTooltip from 'react-tooltip';
 function ResetPass()
 {
 
-  var email;
+  var username, email;
 
   const [message, setMessage] = useState('');
 
@@ -26,7 +26,7 @@ function ResetPass()
     // TODO: figure out endpoint format and send email accordingly
     // alert("*static*");
 
-    let obj = {email: email.value};
+    let obj = {username: username.value, email: email.value};
     let js = JSON.stringify(obj);
     try {
         const response = await fetch("/api/resetPass", {
@@ -44,7 +44,6 @@ function ResetPass()
       } else {
         // TODO: Splash page for redirection
         setMessage("Success! Check your email for the reset link");
-        setTimeout(() => {window.location.href="/emailConf"}, 2000);
         return;
       }
     }
@@ -55,20 +54,33 @@ function ResetPass()
   };
 
   return (
-    <div id="ResetPassDiv" className="center">
-      <div id="ResetPassWrapper">
+    <div id="resetPassDiv" className="center">
+      <div id="resetPassWrapper">
         <h1 class="pageTitle">Reset Password</h1>
           <form
-            id="ResetPassForm"
+            id="resetPassForm"
             onSubmit={requestPassReset}
           >
+
             <div className="form-row">
-              <div className="form-group col-md-6">
-                <label for="email">Email</label>
+              <div className="form-group col-md-12">
+                <label for="resetPassUser">Username</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="ResetPassEmail"
+                  id="resetPassUser"
+                  placeholder="Enter your username"
+                  ref={(c) => username = c}
+                />
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-group col-md-12">
+                <label for="resetPassEmail">Email</label>
+                <input
+                  type="email"
+                  className="center form-control"
+                  id="resetPassEmail"
                   placeholder="Enter your email"
                   ref={(c) => email = c}
                 />
@@ -81,6 +93,14 @@ function ResetPass()
             >
                 myname@example.com
             </ReactTooltip>
+            <div id="resetPassButton">
+              <input
+                type="submit"
+                className="btn btn-primary"
+                value="Reset Password"
+                onClick={requestPassReset}
+              />
+            </div>
           </form>
       </div>
     </div>

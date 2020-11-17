@@ -69,13 +69,14 @@ code {
   text-decoration: underline;
 }
 
-#loginButton {
+#loginButton, #resetPassButton{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#loginWrapper, #registerWrapper, #accountWrapper {
+
+#loginWrapper, #registerWrapper, #accountWrapper, #resetPassWrapper {
   background-color: #464646;
   padding: 10px;
   border: 1px solid #DADADA;
@@ -100,7 +101,7 @@ code {
   text-align: center;
 }
 
-#loginForm, #registerForm {
+#loginForm, #registerForm, #resetPassForm{
   padding-right: 25px;
   padding-left: 25px;
   padding-top: 10px;
@@ -115,5 +116,4 @@ code {
 #fridgeCRUD {
   padding-bottom: 10px;
 }
-
 

@@ -140,7 +140,7 @@ function MyAccount() {
       }
 
       // Check if both new password fields are equal
-      if (!(newPassword1.value == newPassword2.value)) {
+      if (!(newPassword1.value === newPassword2.value)) {
         setMessageNewPW("Your new passwords do not match");
         return;
       }

@@ -11,25 +11,15 @@ import ResetPassPage from './pages/ResetPassPage';
 
 function App() {
   return (
-    <Router >
+    <Router>
       <Switch>
-        <Route path="/" exact>
-          <LoginPage />
-        </Route>
-        <Route path="/dashboard" exact>
-          <DashboardPage />
-        </Route>
-        <Route path="/register" exact>
-          <RegisterPage />
-        </Route>
-        <Route path="/account" exact>
-          <AccountPage />
-        </Route>
-        <Route path="/resetPass" exact>
-          <ResetPassPage />
-        </Route>
+        <Route exact path="/" component={LoginPage} />
+        <Route exact path="/dashboard" component={DashboardPage} />
+        <Route exact path="/register" component={RegisterPage} />
+        <Route exact path="/account" component={AccountPage} />
+        <Route exact path="/resetPass" component={ResetPassPage} />
         <Redirect to="/" />
-      </Switch>  
+      </Switch>
     </Router>
   );
 }
