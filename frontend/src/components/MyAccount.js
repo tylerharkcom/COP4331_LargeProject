@@ -35,8 +35,7 @@ function MyAccount() {
   const [email, setEmail] = useState("");
   const [loginName, setLoginName] = useState("");
 
-  const renderTooltip = (props) => (
-      
+  const renderPwReqTooltip = (props) => (
     <Tooltip id="passwordReqTooltip" style={{minWidth: "200"}} {...props}>
       <div>
           <p style={{
@@ -46,8 +45,8 @@ function MyAccount() {
             fontsize: "15px",
             marginRight: "50px",
             maxWidth: "100% !important",
-            
             }}>
+                
         Your new password should:
         <ul style={{textAlign: "left"}}>
             <li>be at least 8 characters long</li>
@@ -61,11 +60,8 @@ function MyAccount() {
             </li>
         </ul>
         </p>
-        
     </div>
-      
     </Tooltip>
-    
   );
 
   useEffect(() => {
@@ -203,9 +199,10 @@ function MyAccount() {
           {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> */}
           <button
             type="submit"
-            id ="updatePWinitButton"
+            id ="updatePwButton"
             class="btn btn-primary"
             onClick={handleShow}
+            style={{justifyContent: "center",display:"flex",alignItems:"center"}}
           >
             Update Password
           </button>
@@ -214,7 +211,9 @@ function MyAccount() {
         <Modal show={show} onHide={handleClose}>
           <div id="updatePassWrapper">
             <Modal.Header>
-              <Modal.Title>Update password</Modal.Title>
+                <Modal.Title>
+                  <h1>Update password</h1>
+                </Modal.Title>
             </Modal.Header>
             <Form>
               <Form.Group controlId="currentPassword">
@@ -228,7 +227,7 @@ function MyAccount() {
                 <span id="currPasswordMSG">{messageCurr}</span>
               </Form.Group>
               <Form.Label htmlFor="newPassword1">New Password</Form.Label>
-              <OverlayTrigger placement="bottom" overlay={renderTooltip}>
+              <OverlayTrigger placement="bottom" overlay={renderPwReqTooltip}>
                 <Form.Control
                   type="password"
                   id="newPassword1"
@@ -247,6 +246,7 @@ function MyAccount() {
                     id="updatePWBut"
                     variant="primary"
                     type="submit"
+                    style={{margin:"5px"}}
                     onClick={updatePasswordCheck}
                   >
                     Update Password
