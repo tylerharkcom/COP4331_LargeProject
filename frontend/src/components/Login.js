@@ -47,6 +47,12 @@ function Login() {
     }
   };
 
+  const resetPass = async event => {
+    event.preventDefault();
+
+    window.location.href = "/resetPass";
+  };
+
   return (
     <div id="loginDiv" class="center">
       <div id="loginWrapper">
@@ -85,14 +91,26 @@ function Login() {
           </div>
           <div id="registerLink">
             <label>
-              Don't have an account? <br />
+              {/*Don't have an account? <br />*/}
               <input 
                         name="register" 
                         type="button" 
                         className="link-button-light" 
-                        value="Create an account" 
+                        value="Create your account!" 
                         onClick={goToRegister}
                 />
+            </label>
+          </div>
+          <div id="resetPassLink">
+            <label>
+              {/*Forgot your password? <br />*/}
+            <input 
+              name="resetPass"
+              type="button"
+              className="link-button-light"
+              value="Forgot password?"
+              onClick={resetPass}
+            />
             </label>
           </div>
         </form>

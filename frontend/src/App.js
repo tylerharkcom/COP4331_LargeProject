@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import RegisterPage from './pages/RegisterPage';
 import AccountPage from './pages/AccountPage';
+import ResetPassPage from './pages/ResetPassPage';
 
 function App() {
   return (
@@ -21,8 +22,11 @@ function App() {
         <Route path="/register" exact>
           <RegisterPage />
         </Route>
-        <Route path ="/account" exact>
+        <Route path="/account" exact>
           <AccountPage />
+        </Route>
+        <Route path="/resetPass" exact>
+          <ResetPassPage />
         </Route>
         <Redirect to="/" />
       </Switch>  

@@ -14,6 +14,8 @@ const jwt = require(`jsonwebtoken`);
 const cookieParser = require(`cookie-parser`);
 const cors = require(`cors`);
 const { Router } = require("express");
+const sgMail = require('@sendgrid/mail');
+const fs = require('fs');
 
 const app = express();
 const router = Router();
@@ -264,7 +266,7 @@ router.post(
     } catch (e) {
       console.log(e);
       response.error = e;
-      res.send(400).json(response);
+      res.status(400).json(response);
       return;
     }
     res.json(response);
@@ -289,9 +291,69 @@ router.post(
     } catch (e) {
       console.log(e);
       response.error = e;
-      res.send(400).json(response);
+      res.status(400).json(response);
       return;
     }
+    res.json(response);
+  })
+);
+
+
+router.post(
+  '/resetPass',
+  wrapAsync(async (req, res, next) => {
+
+    const {email, username} = req.body;
+
+    const response = {
+      error: ""
+    };
+
+    if (!username) {
+      response.error = "No username entered";
+      res.status(400).json(response);
+      return;
+    }
+
+    if (!email) {
+      response.error = "No email entered";
+      res.status(400).json(response);
+      return;
+    }
+
+    const db = client.db();
+    const user = await db.collection("Users").findOne({username: username, email: email});
+
+    if (!user) {
+      response.error = "Account not found with these credentials";
+      res.status(400).json(response);
+      return;
+    }
+
+    const file = fs.readFile(projectRoot + "/server/index.html", "utf-8", (data, err) => {
+      if (err) {
+        console.log(err);
+      }
+
+      // Uncomment for debugging
+      else {
+        console.log(data);
+      }
+    });
+    const msg = {
+       // Only temporary until we get
+      // the email domain authenticated.
+      // Also, probably should use
+      // an environemnt variable here.
+      from: "yousefeid707@gmail.com",
+      to: email,
+      subject: "Password Reset",
+      text:`Hello there, ${username}! It seems you've forgotten your FoodBuddy password. If that's you, follow the link`,
+      html: file
+    };
+    
+    sgMail.send(msg);
+
     res.json(response);
   })
 );
