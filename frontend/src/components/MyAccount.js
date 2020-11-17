@@ -80,32 +80,6 @@ function MyAccount() {
     // setLoginName("user.loginName");
   }, [user.firstName, user.lastName, user.email, user.loginName]);
 
-  const updatePassword = async () => {
-    alert("Entered updatePassword");
-    //Api call to update PW
-    var pwd = sha256(newPassword1.value);
-    var obj = { password: pwd };
-    var js = JSON.stringify(obj);
-    try {
-      const response = await fetch("/api/updatePassword", {
-        method: "POST",
-        body: js,
-        headers: { "Content-Type": "application/json" },
-      });
-      var res = JSON.parse(await response.text());
-      alert("After 2nd fetch");
-
-      if (response.status !== 200) {
-        alert("In error msg");
-        alert(res.error);
-      } else {
-        alert("Password change successful!");
-      }
-    } catch (e) {
-      console.log(e.toString());
-      return;
-    }
-  };
 
   const updatePasswordCheck = async (event) => {
     event.preventDefault();
@@ -166,7 +140,6 @@ function MyAccount() {
         return;
       }
 
-      alert("Start of sha");
       var currPwd = sha256(currPassword.value);
       var newPwd = sha256(newPassword1.value);
       var obj = { password: currPwd, newPassword: newPwd };
@@ -180,7 +153,6 @@ function MyAccount() {
       });
       var res = JSON.parse(await response.text());
       if (response.status !== 200) {
-        alert("In error msg");
         alert(res.error);
       } else {
         alert("Password change successful!");
@@ -196,50 +168,31 @@ function MyAccount() {
     <div id="accountDiv" class="center">
       <div id="accountWrapper">
         <h1 className="pageTitle">Account Information</h1>
-        {/*    <Card class="text-center" style={{ width: '27rem' }}>
-                    <Card.Header>First Name</Card.Header>
-                        <ListGroup variant="flush">
-                        <ListGroup.Item>{fName}</ListGroup.Item>
-                    <Card.Header>Last Name</Card.Header>
-                        <ListGroup.Item>{lName}</ListGroup.Item>
-                    <Card.Header>Email</Card.Header>
-                        <ListGroup.Item>{email}</ListGroup.Item>
-                    <Card.Header>Login Name</Card.Header>
-                        <ListGroup.Item>{loginName}</ListGroup.Item>
-                    </ListGroup>
-                   <button hidden type="submit" className="btn btn-secondary">Update Info</button> /}
-                    <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
-                </Card>
- */}
         <Card class="text-center" style={{ width: "27rem" }}>
-          <Form>
+          <Form style={{backgroundColor: "#DADADA"}}>
             <Form.Group as={Row}>
+                <Col sm="12">
               <Form.Label className="text-center" column sm="4">
                 <b> Name : </b>
               </Form.Label>
-              <Col>
                   {fName.concat(" ", lName)}
               </Col>
             </Form.Group>
-          </Form>
-          <Form>
             <Form.Group as={Row}>
+                <Col sm="12">
               <Form.Label className="text-center" column sm="4">
                 <b> Email : </b>
               </Form.Label>
-              <Col sm="6">
                 <Form.Label plaintext readOnly>
                   {email}
                 </Form.Label>
               </Col>
             </Form.Group>
-          </Form>
-          <Form>
             <Form.Group as={Row}>
-              <Form.Label  column sm="4">
+            <Col sm="12">
+              <Form.Label className="text-center" column sm="4">
                 <b> Username : </b>
               </Form.Label>
-              <Col sm="6">
                 <Form.Label plaintext readOnly>
                   {loginName}
                 </Form.Label>
