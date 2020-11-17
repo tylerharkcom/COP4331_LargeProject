@@ -36,20 +36,36 @@ function MyAccount() {
   const [loginName, setLoginName] = useState("");
 
   const renderTooltip = (props) => (
-    <Tooltip id="button-tooltip" style={{ width: "150%" }} {...props}>
-      Your new password should:
-      <ul>
-        <li>be at least 8 characters long</li>
-        <li>
-          contain at least one capital letter, at least one lowercase letter,
-          and at least one digit
-        </li>
-        <li>
-          contain at least one of the following special characters: @, !, #, $,
-          %, *
-        </li>
-      </ul>
+      
+    <Tooltip id="passwordReqTooltip" style={{minWidth: "200"}} {...props}>
+      <div>
+          <p style={{
+            color: "white", 
+            width: "100%", 
+            position: "relative",
+            fontsize: "15px",
+            marginRight: "50px",
+            maxWidth: "100% !important",
+            
+            }}>
+        Your new password should:
+        <ul style={{textAlign: "left"}}>
+            <li>be at least 8 characters long</li>
+            <li>
+            contain at least one capital letter, one lowercase letter,
+            and one digit
+            </li>
+            <li>
+            contain at least one of the following special characters: @, !, #, $,
+            %, *
+            </li>
+        </ul>
+        </p>
+        
+    </div>
+      
     </Tooltip>
+    
   );
 
   useEffect(() => {
@@ -57,6 +73,11 @@ function MyAccount() {
     setlName(user.lastName);
     setEmail(user.email);
     setLoginName(user.loginName);
+    // Testing for localmachine use
+    // setfName("user.firstName");
+    // setlName("user.lastName");
+    // setEmail("user.email");
+    // setLoginName("user.loginName");
   }, [user.firstName, user.lastName, user.email, user.loginName]);
 
   const updatePassword = async () => {
@@ -196,10 +217,8 @@ function MyAccount() {
               <Form.Label className="text-center" column sm="4">
                 <b> Name : </b>
               </Form.Label>
-              <Col sm="8">
-                <Form.Label plaintext readOnly>
+              <Col>
                   {fName.concat(" ", lName)}
-                </Form.Label>
               </Col>
             </Form.Group>
           </Form>
@@ -208,7 +227,7 @@ function MyAccount() {
               <Form.Label className="text-center" column sm="4">
                 <b> Email : </b>
               </Form.Label>
-              <Col sm="8">
+              <Col sm="6">
                 <Form.Label plaintext readOnly>
                   {email}
                 </Form.Label>
@@ -217,10 +236,10 @@ function MyAccount() {
           </Form>
           <Form>
             <Form.Group as={Row}>
-              <Form.Label className="text-center" column sm="4">
+              <Form.Label  column sm="4">
                 <b> Username : </b>
               </Form.Label>
-              <Col sm="8">
+              <Col sm="6">
                 <Form.Label plaintext readOnly>
                   {loginName}
                 </Form.Label>
@@ -231,7 +250,8 @@ function MyAccount() {
           {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> */}
           <button
             type="submit"
-            className="btn btn-secondary"
+            id ="updatePWinitButton"
+            class="btn btn-primary"
             onClick={handleShow}
           >
             Update Password
@@ -271,7 +291,7 @@ function MyAccount() {
               <Modal.Footer>
                 <div class="form-group align-right">
                   <Button
-                    id="UpdatePWBut"
+                    id="updatePWBut"
                     variant="primary"
                     type="submit"
                     onClick={updatePasswordCheck}
