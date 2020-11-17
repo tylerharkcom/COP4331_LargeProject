@@ -63,7 +63,7 @@ function ResetPass()
           >
 
             <div className="form-row">
-              <div className="form-group col-md-12">
+              <div className="form-group col-md">
                 <label for="resetPassUser">Username</label>
                 <input
                   type="text"
@@ -75,11 +75,11 @@ function ResetPass()
               </div>
             </div>
             <div className="form-row">
-              <div className="form-group col-md-12">
+              <div className="form-group col-md">
                 <label for="resetPassEmail">Email</label>
                 <input
                   type="email"
-                  className="center form-control"
+                  className="form-control"
                   id="resetPassEmail"
                   placeholder="Enter your email"
                   ref={(c) => email = c}
