@@ -56,7 +56,7 @@ function ResetPass()
   return (
     <div id="resetPassDiv" className="center">
       <div id="resetPassWrapper">
-        <h1 class="pageTitle">Reset Password</h1>
+        <h1 className="pageTitle">Reset Password</h1>
           <form
             id="resetPassForm"
             onSubmit={requestPassReset}
