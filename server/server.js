@@ -176,6 +176,66 @@ router.post(
   })
 );
 
+router.post(
+  '/resetPass',
+  wrapAsync(async (req, res, next) => {
+
+    console.log("resetPass received");
+    const {email, username} = req.body;
+
+    const response = {
+      error: ""
+    };
+
+    if (!username) {
+      response.error = "No username entered";
+      res.status(400).json(response);
+      return;
+    }
+
+    if (!email) {
+      response.error = "No email entered";
+      res.status(400).json(response);
+      return;
+    }
+
+    const db = client.db();
+    const user = await db.collection("Users").findOne({username: username, email: email});
+
+    if (!user) {
+      response.error = "Account not found with these credentials";
+      res.status(400).json(response);
+      return;
+    }
+
+    const file = fs.readFile(projectRoot + "/server/index.html", "utf-8", (data, err) => {
+      if (err) {
+        console.log(err);
+      }
+
+      // Uncomment for debugging
+      else {
+        console.log(data);
+      }
+    });
+    const msg = {
+       // Only temporary until we get
+      // the email domain authenticated.
+      // Also, probably should use
+      // an environemnt variable here.
+      from: "yousefeid707@gmail.com",
+      to: email,
+      subject: "Password Reset",
+      text:`Hello there, ${username}! It seems you've forgotten your FoodBuddy password. If that's you, follow the link`,
+      html: file
+    };
+    
+    sgMail.send(msg);
+
+    res.json(response);
+  })
+);
+
 router.use(authenticateToken);
 
 router.post(
@@ -299,64 +359,6 @@ router.post(
 );
 
 
-router.post(
-  '/resetPass',
-  wrapAsync(async (req, res, next) => {
-
-    const {email, username} = req.body;
-
-    const response = {
-      error: ""
-    };
-
-    if (!username) {
-      response.error = "No username entered";
-      res.status(400).json(response);
-      return;
-    }
-
-    if (!email) {
-      response.error = "No email entered";
-      res.status(400).json(response);
-      return;
-    }
-
-    const db = client.db();
-    const user = await db.collection("Users").findOne({username: username, email: email});
-
-    if (!user) {
-      response.error = "Account not found with these credentials";
-      res.status(400).json(response);
-      return;
-    }
-
-    const file = fs.readFile(projectRoot + "/server/index.html", "utf-8", (data, err) => {
-      if (err) {
-        console.log(err);
-      }
-
-      // Uncomment for debugging
-      else {
-        console.log(data);
-      }
-    });
-    const msg = {
-       // Only temporary until we get
-      // the email domain authenticated.
-      // Also, probably should use
-      // an environemnt variable here.
-      from: "yousefeid707@gmail.com",
-      to: email,
-      subject: "Password Reset",
-      text:`Hello there, ${username}! It seems you've forgotten your FoodBuddy password. If that's you, follow the link`,
-      html: file
-    };
-    
-    sgMail.send(msg);
-
-    res.json(response);
-  })
-);
 
 app.get("*", (req, res) => {
   res.sendFile(projectRoot + "/frontend/build/index.html");
