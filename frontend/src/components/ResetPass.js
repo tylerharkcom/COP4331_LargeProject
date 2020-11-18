@@ -15,6 +15,19 @@ function ResetPass()
     event.preventDefault();
 
     // Copied over, but maybe use RFC regex?
+
+    if (username.value === "")
+    {
+      setMessage('A username is required');
+      return;
+    }
+
+    if (email.value === "")
+    {
+      setMessage('An email is required');
+      return;
+    }
+
     let expression = /\S+@\S+/;
 
     if (!expression.test(String(email.value).toLowerCase()))
@@ -23,10 +36,20 @@ function ResetPass()
       return;
     }
 
+    expression = /^\w+$/;
+
+    if (!expression.test(String(email.value)).toLowerCase())
+    {
+      setMessage('Your username may only contain letters, numbers, and underscores');
+      return;
+    }
+
+
     // TODO: figure out endpoint format and send email accordingly
     // alert("*static*");
 
     let obj = {username: username.value, email: email.value};
+    console.log(obj);
     let js = JSON.stringify(obj);
     try {
         const response = await fetch("/api/resetPass", {
@@ -102,6 +125,12 @@ function ResetPass()
               />
             </div>
           </form>
+          <span
+            id="resetPassResult"
+            className="lightText"
+          >
+              {message}
+          </span>
       </div>
     </div>
   );
