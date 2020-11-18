@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const fetch = require('node-fetch');
+
 const projectRoot = process.cwd();
 
 const MongoClient = require("mongodb").MongoClient;
@@ -233,6 +235,37 @@ router.post(
     sgMail.send(msg);
 
     res.json(response);
+  })
+);
+
+router.get(
+  `/getRecipes`,
+  wrapAsync(async (req, res) => {
+    var resp1 = await fetch('https://api.spoonacular.com/recipes/complexSearch?apiKey='+process.env.API_KEY+'&query='+req.query.search+'&number=2', {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    });
+
+    var res1 = JSON.parse(await resp1.text());
+        
+    var resp2 = await fetch('https://api.spoonacular.com/recipes/'+res1.results[0].id+'/information?apiKey='+process.env.API_KEY+'&includeNutrition=false', {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    });
+    var res2 = JSON.parse(await resp2.text());
+    var resp3 = await fetch('https://api.spoonacular.com/recipes/'+res1.results[1].id+'/information?apiKey='+process.env.API_KEY+'&includeNutrition=false', {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    });
+    var res3 = JSON.parse(await resp3.text());
+    
+    var response = { results: [res2, res3] };
+    if (!response) {
+      res.status(400).json();
+      return;
+    }
+
+    res.status(200).json(response);
   })
 );
 
