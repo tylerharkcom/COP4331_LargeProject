@@ -6,15 +6,22 @@ import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
+import MyLoader from './MyLoadingSymbol';
+require("dotenv").config();
 
 const FoodTable = () => {
-    const [resultID, setResultID] = useState(-1);
     const [resultName, setResultName] = useState('');
+    const [resultName2, setResultName2] = useState('');
     const [resultImageSrc, setResultImageSrc] = useState('');
+    const [resultImageSrc2, setResultImageSrc2] = useState('');
     const [resultTime, setResultTime] = useState(-1);
+    const [resultTime2, setResultTime2] = useState(-1);
     const [resultServes, setResultServes] = useState(-1);
+    const [resultServes2, setResultServes2] = useState(-1);
     const [resultLink, setResultLink] = useState('');
+    const [resultLink2, setResultLink2] = useState('');
     const [search, setSearch] = useState('');
+    const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(false);
     const [food, setFood] = useState({
         foods: [
@@ -39,7 +46,7 @@ const FoodTable = () => {
         ]
     });
 
-    const API_KEY = 'nooooope';
+    const API_KEY = process.env.API_KEY;
 
     const selectRowHandler = (event, foodIndex) => {
         console.log(event.target.checked)
@@ -67,12 +74,10 @@ const FoodTable = () => {
         alert("You're not getting any results, buddy!");
     }
 
-    const getRecipeHandler = async (event, name) => {
+    const getRecipeHandler = async (event,name) => {
         event.preventDefault();
-        setShow(true);
-        setSearch(name);
-
-        var resp1 = await fetch('https://api.spoonacular.com/recipes/complexSearch?apiKey='+API_KEY+'&query='+search+'&number=1', {
+        setLoading(true);
+        var resp1 = await fetch('https://api.spoonacular.com/recipes/complexSearch?apiKey='+API_KEY+'&query='+name+'&number=2', {
             method: "GET",
             headers: { "Content-Type": "application/json" }
         });
@@ -81,23 +86,31 @@ const FoodTable = () => {
         if (resp1.status!=200){
             console.log('Mayday');
         } else {
-            setResultID(res1.results[0].id);
-            setResultName(res1.results[0].title);
-            setResultImageSrc(res1.results[0].image);
-        }
-        if (resultID>0){
-            var resp2 = await fetch('https://api.spoonacular.com/recipes/'+resultID+'/information?apiKey='+API_KEY+'&includeNutrition=false', {
+            var resp2 = await fetch('https://api.spoonacular.com/recipes/'+res1.results[0].id+'/information?apiKey='+API_KEY+'&includeNutrition=false', {
                 method: "GET",
                 headers: { "Content-Type": "application/json" }
             });
             var res2 = JSON.parse(await resp2.text());
-
-            if (resp2.status!=200) {
-                console.log('Mayday');
-            } else {
+            var resp3 = await fetch('https://api.spoonacular.com/recipes/'+res1.results[1].id+'/information?apiKey='+API_KEY+'&includeNutrition=false', {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+            });
+            var res3 = JSON.parse(await resp3.text());
+        
+            if (resp2.status==200&&resp3.status==200) {
+                setResultName(res1.results[0].title);
+                setResultName2(res1.results[1].title);
+                setResultImageSrc(res1.results[0].image);
+                setResultImageSrc2(res1.results[1].image);
                 setResultLink(res2.sourceUrl);
+                setResultLink2(res3.sourceUrl);
                 setResultServes(res2.servings);
+                setResultServes2(res3.servings);
                 setResultTime(res2.readyInMinutes);
+                setResultTime2(res3.readyInMinutes);
+                setSearch(name);
+                setShow(true);
+                setLoading(false);
             }
         }
     }
@@ -201,10 +214,18 @@ const FoodTable = () => {
                                 bg='light'
                                 text='dark'
                             >   
-                                <Card.Title>Recipe Name</Card.Title>
+                                <Card.Title>
+                                    <a 
+                                        href={resultLink2} 
+                                        target="_blank"
+                                    >
+                                            {resultName2}
+                                    </a>
+                                </Card.Title>
                                 <Card.Body>
-                                    <Card.Text>Recipe photo and meal type</Card.Text>
+                                    <Card.Text>Serves {resultServes2} | Ready in {resultTime2} minutes</Card.Text>
                                 </Card.Body>
+                                <Card.Img variant="bottom" src={resultImageSrc2} />
                             </Card>
                         </CardDeck>
                     </Modal.Body>
@@ -214,6 +235,7 @@ const FoodTable = () => {
                         </button>
                     </Modal.Footer>
             </Modal>
+            <MyLoader loading={loading} />
         </div>
     );
 };
