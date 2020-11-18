@@ -36,20 +36,36 @@ function MyAccount() {
   const [loginName, setLoginName] = useState("");
 
   const renderTooltip = (props) => (
-    <Tooltip id="button-tooltip" style={{ width: "150%" }} {...props}>
-      Your new password should:
-      <ul>
-        <li>be at least 8 characters long</li>
-        <li>
-          contain at least one capital letter, at least one lowercase letter,
-          and at least one digit
-        </li>
-        <li>
-          contain at least one of the following special characters: @, !, #, $,
-          %, *
-        </li>
-      </ul>
+      
+    <Tooltip id="passwordReqTooltip" style={{minWidth: "200"}} {...props}>
+      <div>
+          <p style={{
+            color: "white", 
+            width: "100%", 
+            position: "relative",
+            fontsize: "15px",
+            marginRight: "50px",
+            maxWidth: "100% !important",
+            
+            }}>
+        Your new password should:
+        <ul style={{textAlign: "left"}}>
+            <li>be at least 8 characters long</li>
+            <li>
+            contain at least one capital letter, one lowercase letter,
+            and one digit
+            </li>
+            <li>
+            contain at least one of the following special characters: @, !, #, $,
+            %, *
+            </li>
+        </ul>
+        </p>
+        
+    </div>
+      
     </Tooltip>
+    
   );
 
   useEffect(() => {
@@ -57,34 +73,13 @@ function MyAccount() {
     setlName(user.lastName);
     setEmail(user.email);
     setLoginName(user.loginName);
+    // Testing for localmachine use
+    // setfName("user.firstName");
+    // setlName("user.lastName");
+    // setEmail("user.email");
+    // setLoginName("user.loginName");
   }, [user.firstName, user.lastName, user.email, user.loginName]);
 
-  const updatePassword = async () => {
-    alert("Entered updatePassword");
-    //Api call to update PW
-    var pwd = sha256(newPassword1.value);
-    var obj = { password: pwd };
-    var js = JSON.stringify(obj);
-    try {
-      const response = await fetch("/api/updatePassword", {
-        method: "POST",
-        body: js,
-        headers: { "Content-Type": "application/json" },
-      });
-      var res = JSON.parse(await response.text());
-      alert("After 2nd fetch");
-
-      if (response.status !== 200) {
-        alert("In error msg");
-        alert(res.error);
-      } else {
-        alert("Password change successful!");
-      }
-    } catch (e) {
-      console.log(e.toString());
-      return;
-    }
-  };
 
   const updatePasswordCheck = async (event) => {
     event.preventDefault();
@@ -145,7 +140,6 @@ function MyAccount() {
         return;
       }
 
-      alert("Start of sha");
       var currPwd = sha256(currPassword.value);
       var newPwd = sha256(newPassword1.value);
       var obj = { password: currPwd, newPassword: newPwd };
@@ -159,7 +153,6 @@ function MyAccount() {
       });
       var res = JSON.parse(await response.text());
       if (response.status !== 200) {
-        alert("In error msg");
         alert(res.error);
       } else {
         alert("Password change successful!");
@@ -175,52 +168,31 @@ function MyAccount() {
     <div id="accountDiv" class="center">
       <div id="accountWrapper">
         <h1 className="pageTitle">Account Information</h1>
-        {/*    <Card class="text-center" style={{ width: '27rem' }}>
-                    <Card.Header>First Name</Card.Header>
-                        <ListGroup variant="flush">
-                        <ListGroup.Item>{fName}</ListGroup.Item>
-                    <Card.Header>Last Name</Card.Header>
-                        <ListGroup.Item>{lName}</ListGroup.Item>
-                    <Card.Header>Email</Card.Header>
-                        <ListGroup.Item>{email}</ListGroup.Item>
-                    <Card.Header>Login Name</Card.Header>
-                        <ListGroup.Item>{loginName}</ListGroup.Item>
-                    </ListGroup>
-                   <button hidden type="submit" className="btn btn-secondary">Update Info</button> /}
-                    <button type="submit" className="btn btn-secondary" onClick={handleShow}>Update Password</button>
-                </Card>
- */}
         <Card class="text-center" style={{ width: "27rem" }}>
-          <Form>
+          <Form style={{backgroundColor: "#DADADA"}}>
             <Form.Group as={Row}>
+                <Col sm="12">
               <Form.Label className="text-center" column sm="4">
                 <b> Name : </b>
               </Form.Label>
-              <Col sm="8">
-                <Form.Label plaintext readOnly>
                   {fName.concat(" ", lName)}
-                </Form.Label>
               </Col>
             </Form.Group>
-          </Form>
-          <Form>
             <Form.Group as={Row}>
+                <Col sm="12">
               <Form.Label className="text-center" column sm="4">
                 <b> Email : </b>
               </Form.Label>
-              <Col sm="8">
                 <Form.Label plaintext readOnly>
                   {email}
                 </Form.Label>
               </Col>
             </Form.Group>
-          </Form>
-          <Form>
             <Form.Group as={Row}>
+            <Col sm="12">
               <Form.Label className="text-center" column sm="4">
                 <b> Username : </b>
               </Form.Label>
-              <Col sm="8">
                 <Form.Label plaintext readOnly>
                   {loginName}
                 </Form.Label>
@@ -231,7 +203,8 @@ function MyAccount() {
           {/*    <button hidden type="submit" className="btn btn-secondary">Update Info</button> */}
           <button
             type="submit"
-            className="btn btn-secondary"
+            id ="updatePWinitButton"
+            class="btn btn-primary"
             onClick={handleShow}
           >
             Update Password
@@ -271,7 +244,7 @@ function MyAccount() {
               <Modal.Footer>
                 <div class="form-group align-right">
                   <Button
-                    id="UpdatePWBut"
+                    id="updatePWBut"
                     variant="primary"
                     type="submit"
                     onClick={updatePasswordCheck}
