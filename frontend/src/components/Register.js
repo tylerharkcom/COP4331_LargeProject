@@ -111,7 +111,7 @@ function Register()
                 setMessage(error);
                 return;
             } else {
-                setMessage("Success! If you are not redirected, please ckick 'Go to login'");
+                setMessage("Success! If you are not redirected, please click 'Go to login'");
                 setTimeout(function() {
                     window.location.href = '/';
                 }, 2000);
@@ -134,8 +134,8 @@ function Register()
             id="registerDiv" 
             className="center"
         >
-            <div id="registerWrapper">
-                <h1 class="pageTitle">FoodBuddy</h1>
+            <div id="registerWrapper" className="text-center">
+                <h1 className="pageTitle">FoodBuddy</h1>
                 <form 
                     id="registerForm" 
                     onSubmit={doRegister}
@@ -221,25 +221,23 @@ function Register()
                             </ReactTooltip>
                         </div>
                     </div>
-                    <div>
+                    <div className="text-center">
                         <button 
                             type="submit" 
-                            className="btn btn-primary" 
+                            className="btn btn-group btn-primary mx-1" 
                             onClick={doRegister}
                         >
                             Register
                         </button>
                         <button 
                             type="reset" 
-                            style={{marginLeft: "10px", marginRight: "10px"}} 
-                            className="btn btn-secondary"
+                            className="btn btn-group btn-secondary mx-1"
                         >
                             Reset
                         </button>
                         <button 
                             type="button" 
-                            style={{marginLeft: "10x"}} 
-                            className="btn btn-secondary" 
+                            className="btn btn-group btn-secondary mx-1" 
                             onClick={goToLogin}
                         >
                             Go to login
@@ -248,7 +246,7 @@ function Register()
                 </form>
                 <span 
                     id="registerResult" 
-                    classNme="lightText"
+                    className="lightText" 
                 >
                     {message}
                 </span>
