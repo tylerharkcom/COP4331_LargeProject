@@ -57,7 +57,24 @@ const FoodTable = () => {
 
     const clearRecipeStates = () =>
     {
-        setResults({ recipes: [] })
+        setResults({ 
+            results: [
+                {
+                    title: "",
+                    image: "",
+                    sourceUrl: "",
+                    servings: 0,
+                    readyInMinutes: 0
+                },
+                {
+                    title: "",
+                    image: "",
+                    sourceUrl: "",
+                    servings: 0,
+                    readyInMinutes: 0
+                }
+            ]
+        });
     }
 
     const selectRowHandler = (event, foodIndex) => {
