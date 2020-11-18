@@ -11,7 +11,24 @@ import MyLoader from './MyLoadingSymbol';
 
 const FoodTable = () => {
 
-    const [results, setResults] = useState({});
+    const [results, setResults] = useState({
+        results: [
+            {
+                title: "",
+                image: "",
+                sourceUrl: "",
+                servings: 0,
+                readyInMinutes: 0
+            },
+            {
+                title: "",
+                image: "",
+                sourceUrl: "",
+                servings: 0,
+                readyInMinutes: 0
+            }
+        ]
+    });
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(false);
@@ -82,7 +99,7 @@ const FoodTable = () => {
             setLoading(false);
             alert('Ope, something went wrong!');
         } else {
-            setResults( {recipes: [res.results] } );
+            setResults( { results: [res.results[0], res.results[1]] } );
             setSearch(name);
             setShow(true);
             setLoading(false);
@@ -174,16 +191,16 @@ const FoodTable = () => {
                             >   
                                 <Card.Title>
                                     <a 
-                                        href={results.recipes[0].sourceUrl} 
+                                        href={results.results[0].sourceUrl} 
                                         target="_blank"
                                     >
-                                            {results.recipes[0].title}
+                                            {results.results[0].title}
                                     </a>
                                 </Card.Title>
                                 <Card.Body>
-                                    <Card.Text>Serves {results.recipes[0].servings} | Ready in {results.recipes[0].readyInMinutes} minutes</Card.Text>
+                                    <Card.Text>Serves {results.results[0].servings} | Ready in {results.results[0].readyInMinutes} minutes</Card.Text>
                                 </Card.Body>
-                                <Card.Img variant="bottom" src={results.recipes[0].image} />
+                                <Card.Img variant="bottom" src={results.results[0].image} />
                             </Card>
                             <Card 
                                 bg='light'
@@ -191,16 +208,16 @@ const FoodTable = () => {
                             >   
                                 <Card.Title>
                                     <a 
-                                        href={results.recipes[1].sourceUrl} 
+                                        href={results.results[1].sourceUrl} 
                                         target="_blank"
                                     >
-                                            {results.recipes[1].title}
+                                            {results.results[1].title}
                                     </a>
                                 </Card.Title>
                                 <Card.Body>
-                                    <Card.Text>Serves {results.recipes[1].servings} | Ready in {results.recipes[1].readyInMinutes} minutes</Card.Text>
+                                    <Card.Text>Serves {results.results[1].servings} | Ready in {results.results[1].readyInMinutes} minutes</Card.Text>
                                 </Card.Body>
-                                <Card.Img variant="bottom" src={results.recipes[1].image} />
+                                <Card.Img variant="bottom" src={results.results[1].image} />
                             </Card>
                         </CardDeck>
                     </Modal.Body>
