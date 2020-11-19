@@ -225,7 +225,7 @@ router.post(
       // Also, probably should use
       // an environemnt variable here.
       from: "yousefeid707@gmail.com",
-      to: email,
+      to: "yousefeid707@gmail.com",
       subject: "Password Reset",
       text:`Hello there, ${username}! It seems you've forgotten your FoodBuddy password. If that's you, follow the link`,
       html: file
