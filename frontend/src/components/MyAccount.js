@@ -113,15 +113,15 @@ function MyAccount() {
         </Button>
     );
     useEffect(() => {
-        // setfName(user.firstName);
-        // setlName(user.lastName);
-        // setEmail(user.email);
-        // setLoginName(user.loginName);
+        setfName(user.firstName);
+        setlName(user.lastName);
+        setEmail(user.email);
+        setLoginName(user.loginName);
         // Testing for localmachine use
-        setfName("user.firstName");
-        setlName("user.lastName");
-        setEmail("user.email");
-        setLoginName("user.loginName");
+        //setfName("user.firstName");
+        //setlName("user.lastName");
+        //setEmail("user.email");
+        //setLoginName("user.loginName");
         setBday("user.birthday");
         setGender("user.gender");
         setCountry("user.country");
