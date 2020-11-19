@@ -16,8 +16,10 @@ const jwt = require(`jsonwebtoken`);
 const cookieParser = require(`cookie-parser`);
 const cors = require(`cors`);
 const { Router } = require("express");
-const sgMail = require('@sendgrid/mail');
 const fs = require('fs');
+const sgMail = require('@sendgrid/mail');
+
+sgMail.setApiKey(process.env.TEST_SEND_TOKEN);
 
 const app = express();
 const router = Router();
@@ -225,7 +227,7 @@ router.post(
       // Also, probably should use
       // an environemnt variable here.
       from: "yousefeid707@gmail.com",
-      to: "yousefeid707@gmail.com",
+      to: email,
       subject: "Password Reset",
       text:`Hello there, ${username}! It seems you've forgotten your FoodBuddy password. If that's you, follow the link`,
       html: file
