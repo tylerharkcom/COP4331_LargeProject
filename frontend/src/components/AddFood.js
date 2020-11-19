@@ -82,8 +82,6 @@ const AddFoodModal = (props) =>
                 headers: { "Content-Type": "application/json" }
                 });
         
-                var res = JSON.parse(await response.text());
-        
                 if (response.status !== 200) {
                     setMessage("Ope! An error occurred");
                     return;
