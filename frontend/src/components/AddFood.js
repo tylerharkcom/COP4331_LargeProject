@@ -79,7 +79,7 @@ const AddFoodModal = (props) =>
                 const response = await fetch("/api/addFood", {
                 method: "POST",
                 body: js,
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json" }
                 });
         
                 var res = JSON.parse(await response.text());
