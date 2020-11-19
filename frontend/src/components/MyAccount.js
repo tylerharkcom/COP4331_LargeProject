@@ -100,6 +100,7 @@ function MyAccount() {
     const DelFinalButton = (props) => (
         <Button
             {...props}
+            onClick={deleteAccount}
             display="none"
             id="delFinalBut"
             variant="danger"
@@ -191,7 +192,6 @@ function MyAccount() {
         var newPwd = sha256(newPassword1.value);
         var obj = { password: currPwd, newPassword: newPwd };
         var js = JSON.stringify(obj);
-        // try {
         const response = await fetch("/api/updatePassword", {
             method: "POST",
             credentials: "include",
@@ -204,6 +204,29 @@ function MyAccount() {
         } else {
             alert("Password change successful!");
             pwHandleClose();
+        }
+        } catch (e) {
+        console.log(e.toString());
+        return;
+        }
+    };
+
+    const deleteAccount = async (event) => {
+        var obj = { username: loginName };
+        var js = JSON.stringify(obj);
+        try {
+        const response = await fetch("/api/deleteAccount", {
+            method: "POST",
+            credentials: "include",
+            body: js,
+            headers: { "Content-Type": "application/json" },
+        });
+        var res = JSON.parse(await response.text());
+        if (response.status !== 200) {
+            alert(res.error);
+        } else {
+            alert("Account Deleted. Goodbye!");
+            window.location.href = '/';
         }
         } catch (e) {
         console.log(e.toString());
