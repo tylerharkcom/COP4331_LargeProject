@@ -492,6 +492,29 @@ router.post(
 );
 
 
+router.post('/deleteAccount', wrapAsync(async (req, res, next) =>{
+  const response = {
+    error: ""
+  }
+
+  const db = client.db();
+
+  try {
+    await db.collection("Users").deleteOne({userId: req.user_id});
+  }
+
+  catch (e) {
+    console.log(e);
+    response.error = e;
+    res.status(400).json(response);
+    return;
+  }
+
+  response.error = "😱😱😱Account successfully deleted😱😱😱";
+
+  res.status(200).json(response);
+}));
+
 
 app.get("*", (req, res) => {
   res.sendFile(projectRoot + "/frontend/build/index.html");
