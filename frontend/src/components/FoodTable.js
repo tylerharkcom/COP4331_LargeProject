@@ -7,19 +7,28 @@ import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import MyLoader from './MyLoadingSymbol';
-require("dotenv").config();
+
 
 const FoodTable = () => {
-    const [resultName, setResultName] = useState('');
-    const [resultName2, setResultName2] = useState('');
-    const [resultImageSrc, setResultImageSrc] = useState('');
-    const [resultImageSrc2, setResultImageSrc2] = useState('');
-    const [resultTime, setResultTime] = useState(-1);
-    const [resultTime2, setResultTime2] = useState(-1);
-    const [resultServes, setResultServes] = useState(-1);
-    const [resultServes2, setResultServes2] = useState(-1);
-    const [resultLink, setResultLink] = useState('');
-    const [resultLink2, setResultLink2] = useState('');
+
+    const [results, setResults] = useState({
+        results: [
+            {
+                title: "",
+                image: "",
+                sourceUrl: "",
+                servings: 0,
+                readyInMinutes: 0
+            },
+            {
+                title: "",
+                image: "",
+                sourceUrl: "",
+                servings: 0,
+                readyInMinutes: 0
+            }
+        ]
+    });
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(false);
@@ -46,7 +55,27 @@ const FoodTable = () => {
         ]
     });
 
-    const API_KEY = process.env.API_KEY;
+    const clearRecipeStates = () =>
+    {
+        setResults({ 
+            results: [
+                {
+                    title: "",
+                    image: "",
+                    sourceUrl: "",
+                    servings: 0,
+                    readyInMinutes: 0
+                },
+                {
+                    title: "",
+                    image: "",
+                    sourceUrl: "",
+                    servings: 0,
+                    readyInMinutes: 0
+                }
+            ]
+        });
+    }
 
     const selectRowHandler = (event, foodIndex) => {
         console.log(event.target.checked)
@@ -77,46 +106,26 @@ const FoodTable = () => {
     const getRecipeHandler = async (event,name) => {
         event.preventDefault();
         setLoading(true);
-        var resp1 = await fetch('https://api.spoonacular.com/recipes/complexSearch?apiKey='+API_KEY+'&query='+name+'&number=2', {
+        var resp = await fetch('/api/getRecipes?search='+name, {
             method: "GET",
             headers: { "Content-Type": "application/json" }
         });
 
-        var res1 = JSON.parse(await resp1.text());
-        if (resp1.status!=200){
-            console.log('Mayday');
+        var res = JSON.parse(await resp.text());
+        if (resp.status!=200){
+            setLoading(false);
+            alert('Ope, something went wrong!');
         } else {
-            var resp2 = await fetch('https://api.spoonacular.com/recipes/'+res1.results[0].id+'/information?apiKey='+API_KEY+'&includeNutrition=false', {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
-            });
-            var res2 = JSON.parse(await resp2.text());
-            var resp3 = await fetch('https://api.spoonacular.com/recipes/'+res1.results[1].id+'/information?apiKey='+API_KEY+'&includeNutrition=false', {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
-            });
-            var res3 = JSON.parse(await resp3.text());
-        
-            if (resp2.status==200&&resp3.status==200) {
-                setResultName(res1.results[0].title);
-                setResultName2(res1.results[1].title);
-                setResultImageSrc(res1.results[0].image);
-                setResultImageSrc2(res1.results[1].image);
-                setResultLink(res2.sourceUrl);
-                setResultLink2(res3.sourceUrl);
-                setResultServes(res2.servings);
-                setResultServes2(res3.servings);
-                setResultTime(res2.readyInMinutes);
-                setResultTime2(res3.readyInMinutes);
-                setSearch(name);
-                setShow(true);
-                setLoading(false);
-            }
+            setResults( { results: [res.results[0], res.results[1]] } );
+            setSearch(name);
+            setShow(true);
+            setLoading(false);
         }
     }
 
     const closeRecipeHandler = () => {
         setShow(false);
+        clearRecipeStates();
     }
 
    
@@ -199,16 +208,16 @@ const FoodTable = () => {
                             >   
                                 <Card.Title>
                                     <a 
-                                        href={resultLink} 
+                                        href={results.results[0].sourceUrl} 
                                         target="_blank"
                                     >
-                                            {resultName}
+                                            {results.results[0].title}
                                     </a>
                                 </Card.Title>
                                 <Card.Body>
-                                    <Card.Text>Serves {resultServes} | Ready in {resultTime} minutes</Card.Text>
+                                    <Card.Text>Serves {results.results[0].servings} | Ready in {results.results[0].readyInMinutes} minutes</Card.Text>
                                 </Card.Body>
-                                <Card.Img variant="bottom" src={resultImageSrc} />
+                                <Card.Img variant="bottom" src={results.results[0].image} />
                             </Card>
                             <Card 
                                 bg='light'
@@ -216,16 +225,16 @@ const FoodTable = () => {
                             >   
                                 <Card.Title>
                                     <a 
-                                        href={resultLink2} 
+                                        href={results.results[1].sourceUrl} 
                                         target="_blank"
                                     >
-                                            {resultName2}
+                                            {results.results[1].title}
                                     </a>
                                 </Card.Title>
                                 <Card.Body>
-                                    <Card.Text>Serves {resultServes2} | Ready in {resultTime2} minutes</Card.Text>
+                                    <Card.Text>Serves {results.results[1].servings} | Ready in {results.results[1].readyInMinutes} minutes</Card.Text>
                                 </Card.Body>
-                                <Card.Img variant="bottom" src={resultImageSrc2} />
+                                <Card.Img variant="bottom" src={results.results[1].image} />
                             </Card>
                         </CardDeck>
                     </Modal.Body>
