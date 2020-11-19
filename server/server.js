@@ -221,6 +221,7 @@ router.post(
         console.log(data);
       }
     });
+
     const msg = {
        // Only temporary until we get
       // the email domain authenticated.
@@ -366,6 +367,104 @@ router.post(
     res.json(response);
   })
 );
+
+/*
+  Example JSON
+  {
+    username: "",
+    email: "",
+    fName: "some",
+    lName: "person"
+  }
+
+  Only filled entries should be used for updates.
+
+  For now, these edits will be offered on request, but
+  email changes should be email confirmed similar to resetPass.
+
+  Other notes
+*/ 
+router.post('/updateInfo', wrapAsync(async (req, res, next) => {
+  const {username, email, fName, lName} = req.body;
+
+  const newInfo = {
+    username: "",
+    email: "",
+    fName: "",
+    lName: ""
+  }
+
+  const response = {
+    error: ""
+  };
+
+  if (!userename && !email && !fName && !lName)
+  {
+    response.error = "No data entered";
+    return;
+  }
+
+  const db = client.db();
+
+  const user = await db.collection("Users").findOne({userId: req.user_id});
+
+  if (!username) {
+    newInfo.username = user.username;
+  }
+
+  if (!email) {
+    newInfo.email = user.email;
+  }
+
+  if (!fName) {
+    newInfo.fName = user.fName;
+  }
+
+  if (!lName) {
+    newInfo.lName = user.lName;
+  }
+
+  const emailCheck = await db.collection("Users").findOne({ email });
+  const usernameCheck = await db.collection("Users").findOne({ username });
+
+  if (emailCheck) {
+    response.error = "Email already taken";
+    res.status(400).json(response);
+    return;
+  }
+
+  if (usernameCheck) {
+    response.error = "Username already taken";
+    res.status(400).json(response);
+    return;
+  }
+
+  if (typeof username != "string") {
+    // validating data to string
+    response.error = "invalid data";
+    res.status(400).json(response);
+    return;
+  }
+  if (typeof password != "string") {
+    response.error = "invalid data";
+    res.status(400).json(response);
+    return;
+  }
+
+  // Maybe check type of fName and lName as well?
+
+  try {
+    await db.collection("Users").updateOne({userId: req.user_id}, {$set: {userInfo: newInfo}});
+  }
+
+  catch (e) {
+    console.log(e);
+    response.error = e;
+    res.status(400).json(response);
+  }
+
+  res.status(200).json(response);
+}));
 
 router.post(
   `/deleteFood`,
