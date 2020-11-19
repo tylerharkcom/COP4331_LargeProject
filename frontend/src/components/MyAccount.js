@@ -86,19 +86,23 @@ function MyAccount() {
     
 
     useEffect(() => {
-        // setfName(user.firstName);
-         //setlName(user.lastName);
-         //setEmail(user.email);
-         //setLoginName(user.loginName);
+        setfName(user.firstName);
+        setlName(user.lastName);
+        setEmail(user.email);
+        setLoginName(user.loginName);
+        setBday(user.birthday);
+        setGender(user.gender);
+        setCountry(user.country);
+        setLang(user.language);
          // Testing for localmachine use
-         setfName("user.firstName");
-         setlName("user.lastName");
-         setEmail("user.email");
-         setLoginName("user.loginName");
-         setBday("user.birthday");
-         setGender("user.gender");
-         setCountry("user.country");
-         setLang("user.language");
+        //  setfName("user.firstName");
+        //  setlName("user.lastName");
+        //  setEmail("user.email");
+        //  setLoginName("user.loginName");
+        //  setBday("user.birthday");
+        //  setGender("user.gender");
+        //  setCountry("user.country");
+        //  setLang("user.language");
      }, [user.firstName, user.lastName, user.email, user.loginName]);
     const renderGenderSelect = (props) => (
         <select value={gender} onChange={genderNameChange}>
@@ -508,14 +512,13 @@ function MyAccount() {
                     </Form.Label>
                     <Form.Control type="date" style={{marginLeft:'.5rem',width:"12.8rem"}}></Form.Control>
                 </Form.Row>
-                    <Form.Row>
-                        <Form.Group id="genderField"
-                            style={{marginLeft:'.5rem'}} 
-                            
+                <Form.Row>
+                    <Form.Group id="genderField"
+                        style={{marginLeft:'.5rem'}}            
                             >
-                        </Form.Group>
-                        <Form.Label class="col-sm-2.5 col-form-label" style={{marginTop:'1rem',paddingRight:"2.9em"}}>
-                            <b>Gender</b>
+                    </Form.Group>
+                    <Form.Label class="col-sm-2.5 col-form-label" style={{marginTop:'1rem',paddingRight:"2.9em"}}>
+                        <b>Gender</b>
                     </Form.Label>
                     <select  class="form-control" id="sel1" style={{marginLeft:'.5rem',marginTop:'1rem',width:"12.8rem"}}>
                         <option value ="prefNoSay">Prefer not to say</option>
@@ -526,7 +529,24 @@ function MyAccount() {
                 </Form.Row>
                 <Form.Row>
                     <Form.Group 
-                        id="bDayField"
+                        id="countryField"
+                        style={{marginLeft:'.5rem'}} 
+                        
+                        >
+                    </Form.Group>
+                    <Form.Label class="col-sm-2.5 col-form-label" style={{marginTop:'1rem',paddingRight:"2.6em"}}>
+                        <b>Country</b>
+                    </Form.Label>
+                    <select class="form-control" id="sel2" style={{marginLeft:'.5rem',marginTop:'1rem',width:"12.8rem"}}>
+                        <option value ="United States">United States</option>
+                        <option value ="Canada">Canada</option>
+                        <option value = "A">A</option>
+                        <option value = "Other">Other</option>
+                    </select>
+                </Form.Row>    
+                <Form.Row>
+                    <Form.Group 
+                        id="LanguageField"
                         style={{marginLeft:'.5rem'}} 
                         
                         >
@@ -535,9 +555,9 @@ function MyAccount() {
                         <b>Language</b>
                     </Form.Label>
                     <select class="form-control" id="sel2" style={{marginLeft:'.5rem',marginTop:'1rem',marginBottom:'1rem',width:"12.8rem"}}>
-                        <option value ="prefNoSay">Prefer not to say</option>
-                        <option value ="Male">Male</option>
-                        <option value = "Female">Female</option>
+                        <option value ="English">English</option>
+                        <option value ="Spanish">Spanish</option>
+                        <option value = "French">French</option>
                         <option value = "Other">Other</option>
                     </select>
                 </Form.Row>    
