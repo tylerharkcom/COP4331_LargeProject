@@ -1,6 +1,6 @@
 // TODO
-// - Add delete account button
-// - add update acc. info 
+// - Add Delete acct paragraph
+// - Add update acct info 
 
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
@@ -15,17 +15,26 @@ import sha256 from "../sha256";
 import Container from "react-bootstrap/Container";
 
 function MyAccount() {
+    // Info update vars
+    var newFName;
+    var newLName;
+    var newEmail;
+    var newUsername;
+    var newBDay;
+    var newGender;
+    var newCountry;
+    var newLang;
+    // PW Reset Vars
     var newPassword1;
     var newPassword2;
     var currPassword;
     const pwRequirements = " ";
-
+    
     const [pwShow, setPwShow] = useState(false);
     const [infoShow, setInfoShow] = useState(false);
     const [delMShow, setDelShow] = useState(false);
     const [delFinal,setDelFinalShow] = useState(false);
-
-
+    // PW msg
     const [messageCurr, setMessageCurr] = useState("");
     const [messageNewPW, setMessageNewPW] = useState("");
 
@@ -57,6 +66,12 @@ function MyAccount() {
         event.preventDefault();
         setDelFinalShow(true);
     };
+    const genderNameChange = (event) => {
+        event.preventDefault();
+        if (gender.localeCompare("prefNoSay") == 1)
+            setGender("Prefer not to say")
+        else setGender(gender);
+    }
 
 
     const user = JSON.parse(localStorage.getItem("user_data"));
@@ -65,10 +80,34 @@ function MyAccount() {
     const [email, setEmail] = useState("");
     const [loginName, setLoginName] = useState("");
     const [bDay, setBday] = useState("MM/DD/YYYY");
-    const [gender,setGender] = useState("");
+    const [gender,setGender] = useState("Prefer not to say");
     const [country,setCountry] = useState("location");
     const [lang, setLang] = useState("English");  
+    
 
+    useEffect(() => {
+        // setfName(user.firstName);
+         //setlName(user.lastName);
+         //setEmail(user.email);
+         //setLoginName(user.loginName);
+         // Testing for localmachine use
+         setfName("user.firstName");
+         setlName("user.lastName");
+         setEmail("user.email");
+         setLoginName("user.loginName");
+         setBday("user.birthday");
+         setGender("user.gender");
+         setCountry("user.country");
+         setLang("user.language");
+     }, [user.firstName, user.lastName, user.email, user.loginName]);
+    const renderGenderSelect = (props) => (
+        <select value={gender} onChange={genderNameChange}>
+            <option value="prefNoSay">Prefer not to say</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+    ); 
     const renderPwReqTooltip = (props) => (
         <Tooltip id="passwordReqTooltip" style={{minWidth: "200"}} {...props}>
         <div>
@@ -112,21 +151,7 @@ function MyAccount() {
             Delete Account   
         </Button>
     );
-    useEffect(() => {
-        setfName(user.firstName);
-        setlName(user.lastName);
-        setEmail(user.email);
-        setLoginName(user.loginName);
-        // Testing for localmachine use
-        //setfName("user.firstName");
-        //setlName("user.lastName");
-        //setEmail("user.email");
-        //setLoginName("user.loginName");
-        setBday("user.birthday");
-        setGender("user.gender");
-        setCountry("user.country");
-        setLang("user.language");
-    }, [user.firstName, user.lastName, user.email, user.loginName]);
+    
 
 
     const updatePasswordCheck = async (event) => {
@@ -233,7 +258,37 @@ function MyAccount() {
         return;
         }
     };
-
+    const updateAccountInfo = async (event) => {
+        var obj = { 
+            fName: newFName,
+            lName: newLName,
+            email: newEmail,
+            username: newUsername,
+            bDay: newBDay,
+            gender: newGender,
+            country: newCountry,
+            language: newLang
+         };
+        var js = JSON.stringify(obj);
+        try {
+            const response = await fetch("/api/updateAccount", {
+                method: "POST",
+                credentials: "include",
+                body: js,
+                headers: { "Content-Type": "application/json" },
+            });
+            var res = JSON.parse(await response.text());
+            if (response.status !== 200) {
+                alert(res.error);
+            } else {
+                alert("Account Updated!");
+                infoHandleClose();
+            }
+            } catch (e) {
+            console.log(e.toString());
+            return;
+            }
+        };
   return (
     <div id="accountDiv" class="center">
       <div id="accountWrapper">
@@ -361,6 +416,150 @@ function MyAccount() {
           </Form>
         </Card>
         {/* Update Account Modal */}
+        <Modal show={infoShow} onHide={infoHandleClose} >
+          <div id="updateinfoWrapper">
+            <Modal.Header>
+                <Modal.Title>
+                    <h1 style={{textAlign: "center"}}>
+                        Update Account Information
+                    </h1>
+                </Modal.Title>
+            </Modal.Header>
+            <Form>
+                <Form.Row>
+                    <Form.Group 
+                        id="fNameField" 
+                        className="form-inline" 
+                        style={{marginLeft:'.5rem',marginTop:'1rem',paddingRight:".5em"}} 
+                        as={Col}
+                        >
+                        <Form.Label class="col-sm-2.5 col-form-label" ><b>First Name</b></Form.Label>
+                        <Col sm="8">
+                            <Form.Control type="text" placeholder={fName} style={{marginLeft:'.5rem'}}></Form.Control>
+                        </Col>
+                        
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group 
+                        id="lNameField" 
+                        className="form-inline" 
+                        style={{marginLeft:'.5rem'}}
+                        as={Col}>
+                        <Form.Label class="col-sm-2.5 col-form-label">
+                            <b>Last Name</b>&nbsp;
+                        </Form.Label>
+                        <Col sm="8">
+                            <Form.Control 
+                                type="text" 
+                                placeholder={lName} 
+                                style={{marginLeft:'.5rem'
+                                }}>
+                            </Form.Control>
+                        </Col>
+                        </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group 
+                        id="emailField" 
+                        className="form-inline" 
+                        style={{marginLeft:'.5rem'}} 
+                        as={Col}
+                        >
+                        <Form.Label 
+                            class="col-sm-2.5 col-form-label"
+                            style={{paddingRight:"2.4em"
+                            }}>
+                                <b>Email</b>&nbsp;
+                        </Form.Label>
+                        <Col sm="8">
+                            <Form.Control 
+                                type="email" 
+                                placeholder={email} 
+                                style={{marginLeft:'.5rem'
+                                }}>
+                            </Form.Control>
+                        </Col>
+                        </Form.Group>
+                    
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group 
+                        id="usernameField" 
+                        className="form-inline" 
+                        style={{marginLeft:'.5rem'}} 
+                        as={Col}
+                        >
+                        <Form.Label class="col-sm-2.5 col-form-label"
+                        style={{paddingRight:".3em"}}
+                        ><b>Username</b>&nbsp;</Form.Label>
+                        <Col sm="8">
+                            <Form.Control type="text" placeholder={loginName} style={{marginLeft:'.5rem'}}></Form.Control>
+                        </Col>
+                    </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group id="bDayField"
+                        style={{marginLeft:'.5rem'}} 
+                        >
+                    </Form.Group>
+                    <Form.Label class="col-sm-2.5 col-form-label" style={{paddingRight:"2.2em"}}>
+                        <b>Birthday</b>
+                    </Form.Label>
+                    <Form.Control type="date" style={{marginLeft:'.5rem',width:"12.8rem"}}></Form.Control>
+                </Form.Row>
+                    <Form.Row>
+                        <Form.Group id="genderField"
+                            style={{marginLeft:'.5rem'}} 
+                            
+                            >
+                        </Form.Group>
+                        <Form.Label class="col-sm-2.5 col-form-label" style={{marginTop:'1rem',paddingRight:"2.9em"}}>
+                            <b>Gender</b>
+                    </Form.Label>
+                    <select  class="form-control" id="sel1" style={{marginLeft:'.5rem',marginTop:'1rem',width:"12.8rem"}}>
+                        <option value ="prefNoSay">Prefer not to say</option>
+                        <option value ="Male">Male</option>
+                        <option value = "Female">Female</option>
+                        <option value = "Other">Other</option>
+                    </select>
+                </Form.Row>
+                <Form.Row>
+                    <Form.Group 
+                        id="bDayField"
+                        style={{marginLeft:'.5rem'}} 
+                        
+                        >
+                    </Form.Group>
+                    <Form.Label class="col-sm-2.5 col-form-label" style={{marginTop:'1rem',paddingRight:"1.8em"}}>
+                        <b>Language</b>
+                    </Form.Label>
+                    <select class="form-control" id="sel2" style={{marginLeft:'.5rem',marginTop:'1rem',marginBottom:'1rem',width:"12.8rem"}}>
+                        <option value ="prefNoSay">Prefer not to say</option>
+                        <option value ="Male">Male</option>
+                        <option value = "Female">Female</option>
+                        <option value = "Other">Other</option>
+                    </select>
+                </Form.Row>    
+              <Modal.Footer>
+                <div class="form-group align-right">
+                  <Button
+                    id="updateInfoBut"
+                    variant="primary"
+                    type="submit"
+                    style={{margin:"5px"}}
+                    onClick={updateAccountInfo}
+                  >
+                    Update Info.
+                  </Button>
+                  <Button variant="secondary" onClick={infoHandleClose}>
+                    Close
+                  </Button>
+                </div>
+              </Modal.Footer>
+            </Form>
+          </div>
+        </Modal>
         {/* Update password Modal */} 
         <Modal show={pwShow} onHide={pwHandleClose} >
           <div id="updatePassWrapper">
