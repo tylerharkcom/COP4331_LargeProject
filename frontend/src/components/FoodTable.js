@@ -7,6 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import MyLoader from './MyLoadingSymbol';
+import AddFood from './AddFood';
 
 
 const FoodTable = () => {
@@ -32,6 +33,7 @@ const FoodTable = () => {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(false);
+    const [showFoodModal, setShowFoodModal] = useState(false);
     const [food, setFood] = useState({
         foods: [
             {
@@ -90,7 +92,7 @@ const FoodTable = () => {
 
     const addFood = event => {
         event.preventDefault();
-        alert('Thought you could add food, did ya?');
+        setShowFoodModal(true);
     }
 
     const deleteFood = event => {
@@ -245,6 +247,7 @@ const FoodTable = () => {
                     </Modal.Footer>
             </Modal>
             <MyLoader loading={loading} />
+            <AddFood show={showFoodModal} close={() => setShowFoodModal(false)} />
         </div>
     );
 };

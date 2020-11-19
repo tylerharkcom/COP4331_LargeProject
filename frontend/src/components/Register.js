@@ -134,7 +134,7 @@ function Register()
             id="registerDiv" 
             className="center"
         >
-            <div id="registerWrapper" className="text-center">
+            <div id="registerWrapper">
                 <h1 className="pageTitle">FoodBuddy</h1>
                 <form 
                     id="registerForm" 
