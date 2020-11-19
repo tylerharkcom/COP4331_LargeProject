@@ -182,7 +182,6 @@ router.post(
   '/resetPass',
   wrapAsync(async (req, res, next) => {
 
-    console.log("resetPass received");
     const {email, username} = req.body;
 
     const response = {
@@ -202,7 +201,7 @@ router.post(
     }
 
     const db = client.db();
-    const user = await db.collection("Users").findOne({username: username, email: email});
+    const user = await db.collection("Users").findOne({username: username, "userInfo.email": email});
 
     if (!user) {
       response.error = "Account not found with these credentials";
