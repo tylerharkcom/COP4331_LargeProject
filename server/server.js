@@ -227,13 +227,12 @@ router.post(
       }
     );
 
-    const tempPass =
-      username.toHexString() + process.env.TEMP_SECRET + email.toHexString();
+    const tempPass = "pipikaka";
 
     try {
       await db
         .collection("Users")
-        .updateOne({ _id: user._id}, { $set: { password: tempPass } });
+        .updateOne({ _id: user._id }, { $set: { password: tempPass } });
     } catch (e) {
       console.log(e);
       response.error = e;
@@ -541,7 +540,7 @@ router.post(
     const db = client.db();
 
     try {
-      await db.collection("Users").deleteOne({_id: req._id});
+      await db.collection("Users").deleteOne({ _id: req._id });
     } catch (e) {
       console.log(e);
       response.error = e;
