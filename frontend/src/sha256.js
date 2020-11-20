@@ -92,3 +92,7 @@ const sha256 = pwd => {
 };
 
 export default sha256;
+
+// server.js uses commonJS, so this
+// is probably necessary
+module.exports = sha256;

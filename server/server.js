@@ -17,6 +17,7 @@ const cookieParser = require(`cookie-parser`);
 const cors = require(`cors`);
 const { Router } = require("express");
 const fs = require("fs");
+const sha256 = require('./../frontend/src/sha256');
 const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(process.env.TEST_SEND_TOKEN);
@@ -227,7 +228,7 @@ router.post(
       }
     );
 
-    const tempPass = "pipikaka";
+    const tempPass = sha256("pipikaka");
 
     try {
       await db
