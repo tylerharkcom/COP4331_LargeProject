@@ -91,4 +91,4 @@ const sha256 = pwd => {
     return result;
 };
 
-export default sha256;
+module.exports = sha256;
