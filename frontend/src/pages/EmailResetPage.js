@@ -7,10 +7,7 @@ const EmailResetPage = () =>
 {
 
     return(
-      <div id="testPage" class="backgroundPage">
-        <body>
-        </body>
-        
+      <div id="testPage" className="emailTemplateBackground fillBackground">
         <EmailTemplate/>
       </div>
     );
