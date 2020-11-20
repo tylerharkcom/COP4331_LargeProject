@@ -101,7 +101,7 @@ function Register()
             const response = await fetch("/api/register", {
               method: "POST",
               body: js,
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json" }
             });
       
             var res = JSON.parse(await response.text());
@@ -134,7 +134,7 @@ function Register()
             id="registerDiv" 
             className="center"
         >
-            <div id="registerWrapper" className="text-center">
+            <div id="registerWrapper">
                 <h1 className="pageTitle">FoodBuddy</h1>
                 <form 
                     id="registerForm" 

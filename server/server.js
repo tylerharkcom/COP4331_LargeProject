@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
 const projectRoot = process.cwd();
 
@@ -15,8 +15,9 @@ const bodyparser = require(`body-parser`);
 const jwt = require(`jsonwebtoken`);
 const cookieParser = require(`cookie-parser`);
 const cors = require(`cors`);
-const { Router } = require("express");
+const { Router } = require('express');
 const fs = require('fs');
+const sha256 = require('./sha256');
 const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey(process.env.TEST_SEND_TOKEN);
@@ -181,13 +182,12 @@ router.post(
 );
 
 router.post(
-  '/resetPass',
+  "/resetPass",
   wrapAsync(async (req, res, next) => {
-
-    const {email, username} = req.body;
+    const { email, username } = req.body;
 
     const response = {
-      error: ""
+      error: "",
     };
 
     if (!username) {
@@ -203,7 +203,9 @@ router.post(
     }
 
     const db = client.db();
-    const user = await db.collection("Users").findOne({username: username, "userInfo.email": email});
+    const user = await db
+      .collection("Users")
+      .findOne({ username: username, "userInfo.email": email });
 
     if (!user) {
       response.error = "Account not found with these credentials";
@@ -211,56 +213,93 @@ router.post(
       return;
     }
 
-    const file = fs.readFile(projectRoot + "/server/index.html", "utf-8", (data, err) => {
-      if (err) {
-        console.log(err);
-      }
+    const file = fs.readFile(
+      projectRoot + "/server/index.html",
+      "utf-8",
+      (data, err) => {
+        if (err) {
+          console.log(err);
+        }
 
-      // Uncomment for debugging
-      else {
-        console.log(data);
+        // Uncomment for debugging
+        else {
+          console.log(data);
+        }
       }
-    });
+    );
 
+    const tempString = "pipikaka"
+    const tempPass = sha256(tempString);
+
+    try {
+      await db
+        .collection("Users")
+        .updateOne({ _id: user._id }, { $set: { password: tempPass } });
+    } catch (e) {
+      console.log(e);
+      response.error = e;
+      res.status(400).json(response);
+    }
     const msg = {
-       // Only temporary until we get
+      // Only temporary until we get
       // the email domain authenticated.
       // Also, probably should use
       // an environemnt variable here.
       from: "yousefeid707@gmail.com",
       to: email,
       subject: "Password Reset",
-      text:`Hello there, ${username}! It seems you've forgotten your FoodBuddy password. If that's you, follow the link`,
-      html: file
+      text: `Hello there, ${username}! It seems you've forgotten your FoodBuddy password. Your new password is ${tempString}. Use that on your next login and change it to your new password through MyAccount`,
+      html: file,
     };
-    
+
     sgMail.send(msg);
 
-    res.json(response);
+    res.status(200).json(response);
   })
 );
 
 router.get(
   `/getRecipes`,
   wrapAsync(async (req, res) => {
-    var resp1 = await fetch('https://api.spoonacular.com/recipes/complexSearch?apiKey='+process.env.API_KEY+'&query='+req.query.search+'&number=2', {
+    var resp1 = await fetch(
+      "https://api.spoonacular.com/recipes/complexSearch?apiKey=" +
+        process.env.API_KEY +
+        "&query=" +
+        req.query.search +
+        "&number=2",
+      {
         method: "GET",
-        headers: { "Content-Type": "application/json" }
-    });
+        headers: { "Content-Type": "application/json" },
+      }
+    );
 
     var res1 = JSON.parse(await resp1.text());
-        
-    var resp2 = await fetch('https://api.spoonacular.com/recipes/'+res1.results[0].id+'/information?apiKey='+process.env.API_KEY+'&includeNutrition=false', {
+
+    var resp2 = await fetch(
+      "https://api.spoonacular.com/recipes/" +
+        res1.results[0].id +
+        "/information?apiKey=" +
+        process.env.API_KEY +
+        "&includeNutrition=false",
+      {
         method: "GET",
-        headers: { "Content-Type": "application/json" }
-    });
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     var res2 = JSON.parse(await resp2.text());
-    var resp3 = await fetch('https://api.spoonacular.com/recipes/'+res1.results[1].id+'/information?apiKey='+process.env.API_KEY+'&includeNutrition=false', {
+    var resp3 = await fetch(
+      "https://api.spoonacular.com/recipes/" +
+        res1.results[1].id +
+        "/information?apiKey=" +
+        process.env.API_KEY +
+        "&includeNutrition=false",
+      {
         method: "GET",
-        headers: { "Content-Type": "application/json" }
-    });
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     var res3 = JSON.parse(await resp3.text());
-    
+
     var response = { results: [res2, res3] };
     if (!response) {
       res.status(400).json();
@@ -383,88 +422,90 @@ router.post(
   email changes should be email confirmed similar to resetPass.
 
   Other notes
-*/ 
-router.post('/updateInfo', wrapAsync(async (req, res, next) => {
-  const {username, email, fName, lName} = req.body;
+*/
+router.post(
+  "/updateInfo",
+  wrapAsync(async (req, res, next) => {
+    const { username, email, fName, lName } = req.body;
 
-  const newInfo = {
-    username: "",
-    email: "",
-    fName: "",
-    lName: ""
-  }
+    const newInfo = {
+      username: "",
+      email: "",
+      fName: "",
+      lName: "",
+    };
 
-  const response = {
-    error: ""
-  };
+    const response = {
+      error: "",
+    };
 
-  if (!userename && !email && !fName && !lName)
-  {
-    response.error = "No data entered";
-    return;
-  }
+    if (!userename && !email && !fName && !lName) {
+      response.error = "No data entered";
+      return;
+    }
 
-  const db = client.db();
+    const db = client.db();
 
-  const user = await db.collection("Users").findOne({userId: req.user_id});
+    const user = await db.collection("Users").findOne({ _id: req._id });
 
-  if (!username) {
-    newInfo.username = user.username;
-  }
+    if (!username) {
+      newInfo.username = user.username;
+    }
 
-  if (!email) {
-    newInfo.email = user.email;
-  }
+    if (!email) {
+      newInfo.email = user.email;
+    }
 
-  if (!fName) {
-    newInfo.fName = user.fName;
-  }
+    if (!fName) {
+      newInfo.fName = user.fName;
+    }
 
-  if (!lName) {
-    newInfo.lName = user.lName;
-  }
+    if (!lName) {
+      newInfo.lName = user.lName;
+    }
 
-  const emailCheck = await db.collection("Users").findOne({ email });
-  const usernameCheck = await db.collection("Users").findOne({ username });
+    const emailCheck = await db.collection("Users").findOne({ email });
+    const usernameCheck = await db.collection("Users").findOne({ username });
 
-  if (emailCheck) {
-    response.error = "Email already taken";
-    res.status(400).json(response);
-    return;
-  }
+    if (emailCheck) {
+      response.error = "Email already taken";
+      res.status(400).json(response);
+      return;
+    }
 
-  if (usernameCheck) {
-    response.error = "Username already taken";
-    res.status(400).json(response);
-    return;
-  }
+    if (usernameCheck) {
+      response.error = "Username already taken";
+      res.status(400).json(response);
+      return;
+    }
 
-  if (typeof username != "string") {
-    // validating data to string
-    response.error = "invalid data";
-    res.status(400).json(response);
-    return;
-  }
-  if (typeof password != "string") {
-    response.error = "invalid data";
-    res.status(400).json(response);
-    return;
-  }
+    if (typeof username != "string") {
+      // validating data to string
+      response.error = "invalid data";
+      res.status(400).json(response);
+      return;
+    }
+    if (typeof password != "string") {
+      response.error = "invalid data";
+      res.status(400).json(response);
+      return;
+    }
 
-  // Maybe check type of fName and lName as well?
+    // Maybe check type of fName and lName as well?
 
-  try {
-    await db.collection("Users").updateOne({userId: req.user_id}, {$set: {userInfo: newInfo}});
-  }
+    try {
+      await db
+        .collection("Users")
+        .updateOne({ userId: req.user_id }, { $set: { userInfo: newInfo } });
+    } catch (e) {
+      console.log(e);
+      response.error = e;
+      res.status(400).json(response);
+    }
 
-  catch (e) {
-    console.log(e);
-    response.error = e;
-    res.status(400).json(response);
-  }
-
-  res.status(200).json(response);
-}));
+    res.status(200).json(response);
+  })
+);
 
 router.post(
   `/deleteFood`,
@@ -491,30 +532,29 @@ router.post(
   })
 );
 
+router.post(
+  "/deleteAccount",
+  wrapAsync(async (req, res, next) => {
+    const response = {
+      error: "",
+    };
 
-router.post('/deleteAccount', wrapAsync(async (req, res, next) =>{
-  const response = {
-    error: ""
-  }
+    const db = client.db();
 
-  const db = client.db();
+    try {
+      await db.collection("Users").deleteOne({ _id: req._id });
+    } catch (e) {
+      console.log(e);
+      response.error = e;
+      res.status(400).json(response);
+      return;
+    }
 
-  try {
-    await db.collection("Users").deleteOne({userId: req.user_id});
-  }
+    response.error = "😱😱😱Account successfully deleted😱😱😱";
 
-  catch (e) {
-    console.log(e);
-    response.error = e;
-    res.status(400).json(response);
-    return;
-  }
-
-  response.error = "😱😱😱Account successfully deleted😱😱😱";
-
-  res.status(200).json(response);
-}));
-
+    res.status(200).json(response);
+  })
+);
 
 app.get("*", (req, res) => {
   res.sendFile(projectRoot + "/frontend/build/index.html");
