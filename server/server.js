@@ -228,12 +228,12 @@ router.post(
     );
 
     const tempPass =
-      username.toHexString() + process.env.TEMP_SALT + email.toHexString();
+      username.toHexString() + process.env.TEMP_SECRET + email.toHexString();
 
     try {
       await db
         .collection("Users")
-        .updateOne({ _id: req._id }, { $set: { password: tempPass } });
+        .updateOne({ _id: user._id}, { $set: { password: tempPass } });
     } catch (e) {
       console.log(e);
       response.error = e;
