@@ -541,7 +541,7 @@ router.post(
     const db = client.db();
 
     try {
-      await db.collection("Users").deleteOne({ userId: req.user_id });
+      await db.collection("Users").deleteOne({_id: req._id});
     } catch (e) {
       console.log(e);
       response.error = e;
