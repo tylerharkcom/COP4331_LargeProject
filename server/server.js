@@ -228,7 +228,7 @@ router.post(
     );
 
     const tempPass =
-      username.toHexString() + process.env.TEMP_SALT + email.toHexString;
+      username.toHexString() + process.env.TEMP_SALT + email.toHexString();
 
     try {
       await db
@@ -253,7 +253,7 @@ router.post(
 
     sgMail.send(msg);
 
-    res.json(response);
+    res.status(200).json(response);
   })
 );
 
