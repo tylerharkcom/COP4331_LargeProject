@@ -1,2 +1,3 @@
-const sha256 = require('sha256');
+import sha256 from './sha256';
+
 module.exports = sha256;
