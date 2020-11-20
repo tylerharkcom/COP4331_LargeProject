@@ -15,10 +15,10 @@ const bodyparser = require(`body-parser`);
 const jwt = require(`jsonwebtoken`);
 const cookieParser = require(`cookie-parser`);
 const cors = require(`cors`);
-const { Router } = require("express");
-const fs = require("fs");
-const sha256 = require('sha256');
-const sgMail = require("@sendgrid/mail");
+const { Router } = require('express');
+const fs = require('fs');
+const sha256 = require('./sha256');
+const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey(process.env.TEST_SEND_TOKEN);
 
