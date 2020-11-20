@@ -228,7 +228,8 @@ router.post(
       }
     );
 
-    const tempPass = sha256("pipikaka");
+    const tempString = "pipikaka"
+    const tempPass = sha256(tempString);
 
     try {
       await db
@@ -247,7 +248,7 @@ router.post(
       from: "yousefeid707@gmail.com",
       to: email,
       subject: "Password Reset",
-      text: `Hello there, ${username}! It seems you've forgotten your FoodBuddy password. Your new password is ${tempPass}. Use that on your next login and change it to a new password through MyAccount`,
+      text: `Hello there, ${username}! It seems you've forgotten your FoodBuddy password. Your new password is ${tempString}. Use that on your next login and change it to your new password through MyAccount`,
       html: file,
     };
 
