@@ -116,9 +116,15 @@ code {
 #fridgeCRUD {
   padding-bottom: 10px;
 }
-
+/* Added by Jon, I'm not sure where to place them 
+  for styling(relation to others^) purposes*/
 .tooltip-inner{
   max-width: 100% !important;
+}
+.emailTemplateBackground
+{
+  background-image: url(/src/images/banana.jpg);
+  background-size: 50px 50px; 
 }
 
 
