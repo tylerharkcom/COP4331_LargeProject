@@ -123,8 +123,8 @@ code {
 }
 .emailTemplateBackground
 {
-  background-image: url(/src/images/banana.jpg);
-  background-size: 50px 50px; 
+  background-color: #464646;
+  background-size: contain; 
 }
 
 

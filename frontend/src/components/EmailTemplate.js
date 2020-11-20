@@ -5,29 +5,43 @@ import Image from 'react-bootstrap/Image';
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
 import { Email, Item, A} from 'react-html-email';
-
+import Container from 'react-bootstrap/esm/Container';
+import Row from 'react-bootstrap/esm/Row';
+import Col from 'react-bootstrap/esm/Col';
+import banana from '../images/banana.jpg';
 const EmailTemplate = () => ( 
     <Email title ="Password reset">
         <Item align="center">
-            <mark><h1 className="title" style={{fontSize:"5rem",backgroundColor:"white"}}>FoodBuddy</h1></mark>
-            <Card align="center" style={{backgroundColor: "#DADADA",minHeight:"40rem"}}>
-            <Card align="center" style={{backgroundColor:"white",margin:"1rem",minHeight:"40rem",width:"40rem"}}>
+            <h1 className="title" style={{fontSize:"5rem",color:"#049A9E"}}>FoodBuddy</h1>
+            <Card align="center" style={{backgroundColor:"049A9E",margin:"1rem",minHeight:"40rem",width:"40rem"}}>
+                <Container>
+                    <Row>
+                        <Col xs={6} md={4}>
+                        <Image align="center" style={{marginLeft:"5rem",width:"150px",height:"150px"}} alt="ffff" src={banana} roundedCircle></Image>
+                        </Col>
+                    </Row>
+                </Container>
+    
                 <Item align="center">
-                <body style={{marginTop:"30rem",fontSize:"1.5rem"}}>                    
-                    <mark></mark>&nbsp; Hey! Click this link to reset your password! &nbsp;
-                </body>
+                    <h2 style={{marginTop:"10rem",fontSize:"3rem"}}>
+                        Forgot your password?</h2>
+                    <h2 style={{fontSize:"3rem"}}>
+                        Stay calm, we've got you covered.</h2>
+                    <body style={{fontSize:"2rem",marginLeft:"2.5rem",marginRight:"2.5rem"}}>
+                        Make a new one by clicking this link within 24 hours of receiving this email 
+                    </body>
                 </Item>
                 
                 
                 
-                <Button  size="lg" style={{marginLeft:"15rem",maxWidth:"10rem"}}>
-                    <A color="black" style={{padding: "10"}} href='group1largeproject.herokuapp.com/'>
+                <Button  size="lg" style={{backgroundColor:"#049A9E",marginLeft:"15rem",marginTop:"1rem",maxWidth:"10rem"}}>
+                    <A color="#0B2B53" style={{padding: "10"}} href='group1largeproject.herokuapp.com/'>
                         This link!
                     </A>
                 </Button> 
                 
             </Card>
-        </Card>
+        
         </Item>
     </Email>
 );
