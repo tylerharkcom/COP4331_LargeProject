@@ -16,14 +16,14 @@ const EmailTemplate = () => (
             <Card align="center" style={{backgroundColor:"049A9E",margin:"1rem",minHeight:"40rem",width:"40rem"}}>
                 <Container>
                     <Row>
-                        <Col xs={6} md={4}>
-                        <Image align="center" style={{marginLeft:"5rem",width:"150px",height:"150px"}} alt="ffff" src={banana} roundedCircle></Image>
+                        <Col xs={6} md={4} style={{display:"block",margin:"auto",marginTop:"2rem"}}>
+                        <Image align="center" style={{width:"150px",height:"150px"}} alt="ffff" src={banana} roundedCircle></Image>
                         </Col>
                     </Row>
                 </Container>
     
                 <Item align="center">
-                    <h2 style={{marginTop:"10rem",fontSize:"3rem"}}>
+                    <h2 style={{marginTop:"7rem",fontSize:"3rem"}}>
                         Forgot your password?</h2>
                     <h2 style={{fontSize:"3rem"}}>
                         Stay calm, we've got you covered.</h2>
@@ -34,9 +34,9 @@ const EmailTemplate = () => (
                 
                 
                 
-                <Button  size="lg" style={{backgroundColor:"#049A9E",marginLeft:"15rem",marginTop:"1rem",maxWidth:"10rem"}}>
-                    <A color="#0B2B53" style={{padding: "10"}} href='group1largeproject.herokuapp.com/'>
-                        This link!
+                <Button  size="lg" style={{backgroundColor:"#049A9E",marginLeft:"15rem",marginTop:"1rem",marginBottom:"1rem",maxWidth:"10rem"}}>
+                    <A color="#0B2B53" style={{padding: "10",textDecorationLine:"none"}} href='group1largeproject.herokuapp.com/'>
+                        Click here!
                     </A>
                 </Button> 
                 
