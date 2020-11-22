@@ -542,7 +542,8 @@ router.post(
     const db = client.db();
 
     try {
-      await db.collection("Users").deleteOne({ _id: req._id });
+      await db.collection("Users").deleteOne({ _id: req.user._id });
+      await db.collection("Fridge").deleteOne({userId: req.user._id});
     } catch (e) {
       console.log(e);
       response.error = e;
