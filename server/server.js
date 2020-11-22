@@ -228,7 +228,7 @@ router.post(
       }
     );
 
-    const tempString = "pipikaka"
+    const tempString = "pipikaka";
     const tempPass = sha256(tempString);
 
     try {
@@ -496,7 +496,7 @@ router.post(
     try {
       await db
         .collection("Users")
-        .updateOne({ userId: req.user_id }, { $set: { userInfo: newInfo } });
+        .updateOne({ userId: user._id}, { $set: { userInfo: newInfo } });
     } catch (e) {
       console.log(e);
       response.error = e;
