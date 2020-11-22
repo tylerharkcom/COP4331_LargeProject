@@ -424,7 +424,7 @@ router.post(
   Other notes
 */
 router.post(
-  "/updateInfo",
+  "/updateAccount",
   wrapAsync(async (req, res, next) => {
     const { username, email, fName, lName } = req.body;
 
