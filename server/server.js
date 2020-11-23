@@ -15,10 +15,10 @@ const bodyparser = require(`body-parser`);
 const jwt = require(`jsonwebtoken`);
 const cookieParser = require(`cookie-parser`);
 const cors = require(`cors`);
-const { Router } = require('express');
-const fs = require('fs');
-const sha256 = require('./sha256');
-const sgMail = require('@sendgrid/mail');
+const { Router } = require("express");
+const fs = require("fs");
+const sha256 = require("./sha256");
+const sgMail = require("@sendgrid/mail");
 
 sgMail.setApiKey(process.env.TEST_SEND_TOKEN);
 
@@ -345,9 +345,7 @@ router.post(
   wrapAsync(async (req, res, next) => {
     const db = client.db();
 
-    const fridge = await db
-      .collection("Fridge")
-      .findOne({ userId: req.user._id });
+    const fridge = db.collection("Fridge").find({ userId: req.user._id });
 
     let response = fridge;
     response._id = "Id not avail";
@@ -496,7 +494,7 @@ router.post(
     try {
       await db
         .collection("Users")
-        .updateOne({ userId: user._id}, { $set: { userInfo: newInfo } });
+        .updateOne({ userId: user._id }, { $set: { userInfo: newInfo } });
     } catch (e) {
       console.log(e);
       response.error = e;
@@ -543,7 +541,7 @@ router.post(
 
     try {
       await db.collection("Users").deleteOne({ _id: req.user._id });
-      await db.collection("Fridge").deleteMany({userId: req.user._id});
+      await db.collection("Fridge").deleteMany({userId: req.user._id });
     } catch (e) {
       console.log(e);
       response.error = e;
