@@ -108,73 +108,77 @@ const AddFoodModal = (props) =>
             show={props.show}
             onHide={props.close}
         >
-            <Modal.Header closeButton>
-                Add Food
-            </Modal.Header>
-            <Modal.Body>
-                <form id="addFoodForm" onSubmit={handleSubmit}>
-                    <div className="form-row">
-                        <label for="foodName">Food</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="foodName" 
-                            placeholder="Food type" 
-                            ref={(c) => food = c} 
-                        />
+            <div id="addFoodWrapper">
+                <Modal.Header closeButton>
+                    <h1>Add Food</h1>
+                </Modal.Header>
+                <Modal.Body>
+                    <form id="addFoodForm" onSubmit={handleSubmit}>
+                        <div className="form-row">
+                            <label for="foodName">Food</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="foodName" 
+                                placeholder="Food type" 
+                                ref={(c) => food = c} 
+                            />
+                        </div>
+                        <div className="form-row">
+                            <label for="foodBrand">Brand</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="foodBrand" 
+                                placeholder="Brand (optional)" 
+                                ref={(c) => brand = c} 
+                            />
+                        </div>
+                        <div className="form-row">
+                            <label for="foodExpDate">Expiration</label>
+                            <input 
+                                type="date" 
+                                className="form-control" 
+                                id="foodExpDate" 
+                                ref={(c) => expDateString = c} 
+                                onChange={dated}
+                            />
+                        </div>
+                        <div className="form-group text-right">
+                            <button 
+                                type="submit"
+                                className="btn btn-primary"
+                                onClick={handleSubmit}
+                                style={{marginLeft: '10px', marginTop: '10px'}}
+                            >
+                                Add
+                            </button>
+                            <button
+                                type="reset"
+                                className="btn btn-secondary"
+                                style={{marginLeft: '10px', marginTop: '10px'}}
+                            >
+                                Reset
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                onClick={handleClose}
+                                style={{marginLeft: '10px', marginTop: '10px'}}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </form>
+                    <div>
+                        <span id="addFoodMessage" style={messageStyle}>
+                            {message}
+                        </span>
                     </div>
-                    <div className="form-row">
-                        <label for="foodBrand">Brand</label>
-                        <input 
-                            type="text" 
-                            className="form-control" 
-                            id="foodBrand" 
-                            placeholder="Brand (optional)" 
-                            ref={(c) => brand = c} 
-                        />
-                    </div>
-                    <div className="form-row">
-                        <label for="foodExpDate">Expiration</label>
-                        <input 
-                            type="date" 
-                            className="form-control" 
-                            id="foodExpDate" 
-                            ref={(c) => expDateString = c} 
-                            onChange={dated}
-                        />
-                    </div>
-                    <div className="text-center">
-                        <button 
-                            type="submit"
-                            className="btn btn-primary"
-                            onClick={handleSubmit}
-                        >
-                            Add
-                        </button>
-                        <button
-                            type="reset"
-                            className="btn btn-secondary"
-                        >
-                            Reset
-                        </button>
-                        <button
-                            type="button"
-                            className="btn btn-secondary"
-                            onClick={handleClose}
-                        >
-                            Close
-                        </button>
-                    </div>
-                </form>
-            </Modal.Body>
-            <Modal.Footer>
-                <div>
-                    <span id="addFoodMessage" style={messageStyle}>
-                        {message}
-                    </span>
-                </div>
-            </Modal.Footer>
+                </Modal.Body>
+            </div>
         </Modal>
+            
     );
 };
 

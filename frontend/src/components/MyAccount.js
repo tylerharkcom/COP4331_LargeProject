@@ -614,7 +614,7 @@ function MyAccount() {
                 <span id="newPasswordMSG">{messageNewPW}</span>
               </Form.Group>
               <Modal.Footer>
-                <div class="form-group align-right">
+                <div className="form-group align-right">
                   <Button
                     id="updatePWBut"
                     variant="primary"
@@ -653,7 +653,7 @@ function MyAccount() {
             <Form>
               
               <Modal.Footer>
-              <div class="form-group align-right">
+              <div className="form-group align-right">
                   { delFinal ? <DelFinalButton /> : null}
                 </div>
                 <div class="form-group align-right">

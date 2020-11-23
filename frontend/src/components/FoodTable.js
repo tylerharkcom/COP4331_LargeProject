@@ -158,13 +158,7 @@ const FoodTable = () => {
             <Table striped bordered hover variant="dark">
                 <thead>
                     <tr>
-                    <th>
-                        <div id="selectAll" class="checkbox">
-                            <label>
-                            <input type="checkbox" /> Select All
-                            </label>
-                        </div>
-                    </th>
+                    <th></th>
                     <th>Food</th>
                     <th>Date expires</th>
                     <th>Date added</th>

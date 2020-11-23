@@ -82,7 +82,7 @@ code {
   border: 1px solid #DADADA;
 }
 
-#updatePassWrapper {
+#updatePassWrapper, #addFoodWrapper {
   background-color: #DADADA;
   padding: 10px;
 }
