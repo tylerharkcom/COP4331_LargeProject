@@ -7,7 +7,7 @@ const TableRow = (props) => {
   let food = props.item;
   let expDate = new Date(props.expDate);
   let current = new Date();
-  let timeDiff = Math.round((expDate.getTime() - current.getTime())/(1000*60*60*24));
+  let timeDiff = (Math.round((expDate.getTime() - current.getTime())/(1000*60*60*24)))+1;
   let timeDiffString = "";
   let icons = (
     <div>
@@ -28,11 +28,11 @@ const TableRow = (props) => {
     </div>
   );
 
-  if (timeDiff == -1) {
+  if (timeDiff == 0) {
     timeDiffString = "today";
-  } else if (timeDiff == 0) {
+  } else if (timeDiff == 1) {
     timeDiffString = timeDiff + " day";
-  } else if (timeDiff > 0) {
+  } else if (timeDiff > 1) {
     timeDiffString = timeDiff + " days";
   } else {
     timeDiffString = "expired";
