@@ -520,7 +520,7 @@ router.post(
     try {
       await db
         .collection("Fridge")
-        .updateOne({ userId: req.user._id }, { $pull: { fridge: { item } } });
+        .deleteOne({ userId: req.user._id }, { $pull: { fridge: { item } } });
     } catch (e) {
       console.log(e);
       response.error = e;
