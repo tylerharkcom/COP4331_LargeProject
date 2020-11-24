@@ -39,9 +39,9 @@ const TableRow = (props) =>
                     id={props.id}
                 />
             </td>
-            <td>{props.name}</td>
-            <td>{props.dateAdded}</td>
+            <td>{props.item}</td>
             <td>{props.dateExp}</td>
+            <td></td>
             <td>{icons}</td>
         </tr>
     );
