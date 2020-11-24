@@ -5,6 +5,7 @@ import "../../node_modules/react-crud-icons/dist/css/react-crud-icons.css";
 
 const TableRow = (props) => {
   let food = props.name;
+  let expDate = new Date(props.expDate).toLocaleDateString();
   let icons = (
     <div>
       <Icon name="edit" size="small" theme="dark" onClick={props.editFood} />
@@ -34,7 +35,7 @@ const TableRow = (props) => {
         />
       </td>
       <td>{props.item}</td>
-      <td>{props.expDate}</td>
+      <td>{expDate}</td>
       <td></td>
       <td>{icons}</td>
     </tr>

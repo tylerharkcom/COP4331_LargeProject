@@ -179,7 +179,7 @@ const FoodTable = () => {
                 id={index}
                 item={p.item}
                 selected={(event) => selectRowHandler(event, index)}
-                expDate={p.expDate.toDateString()}
+                expDate={p.expDate}
                 editFood={editFood}
                 deleteFood={deleteFood}
                 getRecipe={(event, name) => getRecipeHandler(event, name)}
