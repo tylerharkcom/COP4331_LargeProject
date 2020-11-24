@@ -30,7 +30,9 @@ const TableRow = (props) => {
 
   if (timeDiff == 0) {
     timeDiffString = "today";
-  } else if (timeDiff > 0) {
+  } else if (timeDiff == 1) {
+    timeDiffString = timeDiff + " day";
+  } else if (timeDiff > 1) {
     timeDiffString = timeDiff + " days";
   } else {
     timeDiffString = "expired";
