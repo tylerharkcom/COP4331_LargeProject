@@ -352,8 +352,6 @@ router.post(
     fridge._id = "Id not avail";
     fridge.userId = "userId not avail";
 
-    console.log(fridge);
-
     if (!fridge) {
       res.status(404);
       return;
