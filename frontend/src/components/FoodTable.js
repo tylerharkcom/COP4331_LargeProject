@@ -177,9 +177,9 @@ const FoodTable = () => {
             return (
               <TableRow
                 id={index}
-                name={p.item}
+                item={p.item}
                 selected={(event) => selectRowHandler(event, index)}
-                dateExp={p.dateExp}
+                expDate={p.expDate}
                 editFood={editFood}
                 deleteFood={deleteFood}
                 getRecipe={(event, name) => getRecipeHandler(event, name)}
