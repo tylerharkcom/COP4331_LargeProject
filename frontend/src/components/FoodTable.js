@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import TableRow from './TableRow';
 import Form from 'react-bootstrap/Form';
@@ -37,25 +37,38 @@ const FoodTable = () => {
     const [food, setFood] = useState({
         foods: [
             {
-                id: 1,
-                name: 'Kiwis',
-                dateAdded: '11/11/20',
-                dateExp: '11/22/20'
-            },
-            {
-                id: 2,
-                name: 'Chicken breast',
-                dateAdded: '11/11/20',
-                dateExp: '11/14/20'
-            },
-            {
-                id: 3,
-                name: 'Blackberries',
-                dateAdded: '11/11/20',
-                dateExp: '11/20/20'
+                item: '',
+                brand: '',
+                dateExp: ''
             }
         ]
     });
+
+    useEffect(() => {
+        loadFridgeHandler();
+    },[]);
+
+    const loadFridgeHandler = async () =>
+    {
+        try {
+            const response = await fetch("/api/loadFridge", {
+              method: "POST",
+              body: null,
+              headers: { "Content-Type": "application/json" },
+            });
+      
+            var res = JSON.parse(await response.text());
+      
+            if (response.status !== 200) {
+              alert('Mayday!');
+            } else {
+              setFood({ foods: res.fridge });
+            }
+          } catch (e) {
+            alert(e.toString());
+            return;
+          }
+    }
 
     const clearRecipeStates = () =>
     {
@@ -160,8 +173,8 @@ const FoodTable = () => {
                     <tr>
                     <th></th>
                     <th>Food</th>
-                    <th>Date expires</th>
-                    <th>Date added</th>
+                    <th>Expires in</th>
+                    <th>Amount</th>
                     <th></th>
                     </tr>
                 </thead>
@@ -241,7 +254,10 @@ const FoodTable = () => {
                     </Modal.Footer>
             </Modal>
             <MyLoader loading={loading} />
-            <AddFood show={showFoodModal} close={() => setShowFoodModal(false)} />
+            <AddFood show={showFoodModal} close={() => {
+                setShowFoodModal(false);
+                loadFridgeHandler();
+                }} />
         </div>
     );
 };
