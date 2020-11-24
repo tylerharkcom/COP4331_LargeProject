@@ -197,7 +197,7 @@ const FoodTable = () => {
                 expDate={p.expDate}
                 editFood={editFood}
                 deleteFood={ async (event, foodName) => {
-                    await this.deleteFood(event,foodName);
+                    await deleteFood(event,foodName);
                     await loadFridgeHandler();
                 }}
                 getRecipe={(event, name) => getRecipeHandler(event, name)}
