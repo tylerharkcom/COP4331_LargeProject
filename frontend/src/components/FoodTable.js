@@ -43,13 +43,12 @@ const FoodTable = () => {
 
   const loadFridgeHandler = async () => {
     try {
-      const response = await fetch("/api/loadFridge", {
+      const response =  fetch("/api/loadFridge", {
         method: "POST",
         body: null,
         headers: { "Content-Type": "application/json" },
       });
-
-      var res = JSON.parse(response.text());
+      var res = JSON.parse(await response.text());
 
       if (response.status !== 200) {
         alert("There was an issue loading the fridge.");
