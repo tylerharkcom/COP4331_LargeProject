@@ -509,7 +509,7 @@ router.post(
 router.post(
   `/deleteFood`,
   wrapAsync(async (req, res, next) => {
-    const item = req.body;
+    const { item } = req.body;
 
     const response = {
       error: "",
