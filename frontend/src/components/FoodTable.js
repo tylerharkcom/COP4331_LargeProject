@@ -38,7 +38,6 @@ const FoodTable = () => {
         foods: [
             {
                 item: '',
-                brand: '',
                 dateExp: ''
             }
         ]
@@ -182,6 +181,7 @@ const FoodTable = () => {
                     {
                         food.foods.map((p, index) => {
                             return <TableRow 
+                                id={index}
                                 name={p.item} 
                                 selected={(event) => selectRowHandler(event, index)} 
                                 dateExp={p.dateExp}
