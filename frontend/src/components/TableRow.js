@@ -7,7 +7,7 @@ const TableRow = (props) => {
   let food = props.item;
   let expDate = new Date(props.expDate);
   let current = new Date();
-  let timeDiff = (expDate.getTime() - current.getTime())/(1000*60*60*24);
+  let timeDiff = Math.round((expDate.getTime() - current.getTime())/(1000*60*60*24));
   let icons = (
     <div>
       <Icon name="edit" size="small" theme="dark" onClick={props.editFood} />
