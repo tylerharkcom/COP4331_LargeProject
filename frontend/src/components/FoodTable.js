@@ -118,9 +118,7 @@ const FoodTable = () => {
 
       if (response.status !== 200) {
         alert('There was an issue deleting the food');
-      } else {
-          alert(foodName + res.error);
-      }
+      } 
     } catch (e) {
       alert(e.toString());
       return;
