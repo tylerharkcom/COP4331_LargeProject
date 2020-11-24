@@ -43,10 +43,6 @@ const FoodTable = () => {
         ]
     });
 
-    useEffect(() => {
-        loadFridgeHandler();
-    },[]);
-
     const loadFridgeHandler = async () =>
     {
         try {
@@ -68,6 +64,10 @@ const FoodTable = () => {
             return;
           }
     }
+
+    useEffect(() => {
+        loadFridgeHandler();
+    },[]);
 
     const clearRecipeStates = () =>
     {
