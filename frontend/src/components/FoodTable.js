@@ -109,7 +109,7 @@ const FoodTable = () => {
     var js = JSON.stringify(obj);
 
     try {
-      const response = await fetch("/api/deleteFood", {
+      var response = await fetch("/api/deleteFood", {
         method: "POST",
         body: js,
         headers: { "Content-Type": "application/json" }
@@ -195,7 +195,7 @@ const FoodTable = () => {
                 expDate={p.expDate}
                 editFood={editFood}
                 deleteFood={ async (event, foodName) => {
-                    await deleteFood(event,foodName);
+                    await this.deleteFood(event,foodName);
                     await loadFridgeHandler();
                 }}
                 getRecipe={(event, name) => getRecipeHandler(event, name)}
