@@ -345,11 +345,14 @@ router.post(
   wrapAsync(async (req, res, next) => {
     const db = client.db();
 
-    const fridge = await db.collection("Fridge").find({ userId: req.user._id });
+    const fridge = await db
+      .collection("Fridge")
+      .findOne({ userId: req.user._id });
 
-    let response = fridge;
-    response._id = "Id not avail";
-    response.userId = "userId not avail";
+    fridge._id = "Id not avail";
+    fridge.userId = "userId not avail";
+
+    console.log(fridge);
 
     if (!fridge) {
       res.status(404);
