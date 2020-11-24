@@ -198,7 +198,7 @@ const FoodTable = () => {
                     deleteFood(event,foodName);
                     loadFridgeHandler();
                 }}
-                getRecipe={(event, name) => getRecipeHandler(event, name)}
+               // getRecipe={(event, name) => getRecipeHandler(event, name)}
               />
             );
           })}
