@@ -23,6 +23,7 @@ const AddFoodModal = (props) =>
 
     const checkDate = () =>
     {
+        check = false;
         let current = new Date();
         if(current.getFullYear()>expDate.getFullYear()){
             return;
