@@ -13,7 +13,7 @@ const TableRow = (props) => {
         name="delete"
         size="small"
         theme="dark"
-        onClick={props.deleteFood}
+        onClick={(event) => props.deleteFood(event, food)}
       />
       <button
         className="btn btn-secondary"

@@ -52,7 +52,7 @@ const FoodTable = () => {
       var res = JSON.parse(await response.text());
 
       if (response.status !== 200) {
-        alert("Mayday!");
+        alert("There was an issue loading the fridge.");
       } else {
         setFood({ foods: res.fridge });
       }
@@ -103,9 +103,29 @@ const FoodTable = () => {
     setShowFoodModal(true);
   };
 
-  const deleteFood = (event) => {
+  const deleteFood = async (event, name) => {
     event.preventDefault();
-    alert("Thought you could delete food, did ya?");
+    var obj = { item: name };
+    var js = JSON.stringify(obj);
+
+    try {
+      const response = await fetch("/api/deleteFood", {
+        method: "POST",
+        body: js,
+        headers: { "Content-Type": "application/json" }
+      });
+
+      var res = JSON.parse(await response.text());
+
+      if (response.status !== 200) {
+        return;
+      } else {
+        loadFridgeHandler();
+      }
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
   };
 
   const searchFood = (event) => {
@@ -147,12 +167,7 @@ const FoodTable = () => {
               Add food
             </button>
           </div>
-          <div style={{ marginLeft: "5px" }}>
-            <button className="btn btn-secondary" onClick={deleteFood}>
-              Delete
-            </button>
-          </div>
-          <FormControl type="text" placeholder="Search" className=" mr-sm-2" />
+          <FormControl style={{ marginLeft: "5px" }} type="text" placeholder="Search" className=" mr-sm-2" />
           <button
             className="btn btn-secondary"
             type="submit"
@@ -181,7 +196,7 @@ const FoodTable = () => {
                 selected={(event) => selectRowHandler(event, index)}
                 expDate={p.expDate}
                 editFood={editFood}
-                deleteFood={deleteFood}
+                deleteFood={(event, name) => deleteFood(event,name)}
                 getRecipe={(event, name) => getRecipeHandler(event, name)}
               />
             );
