@@ -61,7 +61,7 @@ const FoodTable = () => {
             if (response.status !== 200) {
               alert('Mayday!');
             } else {
-              setFood({ foods: res.fridge });
+              setFood({ foods: res });
             }
           } catch (e) {
             alert(e.toString());
