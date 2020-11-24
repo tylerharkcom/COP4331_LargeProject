@@ -39,7 +39,6 @@ function MyAccount() {
     const [messageNewPW, setMessageNewPW] = useState("");
 
     const pwHandleClose = (event) => {
-        event.preventDefault();
         setPwShow(false);
     };
     const pwHandleShow = (event) => {
@@ -264,15 +263,25 @@ function MyAccount() {
     };
     const updateAccountInfo = async (event) => {
         var obj = { 
-            fName: newFName,
-            lName: newLName,
-            email: newEmail,
-            username: newUsername,
-            bDay: newBDay,
-            gender: newGender,
-            country: newCountry,
-            language: newLang
+            fName: newFName.value,
+            lName: newLName.value,
+            email: newEmail.value,
+            username: newUsername.value,
+            bDay: newBDay.value,
+            gender: newGender.value,
+            country: newCountry.value,
+            language: newLang.value
          };
+        console.log(newFName);
+        console.log(newGender);
+        alert(newFName.value);
+        alert(newLName.value);
+        alert(newEmail.value);
+        alert(newUsername.value);
+        alert(newBDay.value);
+        alert(newGender.value);
+        alert(newCountry.value);
+        alert(newLang.value);
         var js = JSON.stringify(obj);
         try {
             const response = await fetch("/api/updateAccount", {
@@ -302,7 +311,7 @@ function MyAccount() {
           <Form style={{backgroundColor: "#DADADA",fontSize: "1.5rem"}}>
             <Form.Group as={Row}>
                 <Col sm="12">
-                    <Form.Label className="text-right" column sm="5" >
+                    <Form.Label className="text-right" column sm="5" style={{marginTop:".5rem"}} >
                         <b> Name : </b>
                     </Form.Label>
                         {fName.concat(" ", lName)}
@@ -434,12 +443,16 @@ function MyAccount() {
                     <Form.Group 
                         id="fNameField" 
                         className="form-inline" 
-                        style={{marginLeft:'.5rem',marginTop:'1rem',paddingRight:".5em"}} 
+                        style={{marginLeft:'1rem',marginTop:'1rem',paddingRight:".5em"}} 
                         as={Col}
                         >
                         <Form.Label class="col-sm-2.5 col-form-label" ><b>First Name</b></Form.Label>
                         <Col sm="8">
-                            <Form.Control type="text" placeholder={fName} style={{marginLeft:'.5rem'}}></Form.Control>
+                            <Form.Control 
+                                type="text" 
+                                placeholder={fName}
+                                ref={(c) => (newFName = c)} 
+                                style={{marginLeft:'.5rem'}}/>
                         </Col>
                         
                     </Form.Group>
@@ -448,7 +461,7 @@ function MyAccount() {
                     <Form.Group 
                         id="lNameField" 
                         className="form-inline" 
-                        style={{marginLeft:'.5rem'}}
+                        style={{marginLeft:'1rem'}}
                         as={Col}>
                         <Form.Label class="col-sm-2.5 col-form-label">
                             <b>Last Name</b>&nbsp;
@@ -456,10 +469,10 @@ function MyAccount() {
                         <Col sm="8">
                             <Form.Control 
                                 type="text" 
-                                placeholder={lName} 
+                                placeholder={lName}
+                                ref={(c) => (newLName = c)}  
                                 style={{marginLeft:'.5rem'
-                                }}>
-                            </Form.Control>
+                                }}/>
                         </Col>
                         </Form.Group>
                 </Form.Row>
@@ -467,7 +480,7 @@ function MyAccount() {
                     <Form.Group 
                         id="emailField" 
                         className="form-inline" 
-                        style={{marginLeft:'.5rem'}} 
+                        style={{marginLeft:'1rem'}} 
                         as={Col}
                         >
                         <Form.Label 
@@ -480,9 +493,9 @@ function MyAccount() {
                             <Form.Control 
                                 type="email" 
                                 placeholder={email} 
+                                ref={(c) => (newEmail = c)} 
                                 style={{marginLeft:'.5rem'
-                                }}>
-                            </Form.Control>
+                                }}/>
                         </Col>
                         </Form.Group>
                     
@@ -491,74 +504,92 @@ function MyAccount() {
                     <Form.Group 
                         id="usernameField" 
                         className="form-inline" 
-                        style={{marginLeft:'.5rem'}} 
+                        style={{marginLeft:'1rem'}} 
                         as={Col}
                         >
                         <Form.Label class="col-sm-2.5 col-form-label"
                         style={{paddingRight:".3em"}}
                         ><b>Username</b>&nbsp;</Form.Label>
                         <Col sm="8">
-                            <Form.Control type="text" placeholder={loginName} style={{marginLeft:'.5rem'}}></Form.Control>
+                            <Form.Control 
+                            type="text" 
+                            placeholder={loginName} 
+                            ref={(c) => (newUsername = c)} 
+                            style={{marginLeft:'.5rem'}}/>
                         </Col>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group id="bDayField"
-                        style={{marginLeft:'.5rem'}} 
+                        style={{marginLeft:'1rem'}} 
                         >
                     </Form.Group>
                     <Form.Label class="col-sm-2.5 col-form-label" style={{paddingRight:"2.2em"}}>
                         <b>Birthday</b>
                     </Form.Label>
-                    <Form.Control type="date" style={{marginLeft:'.5rem',width:"12.8rem"}}></Form.Control>
+                    <Form.Control 
+                        type="date"
+                        ref={(c) => (newBDay = c)}  
+                        style={{marginLeft:'.5rem',width:"12.8rem"}}/>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group id="genderField"
-                        style={{marginLeft:'.5rem'}}            
+                        style={{marginLeft:'1rem'}}            
                             >
                     </Form.Group>
                     <Form.Label class="col-sm-2.5 col-form-label" style={{marginTop:'1rem',paddingRight:"2.9em"}}>
                         <b>Gender</b>
                     </Form.Label>
-                    <select  class="form-control" id="sel1" style={{marginLeft:'.5rem',marginTop:'1rem',width:"12.8rem"}}>
-                        <option value ="prefNoSay">Prefer not to say</option>
-                        <option value ="Male">Male</option>
-                        <option value = "Female">Female</option>
-                        <option value = "Other">Other</option>
+                    <select  
+                        class="form-control" 
+                        id="sel1" 
+                        ref={(c) => (newGender = c)} 
+                        style={{marginLeft:'.5rem',marginTop:'1rem',width:"12.8rem"}}>
+                            <option value ="prefNoSay">Prefer not to say</option>
+                            <option value ="Male">Male</option>
+                            <option value = "Female">Female</option>
+                            <option value = "Other">Other</option>
                     </select>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group 
                         id="countryField"
-                        style={{marginLeft:'.5rem'}} 
-                        
+                        style={{marginLeft:'1rem'}} 
                         >
                     </Form.Group>
                     <Form.Label class="col-sm-2.5 col-form-label" style={{marginTop:'1rem',paddingRight:"2.6em"}}>
                         <b>Country</b>
                     </Form.Label>
-                    <select class="form-control" id="sel2" style={{marginLeft:'.5rem',marginTop:'1rem',width:"12.8rem"}}>
-                        <option value ="United States">United States</option>
-                        <option value ="Canada">Canada</option>
-                        <option value = "A">A</option>
-                        <option value = "Other">Other</option>
+                    <select 
+                        class="form-control" 
+                        id="sel2" 
+                        ref={(c) => (newCountry = c)} 
+                        style={{marginLeft:'.5rem',marginTop:'1rem',width:"12.8rem"}}>
+                            <option value ="United States">United States</option>
+                            <option value ="Canada">Canada</option>
+                            <option value = "A">A</option>
+                            <option value = "Other">Other</option>
                     </select>
                 </Form.Row>    
                 <Form.Row>
                     <Form.Group 
                         id="LanguageField"
-                        style={{marginLeft:'.5rem'}} 
+                        style={{marginLeft:'1rem'}} 
                         
                         >
                     </Form.Group>
                     <Form.Label class="col-sm-2.5 col-form-label" style={{marginTop:'1rem',paddingRight:"1.8em"}}>
                         <b>Language</b>
                     </Form.Label>
-                    <select class="form-control" id="sel2" style={{marginLeft:'.5rem',marginTop:'1rem',marginBottom:'1rem',width:"12.8rem"}}>
-                        <option value ="English">English</option>
-                        <option value ="Spanish">Spanish</option>
-                        <option value = "French">French</option>
-                        <option value = "Other">Other</option>
+                    <select 
+                        class="form-control" 
+                        id="sel2" 
+                        ref={(c) => (newLang = c)} 
+                        style={{marginLeft:'.5rem',marginTop:'1rem',marginBottom:'1rem',width:"12.8rem"}}>
+                            <option value ="English">English</option>
+                            <option value ="Spanish">Spanish</option>
+                            <option value = "French">French</option>
+                            <option value = "Other">Other</option>
                     </select>
                 </Form.Row>    
               <Modal.Footer>
