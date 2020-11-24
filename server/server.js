@@ -358,7 +358,7 @@ router.post(
       res.status(404);
       return;
     }
-    res.json(response);
+    res.json(fridge);
   })
 );
 
