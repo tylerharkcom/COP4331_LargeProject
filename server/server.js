@@ -345,7 +345,7 @@ router.post(
   wrapAsync(async (req, res, next) => {
     const db = client.db();
 
-    const fridge = db.collection("Fridge").find({ userId: req.user._id });
+    const fridge = await db.collection("Fridge").find({ userId: req.user._id });
 
     let response = fridge;
     response._id = "Id not avail";
@@ -541,7 +541,7 @@ router.post(
 
     try {
       await db.collection("Users").deleteOne({ _id: req.user._id });
-      await db.collection("Fridge").deleteMany({userId: req.user._id });
+      await db.collection("Fridge").deleteMany({ userId: req.user._id });
     } catch (e) {
       console.log(e);
       response.error = e;
