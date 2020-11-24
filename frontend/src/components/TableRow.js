@@ -4,7 +4,7 @@ import Icon from "react-crud-icons";
 import "../../node_modules/react-crud-icons/dist/css/react-crud-icons.css";
 
 const TableRow = (props) => {
-  let food = props.name;
+  let food = props.item;
   let expDate = new Date(props.expDate).toLocaleDateString();
   let icons = (
     <div>
