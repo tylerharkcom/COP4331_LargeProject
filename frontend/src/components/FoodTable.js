@@ -41,7 +41,7 @@ const FoodTable = () => {
     ],
   });
 
-  const loadFridgeHandler = async (event) => {
+  const loadFridgeHandler = async () => {
     try {
       const response = await fetch("/api/loadFridge", {
         method: "POST",
@@ -49,7 +49,7 @@ const FoodTable = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      var res = JSON.parse(await response.text());
+      var res = JSON.parse(response.text());
 
       if (response.status !== 200) {
         alert("There was an issue loading the fridge.");
