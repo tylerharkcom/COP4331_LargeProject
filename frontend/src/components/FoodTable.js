@@ -113,10 +113,10 @@ const FoodTable = () => {
     alert("You're not getting any results, buddy!");
   };
 
-  const getRecipeHandler = async (event, name) => {
+  const getRecipeHandler = async (event, item) => {
     event.preventDefault();
     setLoading(true);
-    var resp = await fetch("/api/getRecipes?search=" + name, {
+    var resp = await fetch("/api/getRecipes?search=" + item, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
