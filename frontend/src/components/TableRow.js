@@ -18,7 +18,7 @@ const TableRow = (props) => {
       <button
         style={{marginLeft: '20px'}}
         className="btn btn-secondary"
-       // onClick={(event) => props.getRecipe(event, food)}
+        onClick={(event) => props.getRecipe(event, food)}
       >
         Get Recipe
       </button>

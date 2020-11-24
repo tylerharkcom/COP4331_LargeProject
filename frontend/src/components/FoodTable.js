@@ -194,11 +194,11 @@ const FoodTable = () => {
                 selected={(event) => selectRowHandler(event, index)}
                 expDate={p.expDate}
                 editFood={editFood}
-                deleteFood={(event, foodName) => {
-                    deleteFood(event,foodName);
-                    loadFridgeHandler();
+                deleteFood={ async (event, foodName) => {
+                    await deleteFood(event,foodName);
+                    await loadFridgeHandler();
                 }}
-               // getRecipe={(event, name) => getRecipeHandler(event, name)}
+                getRecipe={(event, name) => getRecipeHandler(event, name)}
               />
             );
           })}
