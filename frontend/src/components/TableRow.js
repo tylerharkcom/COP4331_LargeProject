@@ -28,11 +28,11 @@ const TableRow = (props) => {
     </div>
   );
 
-  if (timeDiff == 0) {
+  if (timeDiff == -1) {
     timeDiffString = "today";
-  } else if (timeDiff == 1) {
+  } else if (timeDiff == 0) {
     timeDiffString = timeDiff + " day";
-  } else if (timeDiff > 1) {
+  } else if (timeDiff > 0) {
     timeDiffString = timeDiff + " days";
   } else {
     timeDiffString = "expired";
