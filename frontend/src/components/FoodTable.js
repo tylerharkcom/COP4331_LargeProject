@@ -53,7 +53,7 @@ const FoodTable = () => {
             const response = await fetch("/api/loadFridge", {
               method: "POST",
               body: null,
-              headers: { "Content-Type": "application/json" },
+              headers: { "Content-Type": "application/json" }
             });
       
             var res = JSON.parse(await response.text());
