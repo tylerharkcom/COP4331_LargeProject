@@ -342,7 +342,7 @@ router.post(
 
 router.post(
   `/loadFridge`,
-  wrapAsync(async (req, res) => {
+  wrapAsync(async (req, res, next) => {
     const db = client.db();
 
     const fridge = db.collection("Fridge").find({ userId: req.user._id });
