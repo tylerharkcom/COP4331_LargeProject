@@ -41,7 +41,7 @@ const FoodTable = () => {
     ],
   });
 
-  const loadFridgeHandler = async () => {
+  const loadFridgeHandler = async (event) => {
     try {
       const response = await fetch("/api/loadFridge", {
         method: "POST",
@@ -118,9 +118,7 @@ const FoodTable = () => {
       var res = JSON.parse(await response.text());
 
       if (response.status !== 200) {
-        return;
-      } else {
-        loadFridgeHandler();
+        alert('There was an issue deleting the food');
       }
     } catch (e) {
       alert(e.toString());
@@ -196,7 +194,10 @@ const FoodTable = () => {
                 selected={(event) => selectRowHandler(event, index)}
                 expDate={p.expDate}
                 editFood={editFood}
-                deleteFood={(event, name) => deleteFood(event,name)}
+                deleteFood={(event, name) => {
+                    deleteFood(event,name);
+                    loadFridgeHandler();
+                }}
                 getRecipe={(event, name) => getRecipeHandler(event, name)}
               />
             );
