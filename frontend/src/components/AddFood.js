@@ -25,19 +25,11 @@ const AddFoodModal = (props) =>
     {
         check = false;
         let current = new Date();
-        if(current.getFullYear()>expDate.getFullYear()){
-            return;
-        }
-        if(current.getMonth()>expDate.getMonth()){
-            return;
-        }
-        if(current.getDay()>expDate.getDay()){
+        if (current > expDate) {
             return;
         }
 
         check = true;
-        return;
-
     }
 
     const handleClose = (event) =>
