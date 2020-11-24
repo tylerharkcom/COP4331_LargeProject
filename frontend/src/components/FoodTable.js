@@ -103,9 +103,9 @@ const FoodTable = () => {
     setShowFoodModal(true);
   };
 
-  const deleteFood = async (event, name) => {
+  const deleteFood = async (event, foodName) => {
     event.preventDefault();
-    var obj = { item: name };
+    var obj = { item: foodName };
     var js = JSON.stringify(obj);
 
     try {
@@ -194,8 +194,8 @@ const FoodTable = () => {
                 selected={(event) => selectRowHandler(event, index)}
                 expDate={p.expDate}
                 editFood={editFood}
-                deleteFood={(event, name) => {
-                    deleteFood(event,name);
+                deleteFood={(event, foodName) => {
+                    deleteFood(event,foodName);
                     loadFridgeHandler();
                 }}
                 getRecipe={(event, name) => getRecipeHandler(event, name)}
