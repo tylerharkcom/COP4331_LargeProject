@@ -16,6 +16,7 @@ const TableRow = (props) => {
         onClick={(event) => props.deleteFood(event, food)}
       />
       <button
+        style={{marginLeft: '20px'}}
         className="btn btn-secondary"
         onClick={(event) => props.getRecipe(event, food)}
       >
