@@ -8,6 +8,7 @@ const TableRow = (props) => {
   let expDate = new Date(props.expDate);
   let current = new Date();
   let timeDiff = Math.round((expDate.getTime() - current.getTime())/(1000*60*60*24));
+  let timeDiffString = "";
   let icons = (
     <div>
       <Icon name="edit" size="small" theme="dark" onClick={props.editFood} />
@@ -27,6 +28,14 @@ const TableRow = (props) => {
     </div>
   );
 
+  if (timeDiff == 0) {
+    timeDiffString = "today";
+  } else if (timeDiff > 0) {
+    timeDiffString = timeDiff + " days";
+  } else {
+    timeDiffString = "expired";
+  }
+
   return (
     <tr>
       <td>
@@ -38,7 +47,7 @@ const TableRow = (props) => {
         />
       </td>
       <td>{props.item}</td>
-      <td>{timeDiff} days</td>
+      <td>{timeDiffString}</td>
       <td></td>
       <td>{icons}</td>
     </tr>
