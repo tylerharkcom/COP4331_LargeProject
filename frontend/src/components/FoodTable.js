@@ -43,7 +43,7 @@ const FoodTable = () => {
 
   const loadFridgeHandler = async () => {
     try {
-      const response =  fetch("/api/loadFridge", {
+      const response = await fetch("/api/loadFridge", {
         method: "POST",
         body: null,
         headers: { "Content-Type": "application/json" },
