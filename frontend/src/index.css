@@ -33,6 +33,7 @@ code {
 .backgroundPage {
   background-image: url(/src/images/dill.jpg);
   background-size: contain;
+  background-attachment: fixed; 
 }
 
 .fillBackground {
@@ -76,15 +77,17 @@ code {
 }
 
 
-#loginWrapper, #registerWrapper, #accountWrapper, #resetPassWrapper {
+#loginWrapper, #registerWrapper, #resetPassWrapper {
   background-color: #464646;
   padding: 10px;
   border: 1px solid #DADADA;
 }
-
-#updatePassWrapper, #addFoodWrapper {
-  background-color: #DADADA;
+#accountWrapper {
+  background-color: #464646;
   padding: 10px;
+}
+#accountModalWrapper, #addFoodWrapper {
+  background-color: #DADADA;
 }
 
 #loginWrapper:hover {
@@ -124,7 +127,8 @@ code {
 .emailTemplateBackground
 {
   background-color: #464646;
-  background-size: contain; 
+  background-size: contain;
+  background-attachment: fixed; 
 }
 
 

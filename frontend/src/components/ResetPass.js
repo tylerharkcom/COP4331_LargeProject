@@ -9,6 +9,12 @@ function ResetPass()
   var username, email;
 
   const [message, setMessage] = useState('');
+  
+  const goToLogin = event => 
+  {
+      event.preventDefault();
+      window.location.href = '/';
+  }
 
   const requestPassReset = async event => 
   {
@@ -123,6 +129,13 @@ function ResetPass()
                 value="Reset Password"
                 onClick={requestPassReset}
               />
+              <button 
+                            type="button" 
+                            className="btn btn-group btn-secondary mx-1" 
+                            onClick={goToLogin}
+                        >
+                            Go to login
+                        </button>
             </div>
           </form>
           <span

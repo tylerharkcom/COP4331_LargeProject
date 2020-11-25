@@ -31,6 +31,7 @@ const FoodTable = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const [checkmark, setCheckmark] = useState( [] );
   const [showFoodModal, setShowFoodModal] = useState(false);
   const [food, setFood] = useState({
     foods: [
@@ -40,7 +41,7 @@ const FoodTable = () => {
       },
     ],
   });
-
+  
   const loadFridgeHandler = async () => {
     try {
       const response = await fetch("/api/loadFridge", {
@@ -53,12 +54,18 @@ const FoodTable = () => {
       if (response.status !== 200) {
         alert("There was an issue loading the fridge.");
       } else {
+        let initializeChecks = [];
+        for (let i = 0; i<res.fridge.length; i++) {
+          initializeChecks = [...initializeChecks, false];
+        }
         setFood({ foods: res.fridge });
+        setCheckmark( [initializeChecks] );
       }
     } catch (e) {
       alert(e.toString());
       return;
     }
+    console.log(checkmark);
   };
 
   useEffect(() => {
@@ -87,9 +94,10 @@ const FoodTable = () => {
   };
 
   const selectRowHandler = (event, foodIndex) => {
-    console.log(event.target.checked);
-    let select = event.target.checked ? "selected" : "deselected";
-    alert(foodIndex + " row " + select);
+    let checks = [...checkmark];
+    checks[foodIndex] = event.target.checked;
+    setCheckmark( checks );
+    console.log(checkmark);
   };
 
   const editFood = (event) => {
@@ -125,7 +133,7 @@ const FoodTable = () => {
     }
   };
 
-  const searchFood = (event) => {
+  const searchFood = (event, criteria) => {
     event.preventDefault();
     alert("You're not getting any results, buddy!");
   };

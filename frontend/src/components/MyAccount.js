@@ -39,7 +39,6 @@ function MyAccount() {
   const [messageNewPW, setMessageNewPW] = useState("");
 
   const pwHandleClose = (event) => {
-    event.preventDefault();
     setPwShow(false);
   };
   const pwHandleShow = (event) => {
@@ -47,7 +46,6 @@ function MyAccount() {
     setPwShow(true);
   };
   const infoHandleClose = (event) => {
-    event.preventDefault();
     setInfoShow(false);
   };
   const infoHandleShow = (event) => {
@@ -55,7 +53,6 @@ function MyAccount() {
     setInfoShow(true);
   };
   const delHandleClose = (event) => {
-    event.preventDefault();
     setDelShow(false);
   };
   const delHandleShow = (event) => {
@@ -266,21 +263,11 @@ function MyAccount() {
             lName: newLName.value,
             email: newEmail.value,
             username: newUsername.value,
-            bDay: newBDay.value,
-            gender: newGender.value,
-            country: newCountry.value,
-            language: newLang.value
+            // bDay: newBDay.value,
+            // gender: newGender.value,
+            // country: newCountry.value,
+            // language: newLang.value
          };
-        
-
-        alert(newFName.value);
-        alert(newLName.value);
-        alert(newEmail.value);
-        alert(newUsername.value);
-        alert(newBDay.value);
-        alert(newGender.value);
-        alert(newCountry.value);
-        alert(newLang.value);
         
     var js = JSON.stringify(obj);
     try {
@@ -444,8 +431,11 @@ function MyAccount() {
           </Form>
         </Card>
         {/* Update Account Modal */}
-        <Modal show={infoShow} onHide={infoHandleClose}>
-          <div id="updateinfoWrapper">
+        <Modal 
+          centered
+          show={infoShow} 
+          onHide={infoHandleClose}>
+          <div style={{backgroundColor:"#DADADA",padding:"10px"}}>
             <Modal.Header>
               <Modal.Title>
                 <h1 style={{ textAlign: "center" }}>
@@ -627,36 +617,45 @@ function MyAccount() {
           </div>
         </Modal>
         {/* Update password Modal */}
-        <Modal show={pwShow} onHide={pwHandleClose}>
-          <div id="updatePassWrapper">
-            <Modal.Header>
-              <Modal.Title>
-                <h1>Update password</h1>
-              </Modal.Title>
+        <Modal 
+          centered
+          show={pwShow} 
+          onHide={pwHandleClose}>
+        <div style={{backgroundColor:"#DADADA",padding:"10px"}}>
+            <Modal.Header >
+                <h1 style={{ marginLeft:"5rem",marginRight:"3rem"}}>
+                  Update password
+                </h1>
             </Modal.Header>
             <Form>
-              <Form.Group controlId="currentPassword">
+              <Form.Group controlId="currentPassword" >
                 <Form.Label>Current password</Form.Label>
                 <Form.Control
                   type="password"
-                  placeholder="Current password"
+                  placeholder="Please enter your current password"
                   ref={(c) => (currPassword = c)}
                 />
                 <Form.Text className="text-muted"></Form.Text>
                 <span id="currPasswordMSG">{messageCurr}</span>
               </Form.Group>
-              <Form.Label htmlFor="newPassword1">New Password</Form.Label>
+              <Form.Label htmlFor="newPassword1">New password</Form.Label>
               <OverlayTrigger placement="bottom" overlay={renderPwReqTooltip}>
                 <Form.Control
                   type="password"
                   id="newPassword1"
+                  placeholder="Please enter your new password"
                   aria-describedby={pwRequirements}
                   ref={(c) => (newPassword1 = c)}
                 />
               </OverlayTrigger>
               <Form.Group controlId="newPassword2">
-                <Form.Label>Please enter your new password again</Form.Label>
-                <Form.Control type="password" ref={(c) => (newPassword2 = c)} />
+                <Form.Label style={{marginTop:"1rem"}}>
+                  Confirm new password</Form.Label>
+                <Form.Control 
+                  type="password" 
+                  placeholder="Please enter your new password again"
+                  ref={(c) => (newPassword2 = c)} 
+                />
                 <span id="newPasswordMSG">{messageNewPW}</span>
               </Form.Group>
               <Modal.Footer>
@@ -680,6 +679,7 @@ function MyAccount() {
         </Modal>
         {/* Delete Account Modal */}
         <Modal
+          centered
           show={delMShow}
           onHide={delHandleClose}
           style={{
@@ -687,7 +687,7 @@ function MyAccount() {
             textAlign: "center",
           }}
         >
-          <div id="deletePassWrapper">
+          <div style={{backgroundColor:"#DADADA"}}>
             <Modal.Header>
               <Col sm="12">
                 <Modal.Title class="text-center">
@@ -697,12 +697,12 @@ function MyAccount() {
             </Modal.Header>
             <h6 style={{ margin: "5px" }}>
               How did it come to this. Was there just too many cooks in the
-              kitchen? Well if You're sure about deleting your account go ahead,
+              kitchen? Well if you're sure about deleting your account go ahead,
               we can't stop you. We're not cops, we're FoodBuddy.{" "}
             </h6>
             <Form>
               <Modal.Footer>
-                <div className="form-group align-right">
+                <div>
                   {delFinal ? <DelFinalButton /> : null}
                 </div>
                 <div class="form-group align-right">
