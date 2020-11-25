@@ -19,6 +19,7 @@ const { Router } = require("express");
 const fs = require("fs");
 const sha256 = require("./sha256");
 const sgMail = require("@sendgrid/mail");
+const { userInfo } = require("os");
 
 sgMail.setApiKey(process.env.TEST_SEND_TOKEN);
 
@@ -150,7 +151,7 @@ router.post(
       .collection("Users")
       .findOne({ username: username, password: password });
 
-    const response = {
+    let response = {
       fName: "",
       lName: "",
       email: "",
@@ -171,13 +172,8 @@ router.post(
       id: user._id.toHexString(),
     });
 
-    response.fName = user.userInfo.fName;
-    response.lName = user.userInfo.lName;
-    response.email = user.userInfo.email;
-    response.bDay = user.userInfo.bDay;
-    response.gender = user.userInfo.gender;
-    response.language = user.userInfo.language;
-    response.country = user.userInfo.country;
+    response = { ...response, ...user.userInfo };
+    console.log(response);
 
     res
       .status(200)
