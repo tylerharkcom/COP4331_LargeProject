@@ -406,22 +406,6 @@ router.post(
   })
 );
 
-/*
-  Example JSON
-  {
-    username: "",
-    email: "",
-    fName: "some",
-    lName: "person"
-  }
-
-  Only filled entries should be used for updates.
-
-  For now, these edits will be offered on request, but
-  email changes should be email confirmed similar to resetPass.
-
-  Other notes
-*/
 router.post(
   "/updateAccount",
   wrapAsync(async (req, res, next) => {
@@ -536,7 +520,7 @@ router.post(
 
     try {
       await db.collection("Users").deleteOne({ _id: req.user._id });
-      await db.collection("Fridge").deleteMany({ userId: req.user._id });
+      await db.collection("Fridge").deleteOne({ userId: req.user._id });
     } catch (e) {
       console.log(e);
       response.error = e;
