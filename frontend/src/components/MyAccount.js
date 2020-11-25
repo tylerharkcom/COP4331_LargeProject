@@ -111,6 +111,7 @@ function MyAccount() {
             <option value="Other">Other</option>
         </select>
     ); 
+  
     const renderPwReqTooltip = (props) => (
         <Tooltip id="passwordReqTooltip" style={{minWidth: "200"}} {...props}>
         <div>
@@ -262,6 +263,7 @@ function MyAccount() {
         }
     };
     const updateAccountInfo = async (event) => {
+        event.preventDefault();
         var obj = { 
             fName: newFName.value,
             lName: newLName.value,
@@ -272,8 +274,8 @@ function MyAccount() {
             country: newCountry.value,
             language: newLang.value
          };
-        console.log(newFName);
-        console.log(newGender);
+        
+
         alert(newFName.value);
         alert(newLName.value);
         alert(newEmail.value);
@@ -385,9 +387,9 @@ function MyAccount() {
                         <button
                             type="submit"
                             id ="updateInfoButton"
-                            class="btn btn-primary"
+                            class="btn btn-info "
                             onClick={infoHandleShow}
-                            style={{alignItems:"center",margin: ".75rem",width:"10rem",height:"25"}}
+                            style={{backgroundColor:"#049A9E",outlineColor:"#049A9E",alignItems:"center",margin: ".75rem",width:"10rem",height:"25"}}
                         >
                             Update Info.
                         </button>
@@ -399,8 +401,7 @@ function MyAccount() {
                             class="btn btn-info"
                             onClick={pwHandleShow}
                             style={{
-                                backgroundColor:"green",
-                                borderColor:"green",
+                                backgroundColor:"#049A9E",outlineColor:"#049A9E",                                
                                 alignItems:"center",
                                 margin: ".75rem",
                                 width:"10rem",
@@ -450,7 +451,7 @@ function MyAccount() {
                         <Col sm="8">
                             <Form.Control 
                                 type="text" 
-                                placeholder={fName}
+                                defaultValue={fName}
                                 ref={(c) => (newFName = c)} 
                                 style={{marginLeft:'.5rem'}}/>
                         </Col>
@@ -469,7 +470,7 @@ function MyAccount() {
                         <Col sm="8">
                             <Form.Control 
                                 type="text" 
-                                placeholder={lName}
+                                defaultValue={lName}
                                 ref={(c) => (newLName = c)}  
                                 style={{marginLeft:'.5rem'
                                 }}/>
@@ -492,7 +493,7 @@ function MyAccount() {
                         <Col sm="8">
                             <Form.Control 
                                 type="email" 
-                                placeholder={email} 
+                                defaultValue={email} 
                                 ref={(c) => (newEmail = c)} 
                                 style={{marginLeft:'.5rem'
                                 }}/>
@@ -513,7 +514,7 @@ function MyAccount() {
                         <Col sm="8">
                             <Form.Control 
                             type="text" 
-                            placeholder={loginName} 
+                            defaultValue={loginName} 
                             ref={(c) => (newUsername = c)} 
                             style={{marginLeft:'.5rem'}}/>
                         </Col>
