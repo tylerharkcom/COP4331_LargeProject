@@ -410,77 +410,100 @@ router.post(
   })
 );
 
+/*
+  Example JSON
+  {
+    username: "",
+    email: "",
+    fName: "some",
+    lName: "person"
+  }
+
+  Only filled entries should be used for updates.
+
+  For now, these edits will be offered on request, but
+  email changes should be email confirmed similar to resetPass.
+
+  Other notes
+*/
 router.post(
   "/updateAccount",
   wrapAsync(async (req, res, next) => {
-    const {
-      username,
-      email,
-      fName,
-      lName,
-      bDay,
-      gender,
-      country,
-      language,
-    } = req.body;
+    const { username, email, fName, lName } = req.body;
 
     const newInfo = {
-      email,
-      fName,
-      lName,
-      bDay,
-      gender,
-      country,
-      language,
+      username: "",
+      email: "",
+      fName: "",
+      lName: "",
     };
 
     const response = {
       error: "",
     };
 
-    if (!username || !email || !fName || !lName) {
+    if (!userename && !email && !fName && !lName) {
       response.error = "No data entered";
-      res.status(400).json(response);
       return;
     }
+
     const db = client.db();
-    var emailCheck, usernameCheck;
-    if (email != req.user.email) {
-      emailCheck = await db.collection("Users").findOne({ email });
+
+    const user = await db.collection("Users").findOne({ _id: req._id });
+
+    if (!username) {
+      newInfo.username = user.username;
     }
-    if (username != req.user.username) {
-      usernameCheck = await db.collection("Users").findOne({ username });
+
+    if (!email) {
+      newInfo.email = user.email;
     }
+
+    if (!fName) {
+      newInfo.fName = user.fName;
+    }
+
+    if (!lName) {
+      newInfo.lName = user.lName;
+    }
+
+    const emailCheck = await db.collection("Users").findOne({ email });
+    const usernameCheck = await db.collection("Users").findOne({ username });
 
     if (emailCheck) {
       response.error = "Email already taken";
       res.status(400).json(response);
       return;
     }
+
     if (usernameCheck) {
       response.error = "Username already taken";
       res.status(400).json(response);
       return;
     }
+
     if (typeof username != "string") {
       // validating data to string
       response.error = "invalid data";
       res.status(400).json(response);
       return;
     }
+    if (typeof password != "string") {
+      response.error = "invalid data";
+      res.status(400).json(response);
+      return;
+    }
+
+    // Maybe check type of fName and lName as well?
 
     try {
       await db
         .collection("Users")
-        .updateOne(
-          { _id: req.user._id },
-          { $set: { userInfo: newInfo, username } }
-        );
+        .updateOne({ userId: user._id }, { $set: { userInfo: newInfo } });
     } catch (e) {
       console.log(e);
       response.error = e;
       res.status(400).json(response);
-      return;
     }
 
     res.status(200).json(response);
@@ -523,7 +546,7 @@ router.post(
 
     try {
       await db.collection("Users").deleteOne({ _id: req.user._id });
-      await db.collection("Fridge").deleteOne({ userId: req.user._id });
+      await db.collection("Fridge").deleteMany({ userId: req.user._id });
     } catch (e) {
       console.log(e);
       response.error = e;
