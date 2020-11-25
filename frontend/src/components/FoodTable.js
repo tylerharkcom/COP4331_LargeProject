@@ -41,7 +41,7 @@ const FoodTable = () => {
       },
     ],
   });
-
+  
   const loadFridgeHandler = async () => {
     try {
       const response = await fetch("/api/loadFridge", {
@@ -59,7 +59,7 @@ const FoodTable = () => {
           initializeChecks = [...initializeChecks, false];
         }
         setFood({ foods: res.fridge });
-        setCheckmark( { checked: [...initializeChecks] } );
+        setCheckmark( { checked: [initializeChecks] } );
         console.log(checkmark.checked);
       }
     } catch (e) {
