@@ -59,7 +59,7 @@ const FoodTable = () => {
           initializeChecks = [...initializeChecks, false];
         }
         setFood({ foods: res.fridge });
-        setCheckmark( { initializeChecks } );
+        setCheckmark( initializeChecks );
         console.log(checkmark);
       }
     } catch (e) {
@@ -94,9 +94,10 @@ const FoodTable = () => {
   };
 
   const selectRowHandler = (event, foodIndex) => {
-    console.log(event.target.checked);
-    let select = event.target.checked ? "selected" : "deselected";
-    alert(foodIndex + " row " + select);
+    let checks = [...checkmark];
+    checks[foodIndex] = event.target.checked;
+    setCheckmark( checks );
+    console.log(checkmark);
   };
 
   const editFood = (event) => {
