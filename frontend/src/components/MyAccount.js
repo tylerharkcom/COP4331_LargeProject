@@ -259,6 +259,7 @@ function MyAccount() {
     }
   };
   const updateAccountInfo = async (event) => {
+    event.preventDefault();
     var obj = {
       fName: newFName.value,
       lName: newLName.value,
