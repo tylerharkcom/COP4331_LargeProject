@@ -31,7 +31,7 @@ const FoodTable = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
-  const [checkmark, setCheckmark] = useState( { checked: [] } );
+  const [checkmark, setCheckmark] = useState( [] );
   const [showFoodModal, setShowFoodModal] = useState(false);
   const [food, setFood] = useState({
     foods: [
@@ -59,8 +59,8 @@ const FoodTable = () => {
           initializeChecks = [...initializeChecks, false];
         }
         setFood({ foods: res.fridge });
-        setCheckmark( { checked: [initializeChecks] } );
-        console.log(checkmark.checked);
+        setCheckmark( { initializeChecks } );
+        console.log(checkmark);
       }
     } catch (e) {
       alert(e.toString());
