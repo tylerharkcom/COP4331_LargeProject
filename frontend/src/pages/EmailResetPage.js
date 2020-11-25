@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderEmail } from 'react-html-email'
-import EmailTemplate from '../components/EmailTemplate';
+import EmailTemplate from '../components/EmailPwResetTemplate';
 
 const messageHtml =  renderEmail(<EmailTemplate />); // HTML code
 const EmailResetPage = () =>
