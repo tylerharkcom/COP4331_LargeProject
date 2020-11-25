@@ -437,45 +437,27 @@ router.post(
     } = req.body;
 
     const newInfo = {
-      username: "",
-      email: "",
-      fName: "",
-      lName: "",
-      username: "",
-      bDay: "",
-      gender: "",
-      country: "",
-      language: "",
+      username,
+      email,
+      fName,
+      lName,
+      username,
+      bDay,
+      gender,
+      country,
+      language,
     };
 
     const response = {
       error: "",
     };
 
-    if (!userename && !email && !fName && !lName) {
+    if (!username && !email && !fName && !lName) {
       response.error = "No data entered";
       return;
     }
 
     const db = client.db();
-
-    const user = await db.collection("Users").findOne({ _id: req.user._id });
-
-    if (!username) {
-      newInfo.username = user.username;
-    }
-
-    if (!email) {
-      newInfo.email = user.email;
-    }
-
-    if (!fName) {
-      newInfo.fName = user.fName;
-    }
-
-    if (!lName) {
-      newInfo.lName = user.lName;
-    }
 
     const emailCheck = await db.collection("Users").findOne({ email });
     const usernameCheck = await db.collection("Users").findOne({ username });
@@ -503,8 +485,6 @@ router.post(
       res.status(400).json(response);
       return;
     }
-
-    // Maybe check type of fName and lName as well?
 
     try {
       await db
