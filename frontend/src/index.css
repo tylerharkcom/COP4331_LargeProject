@@ -33,6 +33,7 @@ code {
 .backgroundPage {
   background-image: url(/src/images/dill.jpg);
   background-size: contain;
+  background-attachment: fixed; 
 }
 
 .fillBackground {
@@ -124,7 +125,8 @@ code {
 .emailTemplateBackground
 {
   background-color: #464646;
-  background-size: contain; 
+  background-size: contain;
+  background-attachment: fixed; 
 }
 
 
