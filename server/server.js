@@ -421,7 +421,6 @@ router.post(
     } = req.body;
 
     const newInfo = {
-      username,
       email,
       fName,
       lName,
@@ -432,8 +431,6 @@ router.post(
       language,
     };
 
-    console.log(newInfo);
-
     const response = {
       error: "",
     };
@@ -443,7 +440,6 @@ router.post(
       res.status(400).json(response);
       return;
     }
-    console.log("1");
     const db = client.db();
     var emailCheck, usernameCheck;
     if (email != req.user.email) {
@@ -458,33 +454,32 @@ router.post(
       res.status(400).json(response);
       return;
     }
-    console.log("4");
     if (usernameCheck) {
       response.error = "Username already taken";
       res.status(400).json(response);
       return;
     }
-    console.log("5");
     if (typeof username != "string") {
       // validating data to string
       response.error = "invalid data";
       res.status(400).json(response);
       return;
     }
-    console.log("6");
+
     try {
-      console.log("trying");
       await db
         .collection("Users")
-        .updateOne({ _id: req.user._id }, { $set: { userInfo: newInfo } });
-      console.log("here");
+        .updateOne(
+          { _id: req.user._id },
+          { $set: { userInfo: newInfo, username } }
+        );
     } catch (e) {
       console.log(e);
       response.error = e;
       res.status(400).json(response);
       return;
     }
-    console.log("final");
+
     res.status(200).json(response);
   })
 );
