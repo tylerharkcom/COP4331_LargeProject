@@ -77,15 +77,17 @@ code {
 }
 
 
-#loginWrapper, #registerWrapper, #accountWrapper, #resetPassWrapper {
+#loginWrapper, #registerWrapper, #resetPassWrapper {
   background-color: #464646;
   padding: 10px;
   border: 1px solid #DADADA;
 }
-
-#updatePassWrapper, #addFoodWrapper {
-  background-color: #DADADA;
+#accountWrapper {
+  background-color: #464646;
   padding: 10px;
+}
+#accountModalWrapper, #addFoodWrapper {
+  background-color: #DADADA;
 }
 
 #loginWrapper:hover {
