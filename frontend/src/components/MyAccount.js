@@ -266,21 +266,11 @@ function MyAccount() {
             lName: newLName.value,
             email: newEmail.value,
             username: newUsername.value,
-            bDay: newBDay.value,
-            gender: newGender.value,
-            country: newCountry.value,
-            language: newLang.value
+            // bDay: newBDay.value,
+            // gender: newGender.value,
+            // country: newCountry.value,
+            // language: newLang.value
          };
-        
-
-        alert(newFName.value);
-        alert(newLName.value);
-        alert(newEmail.value);
-        alert(newUsername.value);
-        alert(newBDay.value);
-        alert(newGender.value);
-        alert(newCountry.value);
-        alert(newLang.value);
         
     var js = JSON.stringify(obj);
     try {
