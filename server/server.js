@@ -154,6 +154,10 @@ router.post(
       fName: "",
       lName: "",
       email: "",
+      bDay: "",
+      gender: "",
+      country: "",
+      language: "",
       error: "",
     };
 
@@ -170,6 +174,10 @@ router.post(
     response.fName = user.userInfo.fName;
     response.lName = user.userInfo.lName;
     response.email = user.userInfo.email;
+    response.bDay = user.userInfo.bDay;
+    response.gender = user.userInfo.gender;
+    response.language = user.userInfo.language;
+    response.country = user.userInfo.country;
 
     res
       .status(200)
