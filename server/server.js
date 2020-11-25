@@ -425,13 +425,28 @@ router.post(
 router.post(
   "/updateAccount",
   wrapAsync(async (req, res, next) => {
-    const { username, email, fName, lName } = req.body;
+    const {
+      username,
+      email,
+      fName,
+      lName,
+      username,
+      bDay,
+      gender,
+      country,
+      language,
+    } = req.body;
 
     const newInfo = {
       username: "",
       email: "",
       fName: "",
       lName: "",
+      username: "",
+      bDay: "",
+      gender: "",
+      country: "",
+      language: "",
     };
 
     const response = {
@@ -445,7 +460,7 @@ router.post(
 
     const db = client.db();
 
-    const user = await db.collection("Users").findOne({ _id: req._id });
+    const user = await db.collection("Users").findOne({ _id: req.user._id });
 
     if (!username) {
       newInfo.username = user.username;
@@ -495,7 +510,7 @@ router.post(
     try {
       await db
         .collection("Users")
-        .updateOne({ userId: user._id }, { $set: { userInfo: newInfo } });
+        .updateOne({ userId: req.user._id }, { $set: { userInfo: newInfo } });
     } catch (e) {
       console.log(e);
       response.error = e;
