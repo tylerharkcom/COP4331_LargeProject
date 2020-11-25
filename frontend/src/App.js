@@ -8,7 +8,8 @@ import DashboardPage from './pages/DashboardPage';
 import RegisterPage from './pages/RegisterPage';
 import AccountPage from './pages/AccountPage';
 import ResetPassPage from './pages/ResetPassPage';
-import EmailResetPage from './pages/EmailResetPage';
+import resetPwEmailPage from './pages/EmailResetPage';
+import verifyEmail from './pages/EmailVerifyPage';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/account" component={AccountPage} />
         <Route exact path="/resetPass" component={ResetPassPage} />
-        <Route exact path="/emailTest" component={EmailResetPage}/>
+        <Route exact path="/emailTest" component={resetPwEmailPage}/>
+        <Route exact path="/emailVerify" component={verifyEmail}/>
         <Redirect to="/" />
       </Switch>
     </Router>
