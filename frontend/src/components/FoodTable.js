@@ -59,7 +59,7 @@ const FoodTable = () => {
           initializeChecks = [...initializeChecks, false];
         }
         setFood({ foods: res.fridge });
-        setCheckmark( [...initializeChecks] );
+        setCheckmark( initializeChecks );
         console.log(checkmark);
       }
     } catch (e) {
