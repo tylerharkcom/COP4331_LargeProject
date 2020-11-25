@@ -31,7 +31,7 @@ const FoodTable = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
-  const [checkmark, setCheckmark] = useState( {checks: []} );
+  const [checkmark, setCheckmark] = useState([]);
   const [showFoodModal, setShowFoodModal] = useState(false);
   const [food, setFood] = useState({
     foods: [
@@ -59,13 +59,13 @@ const FoodTable = () => {
           initializeChecks = [...initializeChecks, false];
         }
         setFood({ foods: res.fridge });
-        setCheckmark( { checks: [...initializeChecks] } );
+        setCheckmark( () => [...initializeChecks] );
       }
     } catch (e) {
       alert(e.toString());
       return;
     }
-    console.log(checkmark.checks);
+    console.log(checkmark);
   };
 
   useEffect(() => {
@@ -94,10 +94,10 @@ const FoodTable = () => {
   };
 
   const selectRowHandler = (event, foodIndex) => {
-    let checks = [...checkmark.checks];
+    let checks = [...checkmark];
     checks[foodIndex] = event.target.checked;
-    setCheckmark( { checks: checks } );
-    console.log(checkmark.checks);
+    setCheckmark( () => [...checks]);
+    console.log(checkmark);
   };
 
   const editFood = (event) => {
