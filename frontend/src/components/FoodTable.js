@@ -60,12 +60,12 @@ const FoodTable = () => {
         }
         setFood({ foods: res.fridge });
         setCheckmark( initializeChecks );
-        console.log(checkmark);
       }
     } catch (e) {
       alert(e.toString());
       return;
     }
+    console.log(checkmark);
   };
 
   useEffect(() => {
