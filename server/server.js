@@ -432,32 +432,37 @@ router.post(
       language,
     };
 
+    console.log(newInfo);
+
     const response = {
       error: "",
     };
 
     if (!username && !email && !fName && !lName) {
       response.error = "No data entered";
+      res.status(400).json(response);
       return;
     }
-
+    console.log("1");
     const db = client.db();
 
     const emailCheck = await db.collection("Users").findOne({ email });
+    console.log("2");
     const usernameCheck = await db.collection("Users").findOne({ username });
+    console.log("3");
 
     if (emailCheck) {
       response.error = "Email already taken";
       res.status(400).json(response);
       return;
     }
-
+    console.log("4");
     if (usernameCheck) {
       response.error = "Username already taken";
       res.status(400).json(response);
       return;
     }
-
+    console.log("5");
     if (typeof username != "string") {
       // validating data to string
       response.error = "invalid data";
@@ -478,6 +483,7 @@ router.post(
       console.log(e);
       response.error = e;
       res.status(400).json(response);
+      return;
     }
 
     res.status(200).json(response);
