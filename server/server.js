@@ -445,11 +445,13 @@ router.post(
     }
     console.log("1");
     const db = client.db();
-
-    const emailCheck = await db.collection("Users").findOne({ email });
-    console.log("2");
-    const usernameCheck = await db.collection("Users").findOne({ username });
-    console.log("3");
+    var emailCheck, usernameCheck;
+    if (email != req.user.email) {
+      emailCheck = await db.collection("Users").findOne({ email });
+    }
+    if (username != req.user.username) {
+      usernameCheck = await db.collection("Users").findOne({ username });
+    }
 
     if (emailCheck) {
       response.error = "Email already taken";
@@ -469,23 +471,20 @@ router.post(
       res.status(400).json(response);
       return;
     }
-    if (typeof password != "string") {
-      response.error = "invalid data";
-      res.status(400).json(response);
-      return;
-    }
-
+    console.log("6");
     try {
+      console.log("trying");
       await db
         .collection("Users")
-        .updateOne({ userId: req.user._id }, { $set: { userInfo: newInfo } });
+        .updateOne({ _id: req.user._id }, { $set: { userInfo: newInfo } });
+      console.log("here");
     } catch (e) {
       console.log(e);
       response.error = e;
       res.status(400).json(response);
       return;
     }
-
+    console.log("final");
     res.status(200).json(response);
   })
 );
