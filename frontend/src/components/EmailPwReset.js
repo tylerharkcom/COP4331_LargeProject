@@ -6,7 +6,7 @@ import { Email, Item, A} from 'react-html-email';
 import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/esm/Row';
 import Col from 'react-bootstrap/esm/Col';
-import EmailPic1 from '../images/EmailPic1.jpg';
+import EmailPic from '../images/kiwis.jpg';
 
 // TODO Make a temp password
 // Set font family
@@ -19,7 +19,7 @@ const EmailTemplate = () => (
                 <Container>
                     <Row>
                         <Col xs={6} md="auto" style={{display:"block",margin:"auto",}}>
-                        <Image align="center" style={{width:"24em",height:"22.5rem"}} alt="ffff" src={EmailPic1} ></Image>
+                        <Image align="center" style={{width:"24em",height:"22.5rem"}} alt="ffff" src={EmailPic} ></Image>
                         </Col>
                     </Row>
                 </Container>
