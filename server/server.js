@@ -424,7 +424,6 @@ router.post(
       email,
       fName,
       lName,
-      username,
       bDay,
       gender,
       country,
