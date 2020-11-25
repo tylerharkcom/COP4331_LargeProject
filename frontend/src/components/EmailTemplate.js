@@ -23,18 +23,18 @@ const EmailTemplate = () => (
                 </Container>
     
                 <Item align="center">
-                    <h2 style={{marginTop:"7rem",fontSize:"3rem"}}>
+                    <h2 style={{marginTop:"7rem",fontSize:"2rem"}}>
                         Forgot your password?</h2>
-                    <h2 style={{fontSize:"3rem"}}>
+                    <h2 style={{fontSize:"2rem"}}>
                         Stay calm, we've got you covered.</h2>
-                    <body style={{fontSize:"2rem",marginLeft:"2.5rem",marginRight:"2.5rem"}}>
-                        Make a new one by clicking this link within 24 hours of receiving this email 
+                    <body style={{fontSize:"1.25rem",marginLeft:"2.5rem",marginRight:"2.5rem"}}>
+                        Make a new one by clicking this link to login & updating your password on the account page! 
                     </body>
                 </Item>
                 
                 
                 
-                <Button  size="lg" style={{backgroundColor:"#049A9E",marginLeft:"15rem",marginTop:"1rem",marginBottom:"1rem",maxWidth:"10rem"}}>
+                <Button  size="lg" outline-color="red" style={{backgroundColor:"#049A9E",outlineColor:"#049A9E",marginLeft:"15rem",marginTop:"1rem",marginBottom:"1rem",maxWidth:"10rem"}}>
                     <A color="#0B2B53" style={{padding: "10",textDecorationLine:"none"}} href='group1largeproject.herokuapp.com/'>
                         Click here!
                     </A>
