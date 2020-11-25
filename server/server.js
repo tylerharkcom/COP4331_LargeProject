@@ -434,7 +434,7 @@ router.post(
       error: "",
     };
 
-    if (!username && !email && !fName && !lName) {
+    if (!username || !email || !fName || !lName) {
       response.error = "No data entered";
       res.status(400).json(response);
       return;
