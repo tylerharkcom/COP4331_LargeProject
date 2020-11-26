@@ -124,7 +124,7 @@ const FoodTable = () => {
           initializeChecks = [...initializeChecks, false];
         }
     setFood({foods: expired});
-    setCheckmark( [...expired] );
+    setCheckmark( [...initializeChecks] );
   }
 
   const deleteFood = async (event, foodName) => {
