@@ -48,6 +48,10 @@ const AddFoodModal = (props) =>
         }
         let date = Date.parse(expDateString.value);
         expDate = Date(date);
+        expDate.setHours(23);
+        expDate.setMinutes(59);
+        expDate.setSeconds(59);
+        expDate.setMilliseconds(999);
 
         console.log(expDate);
         if(!(expDate instanceof Date)){
