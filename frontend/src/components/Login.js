@@ -49,7 +49,7 @@ function Login() {
           birthday: res.bDay,
           country: res.country,
           language: res.language,
-          country: res.country,
+          gender: res.gender,
         });
 
         setMessage("");
