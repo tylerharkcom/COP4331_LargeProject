@@ -80,6 +80,17 @@ function MyAccount() {
   const [country, setCountry] = useState("location");
   const [lang, setLang] = useState("English");
 
+  Updateuser(() =>{
+    setfName(updatedUser.firstName);
+    setlName(updatedUser.lastName);
+    setEmail(updatedUser.email);
+    setLoginName(updatedUser.loginName);
+    setBday(updatedUser.birthday);
+    setGender(updatedUser.gender);
+    setCountry(updatedUser.country);
+    setLang(updatedUser.language);
+  });
+  
   useEffect(() => {
     setfName(user.firstName);
     setlName(user.lastName);
@@ -298,11 +309,9 @@ function MyAccount() {
       } 
       else {
         alert("Account Updated!");
-        localStorage.setItem("user_data", JSON.stringify(updatedUser));
-        user = JSON.parse(localStorage.getItem("user_data"));
-        console.log(fName);
-        // quick workaround
-        window.location.href = "/account";
+        localStorage.setItem("user_data", js);
+        Updateuser();
+        console.log(fName.value);
         infoHandleClose();
       }
     } catch (e) {
@@ -329,7 +338,10 @@ function MyAccount() {
                 >
                   <b> Name : </b>
                 </Form.Label>
+                <div>
                 {fName.concat(" ", lName)}
+
+                </div>
               </Col>
             </Form.Group>
             <Form.Group as={Row}>
