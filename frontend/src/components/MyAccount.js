@@ -265,17 +265,17 @@ function MyAccount() {
   const updateAccountInfo = async (event) => {
     event.preventDefault();
     var updatedUser = { 
-      fName: newFName.value,
-      lName: newLName.value,
-      email: newEmail.value,
-      username: newUsername.value,
-      bDay: newBDay.value,
-      gender: newGender.value,
-      country: newCountry.value,
-      language: newLang.value
+      fName: newFName,
+      lName: newLName,
+      email: newEmail,
+      username: newUsername,
+      bDay: newBDay,
+      gender: newGender,
+      country: newCountry,
+      language: newLang
       };
       // Testing Vals
-      console.log(newFName);
+      console.log(newFName.value);
       console.log(newLName.value);
       console.log(newEmail.value);
       console.log( newUsername.value);
@@ -299,7 +299,9 @@ function MyAccount() {
       else {
         alert("Account Updated!");
         localStorage.setItem("user_data", JSON.stringify(updatedUser));
-        const user = JSON.parse(localStorage.getItem("user_data"));
+        user = JSON.parse(localStorage.getItem("user_data"));
+        console.log(fName);
+      
         infoHandleClose();
       }
     } catch (e) {
