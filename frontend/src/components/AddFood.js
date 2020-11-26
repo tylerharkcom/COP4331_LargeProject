@@ -46,11 +46,12 @@ const AddFoodModal = (props) =>
             setMessage('Check your date');
             return;
         }
-        expDate = Date(expDateString.value);
-        expDate.setHours(23);
-        expDate.setMinutes(59);
-        expDate.setSeconds(59);
-        expDate.setMilliseconds(999);
+        let year = expDateString.value.substr(0,4);
+        let month = expDateString.value.substr(5,2);
+        let day = expDateString.value.substr(8,2);
+        let str = month + '-' + day + '-' + year;
+        expDate = Date(str);
+        
 
         console.log(expDate);
         if(!(expDate instanceof Date)){
