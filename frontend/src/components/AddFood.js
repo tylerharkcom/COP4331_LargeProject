@@ -46,10 +46,10 @@ const AddFoodModal = (props) =>
             setMessage('Check your date');
             return;
         }
-        let str = expDateString.value.replace(/-/g,"/");
-        expDate = Date(str);
-        
 
+        let date = new Date(expDateString.value);
+        expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
+    
         console.log(expDate);
         if(!(expDate instanceof Date)){
             setMessage('Check your date');
