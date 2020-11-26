@@ -25,6 +25,7 @@ const AddFoodModal = (props) =>
     {
         check = false;
         let current = new Date();
+        console.log(current);
         if (current > expDate) {
             return;
         }
