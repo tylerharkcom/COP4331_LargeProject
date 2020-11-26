@@ -70,7 +70,8 @@ function MyAccount() {
   };
 
   const user = JSON.parse(localStorage.getItem("user_data"));
-  const [Updateuser, setUser] = useState("");
+  // const updatedUser = user;
+  // const [, setUser] = useState("");
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
   const [email, setEmail] = useState("");
@@ -80,16 +81,16 @@ function MyAccount() {
   const [country, setCountry] = useState("location");
   const [lang, setLang] = useState("English");
 
-  setUser(() =>{
-    setfName(updatedUser.firstName);
-    setlName(updatedUser.lastName);
-    setEmail(updatedUser.email);
-    setLoginName(updatedUser.loginName);
-    setBday(updatedUser.birthday);
-    setGender(updatedUser.gender);
-    setCountry(updatedUser.country);
-    setLang(updatedUser.language);
-  });
+  // setUser(() =>{
+  //   setfName(updatedUser.firstName);
+  //   setlName(updatedUser.lastName);
+  //   setEmail(updatedUser.email);
+  //   setLoginName(updatedUser.loginName);
+  //   setBday(updatedUser.birthday);
+  //   setGender(updatedUser.gender);
+  //   setCountry(updatedUser.country);
+  //   setLang(updatedUser.language);
+  // });
 
   useEffect(() => {
     setfName(user.firstName);
@@ -311,10 +312,10 @@ function MyAccount() {
       else {
         alert("Account Updated!");
         localStorage.setItem("user_data", js);
-        setUser();
-        console.log(fName.value);
-        console.log("Calling Updateuser");
-        console.log(fName.value);
+        //setUser();
+        //console.log(fName.value);
+        //console.log("Calling Updateuser");
+        //console.log(fName.value);
         window.location.href = "/account";
         infoHandleClose();
       }
