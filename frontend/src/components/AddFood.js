@@ -27,7 +27,7 @@ const AddFoodModal = (props) =>
         let current = new Date();
         let today = new Date(current.toUTCString());
         console.log(today);
-        if (today > expDate) {
+        if (today >= expDate) {
             return;
         }
 
