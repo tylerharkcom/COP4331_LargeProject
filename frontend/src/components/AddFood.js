@@ -25,6 +25,7 @@ const AddFoodModal = (props) =>
     {
         check = false;
         let current = new Date();
+        console.log(current);
         if (current > expDate) {
             return;
         }
@@ -46,6 +47,7 @@ const AddFoodModal = (props) =>
             return;
         }
         expDate = new Date(expDateString.value);
+        expDate = new date(expDate.toLocaleDateString());
         console.log(expDate);
         if(!(expDate instanceof Date)){
             setMessage('Check your date');

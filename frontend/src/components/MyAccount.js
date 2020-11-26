@@ -70,6 +70,8 @@ function MyAccount() {
   };
 
   const user = JSON.parse(localStorage.getItem("user_data"));
+  // const updatedUser = user;
+  // const [, setUser] = useState("");
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
   const [email, setEmail] = useState("");
@@ -78,6 +80,17 @@ function MyAccount() {
   const [gender, setGender] = useState("Prefer not to say");
   const [country, setCountry] = useState("location");
   const [lang, setLang] = useState("English");
+
+  // setUser(() =>{
+  //   setfName(updatedUser.firstName);
+  //   setlName(updatedUser.lastName);
+  //   setEmail(updatedUser.email);
+  //   setLoginName(updatedUser.loginName);
+  //   setBday(updatedUser.birthday);
+  //   setGender(updatedUser.gender);
+  //   setCountry(updatedUser.country);
+  //   setLang(updatedUser.language);
+  // });
 
   useEffect(() => {
     setfName(user.firstName);
@@ -98,6 +111,8 @@ function MyAccount() {
     //  setCountry("user.country");
     //  setLang("user.language");
   }, [user.firstName, user.lastName, user.email, user.loginName]);
+
+ 
   const renderGenderSelect = (props) => (
     <select value={gender} onChange={genderNameChange}>
       <option value="prefNoSay">Prefer not to say</option>
@@ -106,6 +121,7 @@ function MyAccount() {
       <option value="Other">Other</option>
     </select>
   );
+
   const renderPwReqTooltip = (props) => (
     <Tooltip id="passwordReqTooltip" style={{ minWidth: "200" }} {...props}>
       <div>
@@ -135,6 +151,7 @@ function MyAccount() {
       </div>
     </Tooltip>
   );
+  
   const DelFinalButton = (props) => (
     <Button
       {...props}
@@ -256,20 +273,31 @@ function MyAccount() {
       return;
     }
   };
-    const updateAccountInfo = async (event) => {
-        event.preventDefault();
-        var obj = { 
-            fName: newFName.value,
-            lName: newLName.value,
-            email: newEmail.value,
-            username: newUsername.value,
-            // bDay: newBDay.value,
-            // gender: newGender.value,
-            // country: newCountry.value,
-            // language: newLang.value
-         };
-        
-    var js = JSON.stringify(obj);
+
+  const updateAccountInfo = async (event) => {
+    event.preventDefault();
+    var updatedUser = { 
+      fName: newFName.value,
+      lName: newLName.value,
+      email: newEmail.value,
+      username: newUsername.value,
+      bDay: newBDay.value,
+      gender: newGender.value,
+      country: newCountry.value,
+      language: newLang.value
+      };
+      // Testing Vals
+      console.log(newFName.value);
+      console.log(newLName.value);
+      console.log(newEmail.value);
+      console.log( newUsername.value);
+      console.log(newBDay.value);
+      console.log( newGender.value);
+      console.log(newCountry.value);
+      console.log(newLang.value);
+      console.log("End of Value check");
+
+    var js = JSON.stringify(updatedUser);
     try {
       const response = await fetch("/api/updateAccount", {
         method: "POST",
@@ -280,8 +308,15 @@ function MyAccount() {
       var res = JSON.parse(await response.text());
       if (response.status !== 200) {
         alert(res.error);
-      } else {
+      } 
+      else {
         alert("Account Updated!");
+        localStorage.setItem("user_data", js);
+        //setUser();
+        //console.log(fName.value);
+        //console.log("Calling Updateuser");
+        //console.log(fName.value);
+        window.location.href = "/account";
         infoHandleClose();
       }
     } catch (e) {
@@ -308,7 +343,10 @@ function MyAccount() {
                 >
                   <b> Name : </b>
                 </Form.Label>
+                <div>
                 {fName.concat(" ", lName)}
+
+                </div>
               </Col>
             </Form.Group>
             <Form.Group as={Row}>
@@ -534,6 +572,7 @@ function MyAccount() {
                     </Form.Label>
                     <Form.Control 
                         type="date"
+                        defaultValue={bDay}
                         ref={(c) => (newBDay = c)}  
                         style={{marginLeft:'.5rem',width:"12.8rem"}}/>
                 </Form.Row>
