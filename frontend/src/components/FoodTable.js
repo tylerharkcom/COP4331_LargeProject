@@ -65,7 +65,6 @@ const FoodTable = () => {
       alert(e.toString());
       return;
     }
-    console.log(checkmark);
   };
 
   useEffect(() => {
@@ -108,7 +107,25 @@ const FoodTable = () => {
   const addFood = (event) => {
     event.preventDefault();
     setShowFoodModal(true);
-  };
+  }
+
+  const getExpired = (event) => {
+    event.preventDefault();
+    let expired = [];
+    let today = new Date();
+    food.foods.map((p) => {
+      let exp = new Date(p.expDate);
+      if(exp<today){
+        expired = [...expired, p]
+      }
+    });
+    let initializeChecks = [];
+        for (let i = 0; i<expired.length; i++) {
+          initializeChecks = [...initializeChecks, false];
+        }
+    setFood({foods: expired});
+    setCheckmark( [...initializeChecks] );
+  }
 
   const deleteFood = async (event, foodName) => {
     event.preventDefault();
@@ -170,6 +187,16 @@ const FoodTable = () => {
           <div style={{ marginLeft: "5px" }}>
             <button className="btn btn-secondary" onClick={addFood}>
               Add food
+            </button>
+          </div>
+          <div style={{ marginLeft: "5px" }}>
+            <button className="btn btn-secondary" onClick={getExpired}>
+              All expired
+            </button>
+          </div>
+          <div style={{ marginLeft: "5px" }}>
+            <button className="btn btn-secondary" onClick={loadFridgeHandler}>
+              Show all
             </button>
           </div>
           <FormControl style={{ marginLeft: "5px" }} type="text" placeholder="Search" className=" mr-sm-2" />
