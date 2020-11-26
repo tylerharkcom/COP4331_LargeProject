@@ -161,7 +161,7 @@ router.post(
       language: "",
       error: "",
     };
-
+    console.log("dumb");
     if (!user) {
       response.error = "No account found.";
       res.status(400).json(response);
@@ -171,7 +171,7 @@ router.post(
     const token = generateAccessToken({
       id: user._id.toHexString(),
     });
-
+    console.log("2");
     response = { ...response, ...user.userInfo };
     console.log(response);
 
