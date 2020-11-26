@@ -46,10 +46,7 @@ const AddFoodModal = (props) =>
             setMessage('Check your date');
             return;
         }
-        let year = expDateString.value.substr(0,4);
-        let month = expDateString.value.substr(5,2);
-        let day = expDateString.value.substr(8,2);
-        let str = month + "-" + day + "-" + year;
+        let str = expDateString.value.replace(/-/g,"/");
         expDate = Date(str);
         
 
