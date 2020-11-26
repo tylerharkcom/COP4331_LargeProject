@@ -312,11 +312,6 @@ function MyAccount() {
       else {
         alert("Account Updated!");
         localStorage.setItem("user_data", js);
-        //setUser();
-        //console.log(fName.value);
-        //console.log("Calling Updateuser");
-        //console.log(fName.value);
-        window.location.href = "/account";
         infoHandleClose();
       }
     } catch (e) {
@@ -344,6 +339,7 @@ function MyAccount() {
                   <b> Name : </b>
                 </Form.Label>
                 <div>
+
                 {fName.concat(" ", lName)}
 
                 </div>
