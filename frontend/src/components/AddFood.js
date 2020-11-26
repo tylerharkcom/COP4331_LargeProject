@@ -49,7 +49,7 @@ const AddFoodModal = (props) =>
         let year = expDateString.value.substr(0,4);
         let month = expDateString.value.substr(5,2);
         let day = expDateString.value.substr(8,2);
-        let str = month + '-' + day + '-' + year;
+        let str = month + "-" + day + "-" + year;
         expDate = Date(str);
         
 
