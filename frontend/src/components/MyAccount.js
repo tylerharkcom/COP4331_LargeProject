@@ -263,12 +263,22 @@ function MyAccount() {
             lName: newLName.value,
             email: newEmail.value,
             username: newUsername.value,
-            // bDay: newBDay.value,
-            // gender: newGender.value,
-            // country: newCountry.value,
-            // language: newLang.value
+            bDay: newBDay.value,
+            gender: newGender.value,
+            country: newCountry.value,
+            language: newLang.value
          };
-        
+         // Testing Vals
+        console.log(newFName);
+        console.log(newLName.value);
+        console.log(newEmail.value);
+        console.log( newUsername.value);
+        console.log(newBDay.value);
+        console.log( newGender.value);
+        console.log(newCountry.value);
+        console.log(newLang.value);
+
+
     var js = JSON.stringify(obj);
     try {
       const response = await fetch("/api/updateAccount", {
