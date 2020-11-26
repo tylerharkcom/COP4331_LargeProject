@@ -265,14 +265,14 @@ function MyAccount() {
   const updateAccountInfo = async (event) => {
     event.preventDefault();
     var updatedUser = { 
-      fName: newFName,
-      lName: newLName,
-      email: newEmail,
-      username: newUsername,
-      bDay: newBDay,
-      gender: newGender,
-      country: newCountry,
-      language: newLang
+      fName: newFName.value,
+      lName: newLName.value,
+      email: newEmail.value,
+      username: newUsername.value,
+      bDay: newBDay.value,
+      gender: newGender.value,
+      country: newCountry.value,
+      language: newLang.value
       };
       // Testing Vals
       console.log(newFName.value);
@@ -301,7 +301,8 @@ function MyAccount() {
         localStorage.setItem("user_data", JSON.stringify(updatedUser));
         user = JSON.parse(localStorage.getItem("user_data"));
         console.log(fName);
-      
+        // quick workaround
+        window.location.href = "/account";
         infoHandleClose();
       }
     } catch (e) {
