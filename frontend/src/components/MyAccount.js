@@ -70,6 +70,7 @@ function MyAccount() {
   };
 
   const user = JSON.parse(localStorage.getItem("user_data"));
+  const [Updateuser, setUser] = useState("");
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
   const [email, setEmail] = useState("");
@@ -98,6 +99,8 @@ function MyAccount() {
     //  setCountry("user.country");
     //  setLang("user.language");
   }, [user.firstName, user.lastName, user.email, user.loginName]);
+
+ 
   const renderGenderSelect = (props) => (
     <select value={gender} onChange={genderNameChange}>
       <option value="prefNoSay">Prefer not to say</option>
@@ -106,6 +109,7 @@ function MyAccount() {
       <option value="Other">Other</option>
     </select>
   );
+
   const renderPwReqTooltip = (props) => (
     <Tooltip id="passwordReqTooltip" style={{ minWidth: "200" }} {...props}>
       <div>
@@ -135,6 +139,7 @@ function MyAccount() {
       </div>
     </Tooltip>
   );
+  
   const DelFinalButton = (props) => (
     <Button
       {...props}
@@ -256,30 +261,30 @@ function MyAccount() {
       return;
     }
   };
-    const updateAccountInfo = async (event) => {
-        event.preventDefault();
-        var obj = { 
-            fName: newFName.value,
-            lName: newLName.value,
-            email: newEmail.value,
-            username: newUsername.value,
-            bDay: newBDay.value,
-            gender: newGender.value,
-            country: newCountry.value,
-            language: newLang.value
-         };
-         // Testing Vals
-        console.log(newFName);
-        console.log(newLName.value);
-        console.log(newEmail.value);
-        console.log( newUsername.value);
-        console.log(newBDay.value);
-        console.log( newGender.value);
-        console.log(newCountry.value);
-        console.log(newLang.value);
 
+  const updateAccountInfo = async (event) => {
+    event.preventDefault();
+    var updatedUser = { 
+      fName: newFName.value,
+      lName: newLName.value,
+      email: newEmail.value,
+      username: newUsername.value,
+      bDay: newBDay.value,
+      gender: newGender.value,
+      country: newCountry.value,
+      language: newLang.value
+      };
+      // Testing Vals
+      console.log(newFName.value);
+      console.log(newLName.value);
+      console.log(newEmail.value);
+      console.log( newUsername.value);
+      console.log(newBDay.value);
+      console.log( newGender.value);
+      console.log(newCountry.value);
+      console.log(newLang.value);
 
-    var js = JSON.stringify(obj);
+    var js = JSON.stringify(updatedUser);
     try {
       const response = await fetch("/api/updateAccount", {
         method: "POST",
@@ -290,8 +295,14 @@ function MyAccount() {
       var res = JSON.parse(await response.text());
       if (response.status !== 200) {
         alert(res.error);
-      } else {
+      } 
+      else {
         alert("Account Updated!");
+        localStorage.setItem("user_data", JSON.stringify(updatedUser));
+        user = JSON.parse(localStorage.getItem("user_data"));
+        console.log(fName);
+        // quick workaround
+        window.location.href = "/account";
         infoHandleClose();
       }
     } catch (e) {
