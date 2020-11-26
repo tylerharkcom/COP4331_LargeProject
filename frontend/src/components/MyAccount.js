@@ -315,6 +315,7 @@ function MyAccount() {
         console.log(fName.value);
         console.log("Calling Updateuser");
         console.log(fName.value);
+        window.location.href = "/account";
         infoHandleClose();
       }
     } catch (e) {
