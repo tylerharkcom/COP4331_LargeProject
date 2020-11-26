@@ -194,6 +194,11 @@ const FoodTable = () => {
               All expired
             </button>
           </div>
+          <div style={{ marginLeft: "5px" }}>
+            <button className="btn btn-secondary" onClick={loadFridgeHandler}>
+              Show all
+            </button>
+          </div>
           <FormControl style={{ marginLeft: "5px" }} type="text" placeholder="Search" className=" mr-sm-2" />
           <button
             className="btn btn-secondary"
