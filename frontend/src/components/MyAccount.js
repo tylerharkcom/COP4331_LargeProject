@@ -80,7 +80,7 @@ function MyAccount() {
   const [country, setCountry] = useState("location");
   const [lang, setLang] = useState("English");
 
-  Updateuser(() =>{
+  setUser(() =>{
     setfName(updatedUser.firstName);
     setlName(updatedUser.lastName);
     setEmail(updatedUser.email);
@@ -90,7 +90,7 @@ function MyAccount() {
     setCountry(updatedUser.country);
     setLang(updatedUser.language);
   });
-  
+
   useEffect(() => {
     setfName(user.firstName);
     setlName(user.lastName);
@@ -294,6 +294,7 @@ function MyAccount() {
       console.log( newGender.value);
       console.log(newCountry.value);
       console.log(newLang.value);
+      console.log("End of Value check");
 
     var js = JSON.stringify(updatedUser);
     try {
@@ -310,7 +311,9 @@ function MyAccount() {
       else {
         alert("Account Updated!");
         localStorage.setItem("user_data", js);
-        Updateuser();
+        setUser();
+        console.log(fName.value);
+        console.log("Calling Updateuser");
         console.log(fName.value);
         infoHandleClose();
       }
@@ -567,6 +570,7 @@ function MyAccount() {
                     </Form.Label>
                     <Form.Control 
                         type="date"
+                        defaultValue={bDay}
                         ref={(c) => (newBDay = c)}  
                         style={{marginLeft:'.5rem',width:"12.8rem"}}/>
                 </Form.Row>
