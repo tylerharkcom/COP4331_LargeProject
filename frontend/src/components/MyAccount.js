@@ -299,6 +299,7 @@ function MyAccount() {
       else {
         alert("Account Updated!");
         localStorage.setItem("user_data", JSON.stringify(updatedUser));
+        const user = JSON.parse(localStorage.getItem("user_data"));
         infoHandleClose();
       }
     } catch (e) {
