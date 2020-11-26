@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import sha256 from '../sha256';
+import sha256 from "../sha256";
 
 function Login() {
   var loginName;
@@ -11,11 +11,11 @@ function Login() {
     localStorage.setItem("user_data", JSON.stringify(user));
   });
 
-    const goToRegister = event => {
-        event.preventDefault();
+  const goToRegister = (event) => {
+    event.preventDefault();
 
-        window.location.href = '/register';
-    }
+    window.location.href = "/register";
+  };
 
   const doLogin = async (event) => {
     event.preventDefault();
@@ -38,11 +38,19 @@ function Login() {
       }
       // Add Verification flag to res statement
       //  else if(response.status ==  ) {
-      else if(!true ) {
+      else if (!true) {
         setMessage("Please verify your account!");
-      }
-      else {
-        setUser({ firstName: res.fName, lastName: res.lName, loginName: loginName.value, email: res.email })
+      } else {
+        setUser({
+          firstName: res.fName,
+          lastName: res.lName,
+          loginName: loginName.value,
+          email: res.email,
+          birthday: res.bDay,
+          country: res.country,
+          language: res.language,
+          gender: res.gender,
+        });
 
         setMessage("");
         window.location.href = "/dashboard";
@@ -53,7 +61,7 @@ function Login() {
     }
   };
 
-  const resetPass = async event => {
+  const resetPass = async (event) => {
     event.preventDefault();
 
     window.location.href = "/resetPass";
@@ -98,32 +106,29 @@ function Login() {
           <div id="registerLink">
             <label>
               {/*Don't have an account? <br />*/}
-              <input 
-                        name="register" 
-                        type="button" 
-                        className="link-button-light" 
-                        value="Create your account!" 
-                        onClick={goToRegister}
-                />
+              <input
+                name="register"
+                type="button"
+                className="link-button-light"
+                value="Create your account!"
+                onClick={goToRegister}
+              />
             </label>
           </div>
           <div id="resetPassLink">
             <label>
               {/*Forgot your password? <br />*/}
-            <input 
-              name="resetPass"
-              type="button"
-              className="link-button-light"
-              value="Forgot password?"
-              onClick={resetPass}
-            />
+              <input
+                name="resetPass"
+                type="button"
+                className="link-button-light"
+                value="Forgot password?"
+                onClick={resetPass}
+              />
             </label>
           </div>
         </form>
-        <span 
-          id="loginResult" 
-          className="lightText"
-        >
+        <span id="loginResult" className="lightText">
           {message}
         </span>
       </div>
