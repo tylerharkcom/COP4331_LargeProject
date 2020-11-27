@@ -312,28 +312,27 @@ function MyAccount() {
       } 
       else {
         alert("Account Updated!");
-        console.log("Account updated, is this js the reason?");
         console.log(js);
         localStorage.setItem("user_data", js);
         
         // Setting local vars
         console.log("Before 2nd value check");
-        console.log(newFName.value);
-        setfName(newFName.value);
-        console.log(newLName.value);
-        setlName(newLName.value);
-        console.log(email.value);
-        setEmail(newEmail.value);
-        console.log(newUsername.value);
-        setLoginName(newUsername.value);
-        console.log(newBDay.value);
-        setBday(newBDay.value);
-        console.log(newGender.value);
-        setGender(newGender.value);
-        console.log(newCountry.value);
-        setCountry(newCountry.value);
-        console.log(newLang.value);
-        setLang(newLang.value);
+        console.log(updatedUser.newFName);
+        setfName(updatedUser.newFName);
+        console.log(updatedUser.newLName);
+        setlName(updatedUser.newLName);
+        console.log(updatedUser.newemail);
+        setEmail(updatedUser.newEmail);
+        console.log(updatedUser.newUsername);
+        setLoginName(updatedUser.newUsername);
+        console.log(updatedUser.newBDay);
+        setBday(updatedUser.newBDay);
+        console.log(updatedUser.newGender);
+        setGender(updatedUser.newGender);
+        console.log(updatedUser.newCountry);
+        setCountry(updatedUser.newCountry);
+        console.log(updatedUser.newLang);
+        setLang(updatedUser.newLang);
         console.log("After value check");
         infoHandleClose();
       }
@@ -341,6 +340,17 @@ function MyAccount() {
       console.log(e.toString());
       return;
     }
+  };
+  // Called after account has been updated 
+  const updateFields = async (event) => {
+    newFName = "";
+    newLName ="";
+    newEmail;
+    newUsername;
+    newBDay;
+    newGender;
+    newCountry;
+    newLang;
   };
   return (
     <div id="accountDiv" class="center">
@@ -362,13 +372,8 @@ function MyAccount() {
                   <b> Name : </b>
                 </Form.Label>
                 <div>
-                {"Init vals"}
-                  {console.log(fName.value)}
-                  {console.log(lName.value)}
-                  {"New vals"}
-                  {console.log(newFName.value)}
-                  {console.log(newLName.value)}
-                {fName != null ? fName.concat(" ", lName) : newFName.concat(" .",newLName) }
+                
+                {fName.concat(" ", lName)}
 
                 </div>
               </Col>
