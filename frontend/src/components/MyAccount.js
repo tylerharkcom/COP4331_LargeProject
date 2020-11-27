@@ -295,6 +295,7 @@ function MyAccount() {
       console.log(newGender.value);
       console.log(newCountry.value);
       console.log(newLang.value);
+      console.log(updatedUser);
       console.log("End of Value check");
       
     var js = JSON.stringify(updatedUser);
@@ -325,6 +326,7 @@ function MyAccount() {
         infoHandleClose();
       }
     } catch (e) {
+      console.log(e.lineNumber);
       console.log(e.toString());
       return;
     }
