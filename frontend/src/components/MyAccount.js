@@ -342,16 +342,7 @@ function MyAccount() {
     }
   };
   // Called after account has been updated 
-  const updateFields = async (event) => {
-    newFName = "";
-    newLName ="";
-    newEmail;
-    newUsername;
-    newBDay;
-    newGender;
-    newCountry;
-    newLang;
-  };
+  
   return (
     <div id="accountDiv" class="center">
       <div id="accountWrapper">
