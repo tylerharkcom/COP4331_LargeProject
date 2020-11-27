@@ -311,7 +311,7 @@ function MyAccount() {
       } 
       else {
         alert("Account Updated!");
-        localStorage.setItem("user_data", updatedUser);
+        localStorage.setItem("user_data", js);
         
         // Setting local vars
         setfName(newFName.value);
