@@ -21,7 +21,7 @@ const sha256 = require("./sha256");
 const sgMail = require("@sendgrid/mail");
 const { userInfo } = require("os");
 
-sgMail.setApiKey(process.env.TEST_SEND_TOKEN);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const app = express();
 const router = Router();
@@ -66,7 +66,7 @@ function authenticateToken(req, res, next) {
     return res.status(403).json(response);
   }
 
-  jwt.verify(token, process.env.TOKEN_SECRET, async (err, data) => {
+  jwt.verify(token, process.env.LOGIN_TOKEN_SECRET, async (err, data) => {
     console.log(err);
     if (err) {
       response.error = err;
@@ -85,7 +85,7 @@ function authenticateToken(req, res, next) {
 
 function generateAccessToken(id) {
   // expires after 30 mins
-  return jwt.sign(id, process.env.TOKEN_SECRET, { expiresIn: "3600s" });
+  return jwt.sign(id, process.env.LOGIN_TOKEN_SECRET, { expiresIn: "3600s" });
 }
 
 router.post(
@@ -132,15 +132,67 @@ router.post(
       return;
     }
 
-    await db.collection("Users").insertOne({ username, password, userInfo });
+    await db
+      .collection("Users")
+      .insertOne({ username, password, confirmed: false, userInfo });
     const user = await db
       .collection("Users")
       .findOne({ username: username, password: password });
+
+    jwt.sign(
+      { id: user._id.toHexString() },
+      process.env.EMAIL_TOKEN_SECRET,
+      { expiresIn: "15m" },
+
+      // Callback contains token to be used
+      // for sending email.
+      (err, emailToken) => {
+        const url = `https://group1largeproject/herokuapp.com/confirmation/${emailToken}`;
+
+        const text = `A request was sent to confirm your FoodBuddy email as part of your account`;
+        text += `for registration. To complete your account registration, visit the following`;
+        text +=  `link: ${url}`;
+
+        const html = `<h2>A request was sent to confirm your FoodBuddy email as part of your`;
+        html += `account. To complete your account registration, visit the following link:`;
+        html += `<a href="${url}">${url}</a><h2>`;
+
+        // TODO: include template to email
+        sgMail.send({
+          from: "yousefeid707@gmail.com",
+          to: email,
+          subject: "FoodBuddy Email Confirmation",
+          text,
+          html
+        });
+      }
+    );
+
     await db.collection("Fridge").insertOne({ userId: user._id });
 
     res.json(response);
   })
 );
+
+router.get("/confirmation/:token", async (req, res) => {
+  let response = {
+    error: "",
+  };
+
+  try {
+    const _id = jwt.verify(req.params.token, EMAIL_TOKEN_SECRET);
+    const db = client.db();
+
+    await db
+      .collection("Users")
+      .updateOne({ _id }, { $set: { confirmed: true } });
+  } catch (e) {
+    response.error = "An error has occurred";
+    res.status(400).json(response);
+  }
+
+  return res.redirect("https://group1largeproject.herokuapp.com/login");
+});
 
 router.post(
   `/login`,
@@ -161,9 +213,16 @@ router.post(
       language: "",
       error: "",
     };
-    console.log("dumb");
+
     if (!user) {
       response.error = "No account found.";
+      res.status(400).json(response);
+      return;
+    }
+
+    if (!user.confirmed) {
+      response.error = "Please confirm the \
+      email to your account";
       res.status(400).json(response);
       return;
     }
@@ -171,9 +230,8 @@ router.post(
     const token = generateAccessToken({
       id: user._id.toHexString(),
     });
-    console.log("2");
+
     response = { ...response, ...user.userInfo };
-    console.log(response);
 
     res
       .status(200)
@@ -217,46 +275,27 @@ router.post(
       return;
     }
 
-    const file = fs.readFile(
-      projectRoot + "/server/index.html",
-      "utf-8",
-      (data, err) => {
-        if (err) {
-          console.log(err);
-        }
+    jwt.sign(user._id, 
+      process.env.EMAIL_TOKEN_SECRET, 
+      { expiresIn: "15m" }, 
+      (err, emailToken) => {
 
-        // Uncomment for debugging
-        else {
-          console.log(data);
-        }
-      }
-    );
+        const url = `https://group1largeproject.herokuapp.com/confirmation/${emailToken}`;
+        const text = `A request to reset your password has been sent to your account. To \
+        reset your password, visit the following link: ${url}`;
 
-    const tempString = "pipikaka";
-    const tempPass = sha256(tempString);
+        const html = `<h2>A request to reset your password has been sent to your account.\
+        To reset your password, <i>visit the following link</i>: ${url}`;
 
-    try {
-      await db
-        .collection("Users")
-        .updateOne({ _id: user._id }, { $set: { password: tempPass } });
-    } catch (e) {
-      console.log(e);
-      response.error = e;
-      res.status(400).json(response);
-    }
-    const msg = {
-      // Only temporary until we get
-      // the email domain authenticated.
-      // Also, probably should use
-      // an environemnt variable here.
-      from: "yousefeid707@gmail.com",
-      to: email,
-      subject: "Password Reset",
-      text: `Hello there, ${username}! It seems you've forgotten your FoodBuddy password. Your new password is ${tempString}. Use that on your next login and change it to your new password through MyAccount`,
-      html: file,
-    };
-
-    sgMail.send(msg);
+        // TODO: include template to email
+        sgMail.send({
+          from: "yousefeid707@gmail.com",
+          to: email,
+          subject: "FoodBuddy Password Reset",
+          text,
+          html
+        });
+    });
 
     res.status(200).json(response);
   })
@@ -267,7 +306,7 @@ router.get(
   wrapAsync(async (req, res) => {
     var resp1 = await fetch(
       "https://api.spoonacular.com/recipes/complexSearch?apiKey=" +
-        process.env.API_KEY +
+        process.env.SPOON_API_KEY +
         "&query=" +
         req.query.search +
         "&number=2",
@@ -283,7 +322,7 @@ router.get(
       "https://api.spoonacular.com/recipes/" +
         res1.results[0].id +
         "/information?apiKey=" +
-        process.env.API_KEY +
+        process.env.SPOON_API_KEY +
         "&includeNutrition=false",
       {
         method: "GET",
@@ -295,7 +334,7 @@ router.get(
       "https://api.spoonacular.com/recipes/" +
         res1.results[1].id +
         "/information?apiKey=" +
-        process.env.API_KEY +
+        process.env.SPOON_API_KEY +
         "&includeNutrition=false",
       {
         method: "GET",
