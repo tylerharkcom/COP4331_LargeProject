@@ -349,8 +349,7 @@ function MyAccount() {
                   <b> Name : </b>
                 </Form.Label>
                 <div>
-
-                {fName.concat(" ", lName)}
+                {fName != null ? fName.concat(" ", lName) : newFName.concat(" .",newLName) }
 
                 </div>
               </Col>
