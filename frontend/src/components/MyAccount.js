@@ -317,14 +317,24 @@ function MyAccount() {
         localStorage.setItem("user_data", js);
         
         // Setting local vars
+        console.log("Before 2nd value check");
+        console.log(newFName);
         setfName(newFName.value);
+        console.log(newLName);
         setlName(newLName.value);
+        console.log(email);
         setEmail(newEmail.value);
+        console.log(newUsername);
         setLoginName(newUsername.value);
+        console.log(newBDay);
         setBday(newBDay.value);
+        console.log(newGender);
         setGender(newGender.value);
+        console.log(newCountry);
         setCountry(newCountry.value);
+        console.log(newLang);
         setLang(newLang.value);
+        console.log("After value check");
         infoHandleClose();
       }
     } catch (e) {
