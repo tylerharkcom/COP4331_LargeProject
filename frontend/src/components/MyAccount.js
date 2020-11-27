@@ -110,7 +110,7 @@ function MyAccount() {
     //  setGender("user.gender");
     //  setCountry("user.country");
     //  setLang("user.language");
-  }, [user.firstName, user.lastName, user.email, user.loginName]);
+  }, [fName,lName,email,loginName,bDay,gender,country,lang]);
 
  
   const renderGenderSelect = (props) => (
@@ -290,9 +290,9 @@ function MyAccount() {
       console.log(newFName.value);
       console.log(newLName.value);
       console.log(newEmail.value);
-      console.log( newUsername.value);
+      console.log(newUsername.value);
       console.log(newBDay.value);
-      console.log( newGender.value);
+      console.log(newGender.value);
       console.log(newCountry.value);
       console.log(newLang.value);
       console.log("End of Value check");
@@ -311,7 +311,8 @@ function MyAccount() {
       } 
       else {
         alert("Account Updated!");
-        localStorage.setItem("user_data", js);
+        localStorage.setItem("user_data", updatedUser);
+        
         // Setting local vars
         setfName(newFName.value);
         setlName(newLName.value);
