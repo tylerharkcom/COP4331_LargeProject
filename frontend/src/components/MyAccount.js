@@ -16,8 +16,8 @@ import Container from "react-bootstrap/Container";
 
 function MyAccount() {
   // Info update vars
-  var newFName;
-  var newLName;
+  var newFName = "";
+  var newLName ="";
   var newEmail;
   var newUsername;
   var newBDay;
