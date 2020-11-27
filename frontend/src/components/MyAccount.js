@@ -318,21 +318,21 @@ function MyAccount() {
         
         // Setting local vars
         console.log("Before 2nd value check");
-        console.log(newFName);
+        console.log(newFName.value);
         setfName(newFName.value);
-        console.log(newLName);
+        console.log(newLName.value);
         setlName(newLName.value);
-        console.log(email);
+        console.log(email.value);
         setEmail(newEmail.value);
-        console.log(newUsername);
+        console.log(newUsername.value);
         setLoginName(newUsername.value);
-        console.log(newBDay);
+        console.log(newBDay.value);
         setBday(newBDay.value);
-        console.log(newGender);
+        console.log(newGender.value);
         setGender(newGender.value);
-        console.log(newCountry);
+        console.log(newCountry.value);
         setCountry(newCountry.value);
-        console.log(newLang);
+        console.log(newLang.value);
         setLang(newLang.value);
         console.log("After value check");
         infoHandleClose();
