@@ -296,7 +296,7 @@ function MyAccount() {
       console.log(newCountry.value);
       console.log(newLang.value);
       console.log("End of Value check");
-
+      
     var js = JSON.stringify(updatedUser);
     try {
       const response = await fetch("/api/updateAccount", {
@@ -312,6 +312,15 @@ function MyAccount() {
       else {
         alert("Account Updated!");
         localStorage.setItem("user_data", js);
+        // Setting local vars
+        setfName(newFName.value);
+        setlName(newLName.value);
+        setEmail(newEmail.value);
+        setLoginName(newUsername.value);
+        setBday(newBDay.value);
+        setGender(newGender.value);
+        setCountry(newCountry.value);
+        setLang(newLang.value);
         infoHandleClose();
       }
     } catch (e) {
