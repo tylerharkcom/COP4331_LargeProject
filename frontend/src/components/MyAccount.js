@@ -312,6 +312,8 @@ function MyAccount() {
       } 
       else {
         alert("Account Updated!");
+        console.log("Account updated, is this js the reason?");
+        console.log(js);
         localStorage.setItem("user_data", js);
         
         // Setting local vars
@@ -326,7 +328,6 @@ function MyAccount() {
         infoHandleClose();
       }
     } catch (e) {
-      console.log(e.lineNumber);
       console.log(e.toString());
       return;
     }
