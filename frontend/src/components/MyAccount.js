@@ -362,6 +362,12 @@ function MyAccount() {
                   <b> Name : </b>
                 </Form.Label>
                 <div>
+                {"Init vals"}
+                  {console.log(fName.value)}
+                  {console.log(lName.value)}
+                  {"New vals"}
+                  {console.log(newFName.value)}
+                  {console.log(newLName.value)}
                 {fName != null ? fName.concat(" ", lName) : newFName.concat(" .",newLName) }
 
                 </div>
