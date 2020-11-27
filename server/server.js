@@ -220,12 +220,12 @@ router.post(
       return;
     }
 
-    if (!user.confirmed) {
-      response.error = "Please confirm the \
-      email to your account";
-      res.status(400).json(response);
-      return;
-    }
+    // if (!user.confirmed) {
+    //   response.error = "Please confirm the \
+    //   email to your account";
+    //   res.status(400).json(response);
+    //   return;
+    // }
 
     const token = generateAccessToken({
       id: user._id.toHexString(),
