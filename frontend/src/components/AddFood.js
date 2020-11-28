@@ -5,7 +5,8 @@ const AddFoodModal = (props) =>
 {
     const [message, setMessage] = useState('');
     let food = "";
-    let brand = "";
+    let foodAmount = 0;
+    let foodUnit = "";
     let expDateString = "";
     let expDate = null;
     let check = false;
@@ -69,7 +70,7 @@ const AddFoodModal = (props) =>
             return;
         }
         else {
-            var obj = { item: food.value, brand: brand.value, expDate: expDateString.value };
+            var obj = { item: food.value, foodAmt: foodAmount.value, foodUt: foodUnit.value, expDate: expDateString.value };
             var js = JSON.stringify(obj);
             try 
             {
@@ -122,14 +123,33 @@ const AddFoodModal = (props) =>
                             />
                         </div>
                         <div className="form-row">
-                            <label for="foodBrand">Brand</label>
-                            <input 
-                                type="text" 
-                                className="form-control" 
-                                id="foodBrand" 
-                                placeholder="Brand (optional)" 
-                                ref={(c) => brand = c} 
-                            />
+                            <div className="form-col">
+                                <label for="foodAmount">Amount</label>
+                                <input 
+                                    type="text" 
+                                    className="form-control" 
+                                    id="foodAmount" 
+                                    placeholder="Amount (i.e 10, 1.5)" 
+                                    ref={(c) => foodAmount = c} 
+                                />
+                            </div>
+                            <div className="form-col">
+                                <label for="foodUnit">Unit</label>
+                                <select 
+                                    name="foodUnit" 
+                                    style={{marginLeft: "10px"}}
+                                    className="form-control" 
+                                    id="foodUnit" 
+                                    ref={(c) => foodUnit = c} 
+                                >
+                                    <option value =" "> </option>
+                                    <option value ="oz">oz</option>
+                                    <option value ="dz">dz</option>
+                                    <option value = "fl. oz">fl. oz</option>
+                                    <option value = "ct">ct</option>
+                                    <option value = "gal">gal</option>
+                                </select>
+                            </div>
                         </div>
                         <div className="form-row">
                             <label for="foodExpDate">Expiration</label>

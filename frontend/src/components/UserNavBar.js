@@ -79,7 +79,7 @@ function UserNavBar()
             />
           </li>
         </ul>
-        <span className="navbar-text" style={{ marginRight: "5px" }}>
+        <span className="navbar-text" style={{ marginRight: "10px" }}>
           Welcome, {fName} {lName}
         </span>
         <form className="form-inline">
