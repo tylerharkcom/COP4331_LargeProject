@@ -242,7 +242,7 @@ const FoodTable = () => {
           </tr>
         </thead>
         <tbody>
-          {food.foods[0].item ? printRows : ""}
+          {printRows}
         </tbody>
       </Table>
     </div>
