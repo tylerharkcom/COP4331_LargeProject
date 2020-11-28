@@ -322,8 +322,15 @@ function MyAccount() {
         
         // Setting local vars
         console.log(user);
-        user.firstName = newFName;
-        user.lastName = newLName;
+        user = updatedUser;
+        setfName(user.firstName);
+        setlName(user.lastName);
+        setEmail(user.email);
+        setLoginName(user.loginName);
+        setBday(user.birthday);
+        setGender(user.gender);
+        setCountry(user.country);
+        setLang(user.language);
         // console.log(newFName.value.concat(" ",newLName.value));
         // console.log("2nd Value Check****");
         // console.log(newFName.value);
