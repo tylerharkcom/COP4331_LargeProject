@@ -70,7 +70,7 @@ function MyAccount() {
     else setGender(gender);
   };
 
-  const user = JSON.parse(localStorage.getItem("user_data"));
+  var user = JSON.parse(localStorage.getItem("user_data"));
   // const updatedUser = user;
   // const [user, setUser] = useState("");
   const [fName, setfName] = useState("");
@@ -321,7 +321,7 @@ function MyAccount() {
         localStorage.setItem("user_data", js);
         
         // Setting local vars
-        user = JSON.parse(localStorage.getItem("user_data"));
+        user = updatedUser;
 
         // console.log(newFName.value.concat(" ",newLName.value));
         // console.log("2nd Value Check****");
@@ -372,8 +372,7 @@ function MyAccount() {
                 </Form.Label>
                 <div>
                 
-          
-                {nameReRender}
+                {fName.concat(" ",lName)}
 
                 </div>
               </Col>
