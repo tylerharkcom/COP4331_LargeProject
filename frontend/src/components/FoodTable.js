@@ -54,12 +54,14 @@ const FoodTable = () => {
       if (response.status !== 200) {
         alert("There was an issue loading the fridge.");
       } else {
-        let initializeChecks = [];
-        for (let i = 0; i<res.fridge.length; i++) {
-          initializeChecks = [...initializeChecks, false];
+        if (res.fridge) {
+          let initializeChecks = [];
+          for (let i = 0; i<res.fridge.length; i++) {
+            initializeChecks = [...initializeChecks, false];
+          }
+          setFood({ foods: res.fridge });
+          setCheckmark( [...initializeChecks] );
         }
-        setFood({ foods: res.fridge });
-        setCheckmark( [...initializeChecks] );
       }
     } catch (e) {
       alert(e.toString());
