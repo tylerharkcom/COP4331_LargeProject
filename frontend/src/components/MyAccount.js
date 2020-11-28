@@ -72,7 +72,7 @@ function MyAccount() {
 
   const user = JSON.parse(localStorage.getItem("user_data"));
   // const updatedUser = user;
-  // const [, setUser] = useState("");
+  // const [user, setUser] = useState("");
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
   const [email, setEmail] = useState("");
@@ -83,6 +83,7 @@ function MyAccount() {
   const [lang, setLang] = useState("English");
 
   // setUser(() =>{
+  //   setUser(JSON.parse(localStorage.getItem("user_data"));
   //   setfName(updatedUser.firstName);
   //   setlName(updatedUser.lastName);
   //   setEmail(updatedUser.email);
@@ -91,7 +92,7 @@ function MyAccount() {
   //   setGender(updatedUser.gender);
   //   setCountry(updatedUser.country);
   //   setLang(updatedUser.language);
-  // });
+  //  });
 
   useEffect(() => {
     setfName(user.firstName);
@@ -320,25 +321,27 @@ function MyAccount() {
         localStorage.setItem("user_data", js);
         
         // Setting local vars
-        console.log(newFName.value.concat(" ",newLName.value));
-        console.log("2nd Value Check****");
-        console.log(newFName.value);
-        setfName(newFName.value);
-        console.log(newLName.value);
-        setlName(newLName.value);
-        console.log(newEmail.value);
-        setEmail(newEmail.value);
-        console.log(newUsername.value);
-        setLoginName(newUsername.value);
-        console.log(newBDay.value);
-        setBday(newBDay.value);
-        console.log(newGender.value);
-        setGender(newGender.value);
-        console.log(newCountry.value);
-        setCountry(newCountry.value);
-        console.log(newLang.value);
-        setLang(newLang.value);
-        console.log("After value check****");
+        user = JSON.parse(localStorage.getItem("user_data"));
+
+        // console.log(newFName.value.concat(" ",newLName.value));
+        // console.log("2nd Value Check****");
+        // console.log(newFName.value);
+        // setfName(newFName.value);
+        // console.log(newLName.value);
+        // setlName(newLName.value);
+        // console.log(newEmail.value);
+        // setEmail(newEmail.value);
+        // console.log(newUsername.value);
+        // setLoginName(newUsername.value);
+        // console.log(newBDay.value);
+        // setBday(newBDay.value);
+        // console.log(newGender.value);
+        // setGender(newGender.value);
+        // console.log(newCountry.value);
+        // setCountry(newCountry.value);
+        // console.log(newLang.value);
+        // setLang(newLang.value);
+        // console.log("After value check****");
         infoHandleClose();
       }
     } catch (e) {
