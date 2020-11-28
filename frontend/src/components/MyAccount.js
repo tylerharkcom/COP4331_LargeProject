@@ -313,7 +313,7 @@ function MyAccount() {
         setfName(newFName.value);
         console.log(newLName.value);
         setlName(newLName.value);
-        console.log(newemail.value);
+        console.log(newEmail.value);
         setEmail(newEmail.value);
         console.log(newUsername.value);
         setLoginName(newUsername.value);
