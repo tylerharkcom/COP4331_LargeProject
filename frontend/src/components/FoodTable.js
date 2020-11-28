@@ -201,26 +201,6 @@ const FoodTable = () => {
     clearRecipeStates();
   };
 
-  let printRows = () => 
-  {
-    food.foods.map((p, index) => {
-      return (
-        <TableRow
-          id={index}
-          item={p.item}
-          selected={(event) => selectRowHandler(event, index)}
-          expDate={p.expDate}
-          editFood={editFood}
-          deleteFood={ async (event, foodName) => {
-              await deleteFood(event,foodName);
-              await loadFridgeHandler();
-          }}
-          getRecipe={(event, name) => getRecipeHandler(event, name)}
-        />
-      );
-    });
-  };
-
   let printTable = (
     <div>
       <div id="fridgeCRUD">
@@ -281,7 +261,7 @@ const FoodTable = () => {
                     await getRecipeHandler(event, name);
                   } catch (e) {
                     setLoading(false);
-                    alert(e.toString);
+                    alert("There was an error loading the recipes");
                   }
                 }}
               />
