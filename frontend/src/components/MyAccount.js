@@ -110,7 +110,7 @@ function MyAccount() {
     //  setGender("user.gender");
     //  setCountry("user.country");
     //  setLang("user.language");
-  }, [fName,lName,email,loginName,bDay,gender,country,lang]);
+  }, [user]);
 
  
 
@@ -309,23 +309,24 @@ function MyAccount() {
         localStorage.setItem("user_data", js);
         
         // Setting local vars
+        console.log(newFName.concat(" ",newLName));
         console.log("2nd Value Check****");
-        console.log(newFName);
-        setfName(newFName);
-        console.log(newLName);
-        setlName(newLName);
-        console.log(newEmail);
-        setEmail(newEmail);
-        console.log(newUsername);
-        setLoginName(newUsername);
-        console.log(newBDay);
-        setBday(newBDay);
-        console.log(newGender);
-        setGender(newGender);
-        console.log(newCountry);
-        setCountry(newCountry);
-        console.log(newLang);
-        setLang(newLang);
+        console.log(newFName.value);
+        setfName(newFName.value);
+        console.log(newLName.value);
+        setlName(newLName.value);
+        console.log(newEmail.value);
+        setEmail(newEmail.value);
+        console.log(newUsername.value);
+        setLoginName(newUsername.value);
+        console.log(newBDay.value);
+        setBday(newBDay.value);
+        console.log(newGender.value);
+        setGender(newGender.value);
+        console.log(newCountry.value);
+        setCountry(newCountry.value);
+        console.log(newLang.value);
+        setLang(newLang.value);
         console.log("After value check****");
         infoHandleClose();
       }
