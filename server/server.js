@@ -142,7 +142,7 @@ router.post(
 
         // DEBUG
         // const url = `http://localhost:5000/api/confirmation/${emailToken}`;
-        const url = `https://group1largeproject.herokuapp.com/api/confirmaiton/${emailToken}`;
+        const url = `https://group1largeproject.herokuapp.com/api/confirmation/${emailToken}`;
 
         const text = `A request was sent to confirm your FoodBuddy email as part of your account\
         for registration. To complete your account registration, visit the following link:${url}`;
