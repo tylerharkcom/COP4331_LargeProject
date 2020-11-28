@@ -16,6 +16,7 @@ import Container from "react-bootstrap/Container";
 
 function MyAccount() {
   // Info update vars
+  var infoUpdated = 0;
   var newFName = "";
   var newLName ="";
   var newEmail;
@@ -161,6 +162,13 @@ function MyAccount() {
     </Button>
   );
 
+  const nameReRender = async (event) => {
+    if (infoUpdated == 1)
+      newFName.concat(" ",newLName);
+    else 
+    fName.concat(" ", lName);
+
+  };
   const updatePasswordCheck = async (event) => {
     event.preventDefault();
     setMessageCurr("");
@@ -306,6 +314,7 @@ function MyAccount() {
         alert(res.error);
       } 
       else {
+        infoUpdated = 1;
         alert("Account Updated!");
         console.log(js);
         localStorage.setItem("user_data", js);
@@ -361,7 +370,7 @@ function MyAccount() {
                 <div>
                 
           
-                {fName == null ?newFName.value.concat(" ",newLName.value) :fName.concat(" ", lName)}
+                {nameReRender}
 
                 </div>
               </Col>
