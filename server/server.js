@@ -134,6 +134,10 @@ router.post(
       .collection("Users")
       .findOne({ username: username, password: password });
 
+    // The async way of sending email.
+    // You don't have to wait for the email
+    // to be sent for the request to return
+    // a response.
     jwt.sign(
       { id: user._id.toHexString() },
       process.env.EMAIL_TOKEN_SECRET,
@@ -141,14 +145,14 @@ router.post(
       (err, emailToken) => {
 
         // DEBUG
-        // const url = `http://localhost:5000/api/confirmation/${emailToken}`;
-        const url = `https://group1largeproject.herokuapp.com/api/confirmation/${emailToken}`;
+        const url = `http://localhost:5000/api/confirmation/emailConf/${emailToken}`;
+        // const url = `https://group1largeproject.herokuapp.com/api/confirmation/emailConf/${emailToken}`;
 
         const text = `A request was sent to confirm your FoodBuddy email as part of your account\
-        for registration. To complete your account registration, visit the following link:${url}`;
+        for registration. To complete your account registration, visit the following link: ${url}`;
         const html = `<h3>A request was sent to confirm your FoodBuddy email as part of your\
         account for registration.<br /></h3><h4>To complete your account registration, visit\
-        the following link:<a href="${url}">${url}</a></h4>`;
+        the following link: <a href="${url}">${url}</a></h4>`;
 
         sgMail.send({
           from: "yousefeid707@gmail.com",
@@ -166,22 +170,28 @@ router.post(
 );
 
 router.get(
-  "/confirmation/:token",
+  "/confirmation/:endpoint/:token",
   wrapAsync(async (req, res) => {
     let response = {
       error: "",
     };
 
+    const {endpoint, token} = req.params;
+    console.log("endpoint", endpoint);
+    console.log("token", token);
     try {
       const { id } = jwt.verify(
-        req.params.token,
+        token,
         process.env.EMAIL_TOKEN_SECRET
       );
       const db = client.db();
 
-      await db
-        .collection("Users")
-        .updateOne({ _id: ObjectId(id) }, { $set: { confirmed: true } });
+      if (endpoint === "emailConf")
+      {
+        await db
+          .collection("Users")
+          .updateOne({ _id: ObjectId(id) }, { $set: { confirmed: true } });
+      }
     } catch (e) {
       console.log(e);
       response.error = "An error has occurred";
@@ -189,11 +199,16 @@ router.get(
       return;
     }
 
-    // DEBUG 
+    const emailRedirect = "https://group1largeproject.herokuapp.com/login";
+
+    // Not sure where to redirect this just yet. Might log user in
+    // and redirect him straight to Account Information for updatePassword. 
+    const passRedirect = "https://group1largeproject.herokuapp.com/login";
+
+    // DEBUG for emailConf
     // return res.redirect("http://localhost:5000/login");
-    return res.redirect("https://group1largeproject.herokuapp.com/login");
-  })
-);
+    return res.redirect(endpoint === "emailConf" ? emailRedirect : passRedirect);
+  }));
 
 router.post(
   `/login`,
@@ -280,19 +295,23 @@ router.post(
     }
 
     jwt.sign(
-      user._id,
+      { id: user._id.toHexString() },
       process.env.EMAIL_TOKEN_SECRET,
       { expiresIn: "15m" },
-      async (err, emailToken) => {
-        const url = `https://group1largeproject.herokuapp.com/confirmation/${emailToken}`;
-        const text = `A request to reset your password has been sent to your account. To \
-        reset your password, visit the following link: ${url}`;
+      (err, emailToken) => {
 
-        const html = `<h2>A request to reset your password has been sent to your account.\
-        To reset your password, <i>visit the following link</i>: ${url}</h2>`;
+        // DEBUG
+        const url = `http://localhost:5000/api/confirmation/passConf/${emailToken}`;
+        // const url = `https://group1largeproject.herokuapp.com/api/confirmation/passConf/${emailToken}`;
+        const text = `A request was sent to reset your FoodBuddy password. If you simply forgot
+        your password and want to remember it, your old password is ${user.password}. Otherwise, to reset
+        your password entirely, visit the following link:${url}`;
+        const html = `<h3>A request was sent to reset your FoodBuddy password. If you simply forgot\
+        your password and want to remember it, your old password is ${user.password}.<br /></h3><h4>\
+        Otherwise, to reset your password entirely, visit the following link to update your account\
+          : <a href="${url}">${url}</a></h4>`;
 
-        // TODO: include template to email
-        await sgMail.send({
+        sgMail.send({
           from: "yousefeid707@gmail.com",
           to: email,
           subject: "FoodBuddy Password Reset",
@@ -301,7 +320,7 @@ router.post(
         });
       }
     );
-
+    
     res.status(200).json(response);
   })
 );
