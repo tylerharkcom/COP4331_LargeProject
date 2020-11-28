@@ -36,11 +36,7 @@ function Login() {
       if (response.status !== 200) {
         setMessage(res.error);
       }
-      // Add Verification flag to res statement
-      //  else if(response.status ==  ) {
-      else if (!true) {
-        setMessage("Please verify your account!");
-      } else {
+      else {
         setUser({
           firstName: res.fName,
           lastName: res.lName,
