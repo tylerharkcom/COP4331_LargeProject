@@ -281,7 +281,7 @@ router.post(
     jwt.sign(user._id, 
       process.env.EMAIL_TOKEN_SECRET, 
       { expiresIn: "15m" }, 
-      (err, emailToken) => {
+      async (err, emailToken) => {
 
         const url = `https://group1largeproject.herokuapp.com/confirmation/${emailToken}`;
         const text = `A request to reset your password has been sent to your account. To \
