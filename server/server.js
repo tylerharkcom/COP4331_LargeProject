@@ -153,7 +153,7 @@ router.post(
         sgMail.send({
           from: "yousefeid707@gmail.com",
           to: email,
-          subject: "FoodBuddy Emaidownl Confirmation",
+          subject: "FoodBuddy Email Confirmation",
           text,
           html,
         });
@@ -189,6 +189,8 @@ router.get(
       return;
     }
 
+    // DEBUG 
+    // return res.redirect("http://localhost:5000/login");
     return res.redirect("https://group1largeproject.herokuapp.com/login");
   })
 );
