@@ -279,6 +279,7 @@ function MyAccount() {
       language: newLang.value
       };
       // Testing Vals
+      console.log(newFName.value.concat(" ",newLName.value));
       console.log("Value check");
       console.log(newFName.value);
       console.log(newLName.value);
@@ -309,7 +310,7 @@ function MyAccount() {
         localStorage.setItem("user_data", js);
         
         // Setting local vars
-        console.log(newFName.concat(" ",newLName));
+        console.log(newFName.value.concat(" ",newLName.value));
         console.log("2nd Value Check****");
         console.log(newFName.value);
         setfName(newFName.value);
@@ -358,7 +359,8 @@ function MyAccount() {
                 </Form.Label>
                 <div>
                 
-                {fName.concat(" ", lName)}
+          
+                {fName == null ?newFName.value.concat(" ",newLName.value) :fName.concat(" ", lName)}
 
                 </div>
               </Col>
