@@ -242,7 +242,24 @@ const FoodTable = () => {
           </tr>
         </thead>
         <tbody>
-          {printRows}
+        {
+          food.foods.map((p, index) => {
+            return (
+              <TableRow
+                id={index}
+                item={p.item}
+                selected={(event) => selectRowHandler(event, index)}
+                expDate={p.expDate}
+                editFood={editFood}
+                deleteFood={ async (event, foodName) => {
+                    await deleteFood(event,foodName);
+                    await loadFridgeHandler();
+                }}
+                getRecipe={(event, name) => getRecipeHandler(event, name)}
+              />
+            );
+          })
+        }
         </tbody>
       </Table>
     </div>

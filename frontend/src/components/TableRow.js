@@ -5,7 +5,7 @@ import "../../node_modules/react-crud-icons/dist/css/react-crud-icons.css";
 
 const TableRow = (props) => {
   let food = props.item;
-  let expDate = props.expDate === "" ? "" : new Date(props.expDate);
+  let expDate = new Date(props.expDate);
   let current = new Date();
   let timeDiff = Math.round((expDate.getTime() - current.getTime())/(1000*60*60*24));
   let timeDiffString = "";
@@ -34,6 +34,8 @@ const TableRow = (props) => {
     timeDiffString = timeDiff + " day";
   } else if (timeDiff > 1) {
     timeDiffString = timeDiff + " days";
+  } else if (timeDiff == NaN) {
+    timeDiffString = "";
   } else {
     timeDiffString = "expired";
   }
@@ -49,9 +51,9 @@ const TableRow = (props) => {
         />
       </td>
       <td>{props.item}</td>
-      <td>{timeDiffString}</td>
+      <td>{props.item === "" ? "" : timeDiffString}</td>
       <td></td>
-      <td>{icons}</td>
+      <td>{props.item === "" ? "" : icons}</td>
     </tr>
   );
 };
