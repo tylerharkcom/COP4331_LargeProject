@@ -91,6 +91,7 @@ function generateAccessToken(id) {
 router.post(
   `/register`,
   wrapAsync(async (req, res) => {
+
     const { username, password, fName, lName, email } = req.body;
     const userInfo = {
       fName,
@@ -120,13 +121,8 @@ router.post(
       return;
     }
 
-    if (typeof username != "string") {
+    if (typeof username != "string" || typeof password != "string") {
       // validating data to string
-      response.error = "invalid data";
-      res.status(400).json(response);
-      return;
-    }
-    if (typeof password != "string") {
       response.error = "invalid data";
       res.status(400).json(response);
       return;
@@ -139,36 +135,38 @@ router.post(
       .collection("Users")
       .findOne({ username: username, password: password });
 
-    jwt.sign(
+    // try {
+    const emailToken = jwt.sign(
       { id: user._id.toHexString() },
       process.env.EMAIL_TOKEN_SECRET,
-      { expiresIn: "15m" },
-
-      // Callback contains token to be used
-      // for sending email.
-      async (err, emailToken) => {
-        const url = `https://group1largeproject/herokuapp.com/confirmation/${emailToken}`;
-
-        const text = `A request was sent to confirm your FoodBuddy email as part of your account`;
-        text += `for registration. To complete your account registration, visit the following`;
-        text +=  `link: ${url}`;
-
-        const html = `<h2>A request was sent to confirm your FoodBuddy email as part of your`;
-        html += `account. To complete your account registration, visit the following link:`;
-        html += `<a href="${url}">${url}</a><h2>`;
-
-        // TODO: include template to email
-        await sgMail.send({
-          from: "yousefeid707@gmail.com",
-          to: email,
-          subject: "FoodBuddy Email Confirmation",
-          text,
-          html
-        });
-      }
+      { expiresIn: "15m" }
     );
 
-    await db.collection("Fridge").insertOne({ userId: user._id });
+    // const url = `https://group1largeproject/herokuapp.com/confirmation/${emailToken}`;
+    const url = `http://localhost:5000/confirmation/${emailToken}`;
+    const text = `A request was sent to confirm your FoodBuddy email as part of your account\
+      for registration. To complete your account registration, visit the following link:${url}`;
+    const html = `<h3>A request was sent to confirm your FoodBuddy email as part of your\
+      account for registration.<br /></h3><h4>To complete your account registration, visit\
+      the following link:<a href="${url}">${url}</a></h4>`;
+
+    const result = await sgMail.send({
+      from: "yousefeid707@gmail.com",
+      to: email,
+      subject: "FoodBuddy Email Confirmation",
+      text,
+      html,
+    });
+
+    console.log(result);
+    // } catch(e) {
+    // console.log(e);
+    // reponse.error = "An error has occurred in processing the request";
+    // res.status(500).json(response);
+    // return;
+    // }
+
+    // await db.collection("Fridge").insertOne({ userId: user._id });
 
     res.json(response);
   })
@@ -180,7 +178,7 @@ router.get("/confirmation/:token", async (req, res) => {
   };
 
   try {
-    const {_id} = jwt.verify(req.params.token, EMAIL_TOKEN_SECRET);
+    const { _id } = jwt.verify(req.params.token, EMAIL_TOKEN_SECRET);
     const db = client.db();
 
     await db
@@ -278,9 +276,10 @@ router.post(
       return;
     }
 
-    jwt.sign(user._id, 
-      process.env.EMAIL_TOKEN_SECRET, 
-      { expiresIn: "15m" }, 
+    jwt.sign(
+      user._id,
+      process.env.EMAIL_TOKEN_SECRET,
+      { expiresIn: "15m" },
       async (err, emailToken) => {
         const url = `https://group1largeproject.herokuapp.com/confirmation/${emailToken}`;
         const text = `A request to reset your password has been sent to your account. To \
@@ -295,9 +294,10 @@ router.post(
           to: email,
           subject: "FoodBuddy Password Reset",
           text,
-          html
+          html,
         });
-    });
+      }
+    );
 
     res.status(200).json(response);
   })
