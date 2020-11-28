@@ -50,8 +50,7 @@ const AddFoodModal = (props) =>
 
         let date = new Date(expDateString.value);
         expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
-    
-        console.log(expDate);
+
         if(!(expDate instanceof Date)){
             setMessage('Check your date');
             return;
@@ -61,12 +60,16 @@ const AddFoodModal = (props) =>
             setMessage('Check your date');
             return;
         }
-        if (expDateString === ""){
+        else if (expDateString === ""){
             setMessage('Check your date');
             return;
         }
-        if(food.value===""){
+        else if (food.value === ""){
             setMessage('Please enter a food');
+            return;
+        }
+        else if (foodAmount.value === "" || foodAmount.value <= 0){
+            setMessage('Please enter the amount of food');
             return;
         }
         else {

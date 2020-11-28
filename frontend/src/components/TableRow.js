@@ -34,28 +34,40 @@ const TableRow = (props) => {
     timeDiffString = timeDiff + " day";
   } else if (timeDiff > 1) {
     timeDiffString = timeDiff + " days";
-  } else if (timeDiff == NaN) {
-    timeDiffString = "";
   } else {
     timeDiffString = "expired";
   }
 
-  return (
+  let tableRow = (
     <tr>
-      <td>
-        <Checkbox
-          checked={(event) => {
-            props.selected(event);
-          }}
-          id={props.id}
-        />
-      </td>
-      <td>{props.item}</td>
-      <td>{props.item === "" ? "" : timeDiffString}</td>
       <td></td>
-      <td>{props.item === "" ? "" : icons}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
   );
+
+  if (props.item !== "" ) {
+    tableRow = (
+      <tr>
+        <td>
+          <Checkbox
+            checked={(event) => {
+              props.selected(event);
+            }}
+            id={props.id}
+          />
+        </td>
+        <td>{props.item}</td>
+        <td>{timeDiffString}</td>
+        <td>{props.foodAmount} {props.foodUnit}</td>
+        <td>{icons}</td>
+      </tr>
+    );
+  }
+
+  return tableRow;
 };
 
 export default TableRow;

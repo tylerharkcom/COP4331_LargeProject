@@ -38,6 +38,8 @@ const FoodTable = () => {
       {
         item: "",
         dateExp: "",
+        foodUt: "",
+        foodAmt: -1
       },
     ],
   });
@@ -250,6 +252,8 @@ const FoodTable = () => {
                 item={p.item}
                 selected={(event) => selectRowHandler(event, index)}
                 expDate={p.expDate}
+                foodAmount={p.foodAmt}
+                foodUnit={p.foodUt}
                 editFood={editFood}
                 deleteFood={ async (event, foodName) => {
                     await deleteFood(event,foodName);
