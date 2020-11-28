@@ -326,6 +326,8 @@ function MyAccount() {
         console.log(user);
         fName = newFName;
         lName = newLName;
+        user.firstName = newFName;
+        user.lName = newLName;
         // console.log(newFName.value.concat(" ",newLName.value));
         // console.log("2nd Value Check****");
         // console.log(newFName.value);
