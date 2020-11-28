@@ -473,22 +473,6 @@ router.post(
   })
 );
 
-/*
-  Example JSON
-  {
-    username: "",
-    email: "",
-    fName: "some",
-    lName: "person"
-  }
-
-  Only filled entries should be used for updates.
-
-  For now, these edits will be offered on request, but
-  email changes should be email confirmed similar to resetPass.
-
-  Other notes
-*/
 router.post(
   "/updateAccount",
   wrapAsync(async (req, res, next) => {
