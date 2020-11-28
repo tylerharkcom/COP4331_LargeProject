@@ -158,7 +158,7 @@ router.post(
         html += `<a href="${url}">${url}</a><h2>`;
 
         // TODO: include template to email
-        sgMail.send({
+        await sgMail.send({
           from: "yousefeid707@gmail.com",
           to: email,
           subject: "FoodBuddy Email Confirmation",
@@ -180,7 +180,7 @@ router.get("/confirmation/:token", async (req, res) => {
   };
 
   try {
-    const _id = jwt.verify(req.params.token, EMAIL_TOKEN_SECRET);
+    const {_id} = jwt.verify(req.params.token, EMAIL_TOKEN_SECRET);
     const db = client.db();
 
     await db
@@ -220,12 +220,15 @@ router.post(
       return;
     }
 
-    // if (!user.confirmed) {
-    //   response.error = "Please confirm the \
-    //   email to your account";
-    //   res.status(400).json(response);
-    //   return;
-    // }
+    // Comment this out to disable
+    // email confirmation for any
+    // other testing.
+    if (!user.confirmed) {
+      response.error = "Please confirm the \
+      email to your account";
+      res.status(400).json(response);
+      return;
+    }
 
     const token = generateAccessToken({
       id: user._id.toHexString(),
@@ -288,7 +291,7 @@ router.post(
         To reset your password, <i>visit the following link</i>: ${url}`;
 
         // TODO: include template to email
-        sgMail.send({
+        await sgMail.send({
           from: "yousefeid707@gmail.com",
           to: email,
           subject: "FoodBuddy Password Reset",
