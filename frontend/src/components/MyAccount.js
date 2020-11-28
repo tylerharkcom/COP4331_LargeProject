@@ -390,7 +390,10 @@ function MyAccount() {
                   <b> Name : </b>
                 </Form.Label>
                 <div>
-                
+                {console.log(fName)}
+                {console.log(lName)}
+                {console.log(fName.value)}
+                {console.log(lName.value)}
                 {fName.concat(" ",lName)}
 
                 </div>
