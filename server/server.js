@@ -328,11 +328,14 @@ router.post(
 router.get(
   `/getRecipes`,
   wrapAsync(async (req, res) => {
+    let offset = Math.floor(Math.random() * Math.floor(500));
     var resp1 = await fetch(
       "https://api.spoonacular.com/recipes/complexSearch?apiKey=" +
         process.env.SPOON_API_KEY +
         "&query=" +
         req.query.search +
+        "&offset=" +
+        offset +
         "&number=2",
       {
         method: "GET",
