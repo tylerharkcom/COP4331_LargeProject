@@ -110,17 +110,9 @@ function MyAccount() {
     //  setGender("user.gender");
     //  setCountry("user.country");
     //  setLang("user.language");
-  }, [fName,lName,email,loginName,bDay,gender,country,lang]);
+  }, []);
 
  
-  const renderGenderSelect = (props) => (
-    <select value={gender} onChange={genderNameChange}>
-      <option value="prefNoSay">Prefer not to say</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Other">Other</option>
-    </select>
-  );
 
   const renderPwReqTooltip = (props) => (
     <Tooltip id="passwordReqTooltip" style={{ minWidth: "200" }} {...props}>
@@ -317,22 +309,22 @@ function MyAccount() {
         
         // Setting local vars
         console.log("Before 2nd value check");
-        console.log(updatedUser.newFName);
-        setfName(updatedUser.newFName);
-        console.log(updatedUser.newLName);
-        setlName(updatedUser.newLName);
-        console.log(updatedUser.newemail);
-        setEmail(updatedUser.newEmail);
-        console.log(updatedUser.newUsername);
-        setLoginName(updatedUser.newUsername);
-        console.log(updatedUser.newBDay);
-        setBday(updatedUser.newBDay);
-        console.log(updatedUser.newGender);
-        setGender(updatedUser.newGender);
-        console.log(updatedUser.newCountry);
-        setCountry(updatedUser.newCountry);
-        console.log(updatedUser.newLang);
-        setLang(updatedUser.newLang);
+        console.log(newFName.value);
+        setfName(newFName.value);
+        console.log(newLName.value);
+        setlName(newLName.value);
+        console.log(newemail.value);
+        setEmail(newEmail.value);
+        console.log(newUsername.value);
+        setLoginName(newUsername.value);
+        console.log(newBDay.value);
+        setBday(newBDay.value);
+        console.log(newGender.value);
+        setGender(newGender.value);
+        console.log(newCountry.value);
+        setCountry(newCountry.value);
+        console.log(newLang.value);
+        setLang(newLang.value);
         console.log("After value check");
         infoHandleClose();
       }
