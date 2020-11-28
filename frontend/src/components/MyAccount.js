@@ -1,6 +1,10 @@
 // TODO
-// - Add Delete acct paragraph
-// - Add update acct info
+// So fname is first just a value, but when it gets updated it become undefined
+// Is this because the set funcs are different? 
+// EX. setfName(user.firstName) vs setfName(newFName.value)
+// referencing newFName returns an html element, not the value
+// On the first render fName.concat works, but on the second render it says that fName is undef.
+
 
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
@@ -321,8 +325,15 @@ function MyAccount() {
         localStorage.setItem("user_data", js);
         
         // Setting local vars
+        console.log("User before user = updatedUser");
         console.log(user);
         user = updatedUser;
+        console.log("User after user = updatedUser");
+        console.log(user);
+        console.log("Testing user.field values");
+        console.log(user.firstName);
+        console.log("Testing field.value values");
+        console.log(newFName.value);
         setfName(user.firstName);
         setlName(user.lastName);
         setEmail(user.email);
