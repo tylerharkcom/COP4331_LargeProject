@@ -278,7 +278,8 @@ function MyAccount() {
       country: newCountry.value,
       language: newLang.value
       };
-      // Testing Vals
+      // Testing Vals 
+      //
       console.log(newFName.value.concat(" ",newLName.value));
       console.log("Value check");
       console.log(newFName.value);
