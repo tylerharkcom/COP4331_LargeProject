@@ -333,7 +333,7 @@ router.get(
         process.env.SPOON_API_KEY +
         "&query=" +
         req.query.search +
-        "&number=2",
+        "&sort=random&number=2",
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
