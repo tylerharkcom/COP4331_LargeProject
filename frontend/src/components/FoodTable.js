@@ -159,18 +159,30 @@ const FoodTable = () => {
     alert("You're not getting any results, buddy!");
   };
 
+  const fetchWithTimeout = async (resource, options) => 
+  {
+    const { timeout = 8000 } = options;
+    
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+  
+    const response = await fetch(resource, {
+      ...options,
+      signal: controller.signal  
+    });
+    clearTimeout(id);
+  
+    return response;
+  }
+
   const getRecipeHandler = async (event, name) => {
     event.preventDefault();
     setLoading(true);
-    var resp = await fetch("/api/getRecipes?search=" + name, {
+    var resp = await fetchWithTimeout("/api/getRecipes?search=" + name, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
+      timeout: 6000
     });
-
-    setTimeout(() => {
-      setLoading(false);
-      return;
-    }, 100000)
 
     var res = JSON.parse(await resp.text());
     if (resp.status != 200) {
@@ -264,7 +276,14 @@ const FoodTable = () => {
                     await deleteFood(event,foodName);
                     await loadFridgeHandler();
                 }}
-                getRecipe={(event, name) => getRecipeHandler(event, name)}
+                getRecipe={async (event, name) => {
+                  try {
+                    await getRecipeHandler(event, name);
+                  } catch (e) {
+                    setLoading(false);
+                    alert(e.toString);
+                  }
+                }}
               />
             );
           })
