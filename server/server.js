@@ -329,11 +329,11 @@ router.get(
   `/getRecipes`,
   wrapAsync(async (req, res) => {
     var resp1 = await fetch(
-      "https://api.spoonacular.com/recipes/complexSearch?apiKey=" +
+      "https://api.spoonacular.com/recipes/findByIngredients?apiKey=" +
         process.env.SPOON_API_KEY +
-        "&query=" +
+        "&ingredients=" +
         req.query.search +
-        "&sort=random&number=2",
+        "&number=2",
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -344,7 +344,7 @@ router.get(
 
     var resp2 = await fetch(
       "https://api.spoonacular.com/recipes/" +
-        res1.results[0].id +
+        res1[0].id +
         "/information?apiKey=" +
         process.env.SPOON_API_KEY +
         "&includeNutrition=false",
@@ -356,7 +356,7 @@ router.get(
     var res2 = JSON.parse(await resp2.text());
     var resp3 = await fetch(
       "https://api.spoonacular.com/recipes/" +
-        res1.results[1].id +
+        res1[1].id +
         "/information?apiKey=" +
         process.env.SPOON_API_KEY +
         "&includeNutrition=false",
