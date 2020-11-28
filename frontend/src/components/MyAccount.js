@@ -321,8 +321,11 @@ function MyAccount() {
         localStorage.setItem("user_data", js);
         
         // Setting local vars
+        console.log(user);
         user = updatedUser;
-
+        console.log(user);
+        fName = newFName;
+        lName = newLName;
         // console.log(newFName.value.concat(" ",newLName.value));
         // console.log("2nd Value Check****");
         // console.log(newFName.value);
