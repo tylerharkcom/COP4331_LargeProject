@@ -10,8 +10,8 @@ import EmailPic from '../images/orangeSlice.jpg';
 
 // TODO Make a temp password
 // Set font family
-
-const EmailTemplate = () => ( 
+function EmailTemplate({emailLink}) {
+    return (
     <Email title ="Verify your account">
         <Item align="center">
             <h1 className="title" style={{fontSize:"5rem",color:"#049A9E"}}>FoodBuddy</h1>
@@ -30,7 +30,7 @@ const EmailTemplate = () => (
                     <h2 style={{fontSize:"2rem",marginLeft:"2rem",marginRight:"2rem"}}>
                         Please verify your account by clicking this link.</h2>
                     <body style={{fontSize:"1.25rem",marginBottom:".25rem",marginLeft:"2rem",marginRight:"2rem"}}>
-                        Insert Something about verification here! Filler! 
+                        {emailLink} 
                     </body>
                     
                 </Item>
@@ -57,7 +57,7 @@ const EmailTemplate = () => (
         
         </Item>
     </Email>
-);
+)};
     export default EmailTemplate;
 
 

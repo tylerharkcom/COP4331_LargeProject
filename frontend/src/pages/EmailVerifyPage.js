@@ -8,7 +8,7 @@ const EmailResetPage = () =>
 
     return(
       <div id="testPage" className="emailTemplateBackground fillBackground">
-        <EmailTemplate/>
+        <EmailTemplate emailLink={"sample"} />
       </div>
     );
 };
