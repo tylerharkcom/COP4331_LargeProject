@@ -282,13 +282,12 @@ router.post(
       process.env.EMAIL_TOKEN_SECRET, 
       { expiresIn: "15m" }, 
       async (err, emailToken) => {
-
         const url = `https://group1largeproject.herokuapp.com/confirmation/${emailToken}`;
         const text = `A request to reset your password has been sent to your account. To \
         reset your password, visit the following link: ${url}`;
 
         const html = `<h2>A request to reset your password has been sent to your account.\
-        To reset your password, <i>visit the following link</i>: ${url}`;
+        To reset your password, <i>visit the following link</i>: ${url}</h2>`;
 
         // TODO: include template to email
         await sgMail.send({
