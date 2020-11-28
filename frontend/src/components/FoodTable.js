@@ -167,6 +167,11 @@ const FoodTable = () => {
       headers: { "Content-Type": "application/json" },
     });
 
+    setTimeout(() => {
+      setLoading(false);
+      return;
+    }, 100000)
+
     var res = JSON.parse(await resp.text());
     if (resp.status != 200) {
       setLoading(false);

@@ -328,7 +328,7 @@ router.post(
 router.get(
   `/getRecipes`,
   wrapAsync(async (req, res) => {
-    var resp1 = setTimeout(await fetch(
+    var resp1 = await fetch(
       "https://api.spoonacular.com/recipes/complexSearch?apiKey=" +
         process.env.SPOON_API_KEY +
         "&query=" +
