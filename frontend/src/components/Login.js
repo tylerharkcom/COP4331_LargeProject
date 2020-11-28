@@ -86,11 +86,6 @@ function Login() {
             />
             <br />
           </div>
-          <div id="rememberme" class="checkbox">
-            <label>
-              <input type="checkbox" /> Remember me
-            </label>
-          </div>
           <div id="loginButton">
             <input
               type="submit"

@@ -94,14 +94,19 @@ code {
   border: 5px ridge #DADADA;
 }
 
-#inner-title, #rememberme {
+#inner-title {
   color: #0B2B53;
 }
 
 #registerLink {
   color: #0B2B53;
-  padding-top: 10px;
-  text-align: center;
+  margin-top: 10px;
+  text-align: left;
+}
+
+#resetPassLink {
+  color: #0B2B53;
+  text-align: left;
 }
 
 #loginForm, #registerForm, #resetPassForm{

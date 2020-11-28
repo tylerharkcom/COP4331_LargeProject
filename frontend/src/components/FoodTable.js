@@ -182,6 +182,26 @@ const FoodTable = () => {
     clearRecipeStates();
   };
 
+  let printRows = () => 
+  {
+    food.foods.map((p, index) => {
+      return (
+        <TableRow
+          id={index}
+          item={p.item}
+          selected={(event) => selectRowHandler(event, index)}
+          expDate={p.expDate}
+          editFood={editFood}
+          deleteFood={ async (event, foodName) => {
+              await deleteFood(event,foodName);
+              await loadFridgeHandler();
+          }}
+          getRecipe={(event, name) => getRecipeHandler(event, name)}
+        />
+      );
+    });
+  };
+
   let printTable = (
     <div>
       <div id="fridgeCRUD">
@@ -222,22 +242,7 @@ const FoodTable = () => {
           </tr>
         </thead>
         <tbody>
-          {food.foods.map((p, index) => {
-            return (
-              <TableRow
-                id={index}
-                item={p.item}
-                selected={(event) => selectRowHandler(event, index)}
-                expDate={p.expDate}
-                editFood={editFood}
-                deleteFood={ async (event, foodName) => {
-                    await deleteFood(event,foodName);
-                    await loadFridgeHandler();
-                }}
-                getRecipe={(event, name) => getRecipeHandler(event, name)}
-              />
-            );
-          })}
+          {food.foods[0].item ? printRows : ""}
         </tbody>
       </Table>
     </div>
