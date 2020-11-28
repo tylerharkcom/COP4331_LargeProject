@@ -146,7 +146,7 @@ router.post(
 
       // Callback contains token to be used
       // for sending email.
-      (err, emailToken) => {
+      async (err, emailToken) => {
         const url = `https://group1largeproject/herokuapp.com/confirmation/${emailToken}`;
 
         const text = `A request was sent to confirm your FoodBuddy email as part of your account`;
