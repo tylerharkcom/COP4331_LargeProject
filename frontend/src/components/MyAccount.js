@@ -319,7 +319,6 @@ function MyAccount() {
         alert(res.error);
       } 
       else {
-        infoUpdated = 1;
         alert("Account Updated!");
         console.log(js);
         localStorage.setItem("user_data", js);
@@ -390,11 +389,11 @@ function MyAccount() {
                   <b> Name : </b>
                 </Form.Label>
                 <div>
-                {console.log(fName)}
-                {console.log(lName)}
-                {console.log(fName.value)}
-                {console.log(lName.value)}
-                {fName.concat(" ",lName)}
+                
+                {/* Below stays undefined no matter what */}
+                {/* {console.log(fName.value)}
+                {console.log(lName.value)} */}
+                {user.fName.concat(" ",user.lName)}
 
                 </div>
               </Col>
