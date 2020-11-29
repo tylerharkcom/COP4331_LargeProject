@@ -4,10 +4,11 @@ import Modal from 'react-bootstrap/Modal';
 const EditFoodModal = (props) => 
 {
     const [message, setMessage] = useState('');
-    let food = props.food;
-    let foodAmount = props.foodAmount;
-    let foodUnit = props.foodUnit;
-    let expDateString = props.expDate;
+    const [food, setFood] = useState(props.food);
+    const [amount, setAmount] = useState(props.foodAmount);
+    const [unit, setUnit] = useState(props.foodUnit);
+    const [dateString, setDateString] = useState(props.expDate);
+    
     let expDate = null;
     let check = false;
 
@@ -20,7 +21,7 @@ const EditFoodModal = (props) =>
     {
         check = false;
         let current = new Date();
-        console.log(current);
+        
         if (current >= expDate) {
             return;
         }
@@ -37,27 +38,28 @@ const EditFoodModal = (props) =>
 
     const foodChangeHandler = (event) =>
     {
-        food = event.target.value;
+        setFood(event.target.value);
     }
 
     const amountChangeHandler = (event) =>
     {
-        foodAmount = event.target.value;
+        setAmount(event.target.value);
     }
 
     const unitChangeHandler = (event) =>
     {
-        foodUnit = event.target.value;
+        setUnit(event.target.value);
     }
 
     const dateChangeHandler = (event) =>
     {
-        expDateString = event.target.value;
+        setDateString(event.target.value);
     }
+
     const handleSubmit = async (event) =>
     {
         event.preventDefault();
-        let date = new Date(expDateString.value);
+        let date = new Date(dateString);
         expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
 
         if(!(expDate instanceof Date)){
@@ -69,20 +71,20 @@ const EditFoodModal = (props) =>
             setMessage('Check your date');
             return;
         }
-        else if (expDateString === ""){
+        else if (dateString === ""){
             setMessage('Check your date');
             return;
         }
-        else if (food.value === ""){
+        else if (food === ""){
             setMessage('Please enter a food');
             return;
         }
-        else if (foodAmount.value === "" || foodAmount.value <= 0){
+        else if (amount === "" || amount <= 0){
             setMessage('Please enter the amount of food');
             return;
         }
         else {
-            var obj = { item: food.value, foodAmt: foodAmount.value, foodUt: foodUnit.value, expDate: expDateString.value };
+            var obj = { item: food, foodAmt: amount, foodUt: unit, expDate: dateString };
             var js = JSON.stringify(obj);
             try 
             {
@@ -141,7 +143,7 @@ const EditFoodModal = (props) =>
                                     type="text" 
                                     className="form-control" 
                                     id="foodAmount" 
-                                    value={foodAmount} 
+                                    value={amount} 
                                     onChange={amountChangeHandler} 
                                 />
                             </div>
@@ -152,7 +154,7 @@ const EditFoodModal = (props) =>
                                     style={{marginLeft: "10px"}}
                                     className="form-control" 
                                     id="foodUnit" 
-                                    value={foodUnit}
+                                    value={unit}
                                     onChange={unitChangeHandler} 
                                 >
                                     <option value =" "> </option>
@@ -170,7 +172,7 @@ const EditFoodModal = (props) =>
                                 type="date" 
                                 className="form-control" 
                                 id="foodExpDate" 
-                                value={expDate}
+                                value={dateString}
                                 onChange={dateChangeHandler} 
                             />
                         </div>
