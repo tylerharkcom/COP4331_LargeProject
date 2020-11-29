@@ -374,7 +374,7 @@ router.get(
   })
 );
 
-//router.use(authenticateToken);
+router.use(authenticateToken);
 
 router.post(
   `/logout`,
@@ -423,7 +423,20 @@ router.post(
     res.json();
   })
 );
+/*
+router.post(
+  `/searchFood`,
+  wrapAsync(async (req, res, next) => {
+    const { item } = req.body;
 
+    const db = client.db();
+
+    const searchResults = db
+      .collection("Fridge")
+      .find({ userId: req.user._id, Fridge: { item } });
+  })
+);
+*/
 router.post(
   `/loadFridge`,
   wrapAsync(async (req, res, next) => {
