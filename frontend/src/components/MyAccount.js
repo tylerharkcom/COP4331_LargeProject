@@ -326,16 +326,14 @@ function MyAccount() {
         localStorage.setItem("user_data", js);
         
         // Setting local vars
-        console.log("User before user.firstname = updatedUser.fName");
+        console.log("User.firstName before user.firstname = updatedUser.fName");
         console.log(user.firstName);
         infoUpdated = true;
         user.firstName = updatedUser.fName;
-        console.log("After");
+        console.log("user.firstName After");
         console.log(user.firstName);
-        console.log("Testing user.field values");
-        console.log("Testing field.value values");
-        console.log(newFName.value);
         setfName(user.firstName);
+        setlName(user.lastName);
         // setlName(user.lName);
         // setEmail(user.email);
         // setLoginName(user.username);
@@ -391,11 +389,11 @@ function MyAccount() {
                   <b> Name : </b>
                 </Form.Label>
                 <div>
-                
+                {user.firstName.concat(" ", user.lastName)}
                 {/* Below stays undefined no matter what */}
                 {/* {console.log(fName.value)}
                 {console.log(lName.value)} */}
-                {nameReRender}
+                {/* {nameReRender} */}
                 {/* {user.fName.concat(" ",user.lName)} */}
 
                 </div>
