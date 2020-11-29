@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import TableRow from "./TableRow";
 import Form from "react-bootstrap/Form";
