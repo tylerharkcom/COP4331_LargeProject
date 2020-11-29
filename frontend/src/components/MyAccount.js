@@ -20,7 +20,7 @@ import Container from "react-bootstrap/Container";
 
 function MyAccount() {
   // Info update vars
-  var infoUpdated = 0;
+  var infoUpdated = new Boolean(false);;
   var newFName = "";
   var newLName ="";
   var newEmail;
@@ -168,7 +168,7 @@ function MyAccount() {
   );
 
   const nameReRender = async (event) => {
-    if (infoUpdated == 1)
+    if (infoUpdated.valueOf() == true)
     {user.fName.concat(" ",user.lName)}
     else 
     fName.concat(" ", lName);
@@ -326,6 +326,7 @@ function MyAccount() {
         // Setting local vars
         console.log("User before user = updatedUser");
         console.log(user);
+        infoUpdated = true;
         user = updatedUser;
         console.log("User after user = updatedUser");
         console.log(user);
