@@ -3,12 +3,23 @@ import Modal from 'react-bootstrap/Modal';
 
 const EditFoodModal = (props) => 
 {
+    let f = props.food;
+    let a = props.foodAmount;
+    let u = props.foodUnit;
+    let d = props.expDate;
 
     const [message, setMessage] = useState('');
     const [food, setFood] = useState('');
     const [amount, setAmount] = useState(0);
     const [unit, setUnit] = useState('');
     const [dateString, setDateString] = useState('');
+
+    useEffect(() => {
+        setFood(f);
+        setAmount(a);
+        setUnit(u);
+        setDateString(d);
+    }, []);
 
     let expDate = null;
     let check = false;
@@ -184,7 +195,7 @@ const EditFoodModal = (props) =>
                                 onClick={handleSubmit}
                                 style={{marginLeft: '10px', marginTop: '10px'}}
                             >
-                                Add
+                                Save
                             </button>
                             <button
                                 type="button"
