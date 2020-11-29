@@ -116,8 +116,8 @@ function MyAccount() {
     //  setGender("user.gender");
     //  setCountry("user.country");
     //  setLang("user.language");
-  }, [user]);
-
+  }, []);
+  // Empty dependecy array means useEffect will only run once
  
 
   const renderPwReqTooltip = (props) => (
@@ -389,10 +389,11 @@ function MyAccount() {
                   <b> Name : </b>
                 </Form.Label>
                 <div>
-                {user.firstName.concat(" ", user.lastName)}
+                {fName.concat(" ", lName)}
                 {/* Below stays undefined no matter what */}
                 {/* {console.log(fName.value)}
                 {console.log(lName.value)} */}
+                {/* Below are different tries */}
                 {/* {nameReRender} */}
                 {/* {user.fName.concat(" ",user.lName)} */}
 
