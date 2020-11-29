@@ -4,23 +4,17 @@ import Modal from 'react-bootstrap/Modal';
 const EditFoodModal = (props) => 
 {
     const [message, setMessage] = useState('');
-    let food = "";
-    let foodAmount = 0;
-    let foodUnit = "";
-    let expDateString = "";
+    let food = props.food;
+    let foodAmount = props.foodAmount;
+    let foodUnit = props.foodUnit;
+    let expDateString = props.expDate;
     let expDate = null;
     let check = false;
-    let didDate = false;
 
     let messageStyle = {
         color: "red",
         textAlign: "center"
     };
-
-    const dated = () =>
-    {
-        didDate = true;
-    }
 
     const checkDate = () =>
     {
@@ -43,11 +37,6 @@ const EditFoodModal = (props) =>
     const handleSubmit = async (event) =>
     {
         event.preventDefault();
-        if (!didDate){
-            setMessage('Check your date');
-            return;
-        }
-
         let date = new Date(expDateString.value);
         expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
 
@@ -163,7 +152,6 @@ const EditFoodModal = (props) =>
                                 id="foodExpDate" 
                                 value={props.expDate}
                                 ref={(c) => expDateString = c} 
-                                onChange={dated}
                             />
                         </div>
                         <div className="form-group text-right">
