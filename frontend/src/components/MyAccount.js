@@ -168,6 +168,7 @@ function MyAccount() {
   );
 
   const nameReRender = async (event) => {
+    console.log("Value of infoUpdated: " + infoUpdated.valueOf());
     if (infoUpdated.valueOf() == true)
     {user.fName.concat(" ",user.lName)}
     else 
