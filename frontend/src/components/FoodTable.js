@@ -74,7 +74,7 @@ const FoodTable = () => {
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     loadFridgeHandler();
   }, []);
 
