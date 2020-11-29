@@ -326,24 +326,23 @@ function MyAccount() {
         localStorage.setItem("user_data", js);
         
         // Setting local vars
-        console.log("User before user = updatedUser");
-        console.log(user);
+        console.log("User before user.firstname = updatedUser.fName");
+        console.log(user.firstName);
         infoUpdated = true;
-        user = updatedUser;
-        console.log("User after user = updatedUser");
-        console.log(user);
+        user.firstName = updatedUser.fName;
+        console.log("After");
+        console.log(user.firstName);
         console.log("Testing user.field values");
-        console.log(user.fName);
         console.log("Testing field.value values");
         console.log(newFName.value);
-        setfName(user.fName);
-        setlName(user.lName);
-        setEmail(user.email);
-        setLoginName(user.username);
-        setBday(user.bDay);
-        setGender(user.gender);
-        setCountry(user.country);
-        setLang(user.language);
+        setfName(user.firstName);
+        // setlName(user.lName);
+        // setEmail(user.email);
+        // setLoginName(user.username);
+        // setBday(user.bDay);
+        // setGender(user.gender);
+        // setCountry(user.country);
+        // setLang(user.language);
         // console.log(newFName.value.concat(" ",newLName.value));
         // console.log("2nd Value Check****");
         // console.log(newFName.value);
