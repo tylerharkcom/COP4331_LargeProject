@@ -333,8 +333,8 @@ const FoodTable = () => {
       <EditFoodModal
         show={showEditFood}
         food={food.foods[editIndex].item}
-        foodAmount={food.foods[editIndex].foodAmount}
-        foodUnit={food.foods[editIndex].foodUnit}
+        foodAmount={food.foods[editIndex].foodAmt}
+        foodUnit={food.foods[editIndex].foodUt}
         expDate={food.foods[editIndex].expDate}
         close={()=> {
           setShowEditFood(false);
