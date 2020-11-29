@@ -161,6 +161,7 @@ router.post(
           to: email,
           subject: "FoodBuddy Email Confirmation",
           html2,
+          text,
         });
       }
     );
