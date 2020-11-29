@@ -1,59 +1,56 @@
 import React, { useState, useEffect } from "react";
 
-function UserNavBar()
-{
+function UserNavBar() {
+  const user = JSON.parse(localStorage.getItem("user_data"));
+  const [fName, setfName] = useState("");
+  const [lName, setlName] = useState("");
 
-    const user = JSON.parse(localStorage.getItem("user_data"));
-    const [fName, setfName] = useState('');
-    const [lName, setlName] = useState('');
+  useEffect(() => {
+    setfName(user.firstName);
+    setlName(user.lastName);
+  });
 
-    useEffect(() => {
-        setfName(user.firstName);
-        setlName(user.lastName);
-    });
+  const doLogout = async (event) => {
+    event.preventDefault();
 
-    const doLogout = async event => 
-    {
-        event.preventDefault();
-        
+    try {
+      const response = await fetch("/api/logout", {
+        method: "POST",
+        body: null,
+        headers: { "Content-Type": "application/json" },
+      });
 
-        try {
-            const response = await fetch("/api/logout", {
-              method: "POST",
-              body: null,
-              headers: { "Content-Type": "application/json" },
-            });
-            
-
-            if (response.status !== 200) {
-              return;
-            } else {
-                localStorage.clear();
-                window.location.href = '/';
-            }
-        } catch (e) {
-            alert(e.toString());
-            return;
-        }
-    };    
-
-    const goToFridge = event => 
-    {
-        event.preventDefault();
-        window.location.href = '/dashboard';
+      if (response.status !== 200) {
+        return;
+      } else {
+        localStorage.clear();
+        window.location.href = "/";
+      }
+    } catch (e) {
+      alert(e.toString());
+      return;
     }
+  };
 
-    const goToAccount = event =>
-    {
-        event.preventDefault();
-        window.location.href = '/account';
-    }
+  const goToFridge = (event) => {
+    event.preventDefault();
+    window.location.href = "/dashboard";
+  };
 
-    const goToRecipes = event =>
-    {
-        event.preventDefault();
-        window.location.href = '/recipes';
-    }
+  const goToAccount = (event) => {
+    event.preventDefault();
+    window.location.href = "/account";
+  };
+
+  const goToFeed = (event) => {
+    event.preventDefault();
+    window.location.href = "/feed";
+  };
+
+  const goToRecipes = (event) => {
+    event.preventDefault();
+    window.location.href = "/recipes";
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -76,6 +73,15 @@ function UserNavBar()
               className="link-button-dark"
               value="My Account"
               onClick={goToAccount}
+            />
+          </li>
+          <li className="nav-item">
+            <input
+              name="feed"
+              type="button"
+              className="link-button-dark"
+              value="My Feed"
+              onClick={goToFeed}
             />
           </li>
         </ul>

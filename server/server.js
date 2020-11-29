@@ -20,6 +20,8 @@ const fs = require("fs");
 const sha256 = require("./sha256");
 const sgMail = require("@sendgrid/mail");
 const { userInfo } = require("os");
+// const { ResetPwEmail } = require("../components/EmailVerify");
+// const { renderEmail } = require("react-html-email");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -153,6 +155,7 @@ router.post(
         const html = `<h3>A request was sent to confirm your FoodBuddy email as part of your\
         account for registration.<br /></h3><h4>To complete your account registration, visit\
         the following link: <a href="${url}">${url}</a></h4>`;
+        // const html2 = renderEmail(<ResetPwEmail emailLink={url} />);
 
         sgMail.send({
           from: "yousefeid707@gmail.com",
