@@ -50,10 +50,6 @@ function ResetPass()
       return;
     }
 
-
-    // TODO: figure out endpoint format and send email accordingly
-    // alert("*static*");
-
     let obj = {username: username.value, email: email.value};
     console.log(obj);
     let js = JSON.stringify(obj);
