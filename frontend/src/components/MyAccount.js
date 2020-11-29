@@ -307,11 +307,11 @@ function MyAccount() {
         user.firstName = updatedUser.fName;
         user.lastName = updatedUser.lName;
         user.email = updatedUser.email;
-        user.loginName = updatedUser.loginName;
+        user.loginName = updatedUser.username;
         user.birthday = updatedUser.bDay;
         user.gender = updatedUser.gender;
         user.country = updatedUser.country;
-        user.language = updatedUser.lang;
+        user.language = updatedUser.language;
         console.log("user.firstName After");
         console.log(user.firstName);
         setfName(user.firstName);
@@ -595,7 +595,8 @@ function MyAccount() {
                     </Form.Label>
                     <select  
                         class="form-control" 
-                        id="sel1" 
+                        id="sel1"
+                        defaultValue={gender} 
                         ref={(c) => (newGender = c)} 
                         style={{marginLeft:'.5rem',marginTop:'1rem',width:"12.8rem"}}>
                             <option value ="prefNoSay">Prefer not to say</option>
@@ -616,6 +617,7 @@ function MyAccount() {
                     <select 
                         class="form-control" 
                         id="sel2" 
+                        defaultValue={country}
                         ref={(c) => (newCountry = c)} 
                         style={{marginLeft:'.5rem',marginTop:'1rem',width:"12.8rem"}}>
                             <option value ="United States">United States</option>
@@ -637,6 +639,7 @@ function MyAccount() {
                     <select 
                         class="form-control" 
                         id="sel2" 
+                        defaultValue={lang}
                         ref={(c) => (newLang = c)} 
                         style={{marginLeft:'.5rem',marginTop:'1rem',marginBottom:'1rem',width:"12.8rem"}}>
                             <option value ="English">English</option>
