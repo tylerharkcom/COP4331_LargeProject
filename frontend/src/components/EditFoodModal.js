@@ -3,11 +3,16 @@ import Modal from 'react-bootstrap/Modal';
 
 const EditFoodModal = (props) => 
 {
+    let food1 = props.food;
+    let amt = props.foodAmount;
+    let ut = props.foodUnit;
+    let d = props.expDate;
+
     const [message, setMessage] = useState('');
-    const [food, setFood] = useState(props.food);
-    const [amount, setAmount] = useState(props.foodAmount);
-    const [unit, setUnit] = useState(props.foodUnit);
-    const [dateString, setDateString] = useState(props.expDate);
+    const [food, setFood] = useState(food1);
+    const [amount, setAmount] = useState(amt);
+    const [unit, setUnit] = useState(ut);
+    const [dateString, setDateString] = useState(d);
     
     let expDate = null;
     let check = false;
