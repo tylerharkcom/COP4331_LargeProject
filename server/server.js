@@ -143,7 +143,6 @@ router.post(
       process.env.EMAIL_TOKEN_SECRET,
       { expiresIn: "15m" },
       (err, emailToken) => {
-
         // DEBUG
         const url = `http://localhost:5000/api/confirmation/emailConf/${emailToken}`;
         // const url = `https://group1largeproject.herokuapp.com/api/confirmation/emailConf/${emailToken}`;
@@ -164,7 +163,7 @@ router.post(
       }
     );
 
-    await db.collection("Fridge").insertOne({userId: user._id});
+    await db.collection("Fridge").insertOne({ userId: user._id });
     res.json(response);
   })
 );
@@ -176,18 +175,14 @@ router.get(
       error: "",
     };
 
-    const {endpoint, token} = req.params;
+    const { endpoint, token } = req.params;
     console.log("endpoint", endpoint);
     console.log("token", token);
     try {
-      const { id } = jwt.verify(
-        token,
-        process.env.EMAIL_TOKEN_SECRET
-      );
+      const { id } = jwt.verify(token, process.env.EMAIL_TOKEN_SECRET);
       const db = client.db();
 
-      if (endpoint === "emailConf")
-      {
+      if (endpoint === "emailConf") {
         await db
           .collection("Users")
           .updateOne({ _id: ObjectId(id) }, { $set: { confirmed: true } });
@@ -202,13 +197,16 @@ router.get(
     const emailRedirect = "https://group1largeproject.herokuapp.com/login";
 
     // Not sure where to redirect this just yet. Might log user in
-    // and redirect him straight to Account Information for updatePassword. 
+    // and redirect him straight to Account Information for updatePassword.
     const passRedirect = "https://group1largeproject.herokuapp.com/login";
 
     // DEBUG for emailConf
     // return res.redirect("http://localhost:5000/login");
-    return res.redirect(endpoint === "emailConf" ? emailRedirect : passRedirect);
-  }));
+    return res.redirect(
+      endpoint === "emailConf" ? emailRedirect : passRedirect
+    );
+  })
+);
 
 router.post(
   `/login`,
@@ -299,7 +297,6 @@ router.post(
       process.env.EMAIL_TOKEN_SECRET,
       { expiresIn: "15m" },
       (err, emailToken) => {
-
         // DEBUG
         const url = `http://localhost:5000/api/confirmation/passConf/${emailToken}`;
         // const url = `https://group1largeproject.herokuapp.com/api/confirmation/passConf/${emailToken}`;
@@ -320,7 +317,7 @@ router.post(
         });
       }
     );
-    
+
     res.status(200).json(response);
   })
 );
@@ -377,7 +374,7 @@ router.get(
   })
 );
 
-router.use(authenticateToken);
+//router.use(authenticateToken);
 
 router.post(
   `/logout`,
@@ -400,7 +397,28 @@ router.post(
         .updateOne({ userId: req.user._id }, { $push: { fridge: fridgeItem } });
     } catch (e) {
       console.log(e);
-      res.send(400).json();
+      res.status(400).json();
+      return;
+    }
+    res.json();
+  })
+);
+
+router.post(
+  `/editFood`,
+  wrapAsync(async (req, res, next) => {
+    console.log("hello");
+    const newItem = req.body;
+
+    const db = client.db();
+
+    try {
+      await db
+        .collection("Fridge")
+        .updateOne({ userId: req.user._id }, { $set: { fridge: { newItem } } });
+    } catch (e) {
+      console.log(e);
+      res.status(400).json();
       return;
     }
     res.json();
