@@ -8,7 +8,8 @@ const EditFoodModal = (props) =>
     let foodAmount = props.foodAmount;
     let foodUnit = props.foodUnit;
     let expDateString = props.expDate;
-    let expDate = null;
+    let date = new Date(expDateString);
+    let expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
     let check = false;
 
     let messageStyle = {
@@ -37,7 +38,7 @@ const EditFoodModal = (props) =>
     const handleSubmit = async (event) =>
     {
         event.preventDefault();
-        let date = new Date(expDateString.value);
+        date = new Date(expDateString.value);
         expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
 
         if(!(expDate instanceof Date)){
@@ -110,7 +111,7 @@ const EditFoodModal = (props) =>
                                 type="text" 
                                 className="form-control" 
                                 id="foodName" 
-                                value={props.food}
+                                value={food}
                                 ref={(c) => food = c} 
                             />
                         </div>
@@ -121,7 +122,7 @@ const EditFoodModal = (props) =>
                                     type="text" 
                                     className="form-control" 
                                     id="foodAmount" 
-                                    value={props.foodAmount} 
+                                    value={foodAmount} 
                                     ref={(c) => foodAmount = c} 
                                 />
                             </div>
@@ -132,7 +133,7 @@ const EditFoodModal = (props) =>
                                     style={{marginLeft: "10px"}}
                                     className="form-control" 
                                     id="foodUnit" 
-                                    value={props.foodUnit}
+                                    value={foodUnit}
                                     ref={(c) => foodUnit = c} 
                                 >
                                     <option value =" "> </option>
@@ -150,7 +151,7 @@ const EditFoodModal = (props) =>
                                 type="date" 
                                 className="form-control" 
                                 id="foodExpDate" 
-                                value={props.expDate}
+                                value={expDate}
                                 ref={(c) => expDateString = c} 
                             />
                         </div>
