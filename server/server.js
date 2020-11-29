@@ -407,7 +407,6 @@ router.post(
 router.post(
   `/editFood`,
   wrapAsync(async (req, res, next) => {
-    console.log("hello");
     const newItem = req.body;
 
     const db = client.db();
