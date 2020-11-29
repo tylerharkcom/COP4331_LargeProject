@@ -172,9 +172,10 @@ function MyAccount() {
     if (infoUpdated.valueOf() == true)
     {user.fName.concat(" ",user.lName)}
     else 
-    fName.concat(" ", lName);
+    user.firstName.concat(" ", user.lastName);
 
   };
+
   const updatePasswordCheck = async (event) => {
     event.preventDefault();
     setMessageCurr("");
