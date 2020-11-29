@@ -35,7 +35,7 @@ const FoodTable = () => {
   const [checkmark, setCheckmark] = useState([]);
   const [showAddFood, setShowAddFood] = useState(false);
   const [showEditFood, setShowEditFood] = useState(false);
-  const [foodToEdit, setFoodToEdit] = useState( {} );
+  const [editIndex, setEditIndex] = useState(0);
   const [food, setFood] = useState({
     foods: [
       {
@@ -78,10 +78,6 @@ const FoodTable = () => {
     loadFridgeHandler();
   }, []);
 
-  const clearEditFood = () => {
-    setFoodToEdit( {} );
-  };
-
   const clearRecipeStates = () => {
     setResults({
       results: [
@@ -112,7 +108,7 @@ const FoodTable = () => {
 
   const editFood = (event, index) => {
     event.preventDefault();
-    setFoodToEdit(food.foods[index]);
+    setEditIndex(index);
     setShowEditFood(true);
   };
 
@@ -259,10 +255,7 @@ const FoodTable = () => {
                 expDate={p.expDate}
                 foodAmount={p.foodAmt}
                 foodUnit={p.foodUt}
-                editFood={(event, index) => {
-                  editFood(event, index);
-                  clearEditFood();
-                }}
+                editFood={(event, index) => editFood(event, index)}
                 deleteFood={ async (event, foodName) => {
                     await deleteFood(event,foodName);
                     await loadFridgeHandler();
@@ -339,13 +332,12 @@ const FoodTable = () => {
       />
       <EditFoodModal
         show={showEditFood}
-        food={foodToEdit.food}
-        foodAmount={foodToEdit.foodAmount}
-        foodUnit={foodToEdit.foodUnit}
-        expDate={foodToEdit.expDate}
+        food={food.foods[editIndex].item}
+        foodAmount={food.foods[editIndex].foodAmount}
+        foodUnit={food.foods[editIndex].foodUnit}
+        expDate={food.foods[editIndex].expDate}
         close={()=> {
           setShowEditFood(false);
-          clearEditFood();
           loadFridgeHandler();
         }}
       />
