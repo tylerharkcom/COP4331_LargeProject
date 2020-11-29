@@ -20,8 +20,6 @@ const fs = require("fs");
 const sha256 = require("./sha256");
 const sgMail = require("@sendgrid/mail");
 const { userInfo } = require("os");
-const { ResetPwEmail } = require("../components/EmailVerify");
-const { renderEmail } = require("react-html-email");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -145,6 +143,7 @@ router.post(
       process.env.EMAIL_TOKEN_SECRET,
       { expiresIn: "15m" },
       (err, emailToken) => {
+
         // DEBUG
         const url = `http://localhost:5000/api/confirmation/emailConf/${emailToken}`;
         // const url = `https://group1largeproject.herokuapp.com/api/confirmation/emailConf/${emailToken}`;
@@ -154,19 +153,18 @@ router.post(
         const html = `<h3>A request was sent to confirm your FoodBuddy email as part of your\
         account for registration.<br /></h3><h4>To complete your account registration, visit\
         the following link: <a href="${url}">${url}</a></h4>`;
-        const html2 = renderEmail(<ResetPwEmail emailLink={url} />);
 
         sgMail.send({
           from: "yousefeid707@gmail.com",
           to: email,
           subject: "FoodBuddy Email Confirmation",
-          html2,
           text,
+          html,
         });
       }
     );
 
-    await db.collection("Fridge").insertOne({ userId: user._id });
+    await db.collection("Fridge").insertOne({userId: user._id});
     res.json(response);
   })
 );
@@ -178,14 +176,18 @@ router.get(
       error: "",
     };
 
-    const { endpoint, token } = req.params;
+    const {endpoint, token} = req.params;
     console.log("endpoint", endpoint);
     console.log("token", token);
     try {
-      const { id } = jwt.verify(token, process.env.EMAIL_TOKEN_SECRET);
+      const { id } = jwt.verify(
+        token,
+        process.env.EMAIL_TOKEN_SECRET
+      );
       const db = client.db();
 
-      if (endpoint === "emailConf") {
+      if (endpoint === "emailConf")
+      {
         await db
           .collection("Users")
           .updateOne({ _id: ObjectId(id) }, { $set: { confirmed: true } });
@@ -200,16 +202,13 @@ router.get(
     const emailRedirect = "https://group1largeproject.herokuapp.com/login";
 
     // Not sure where to redirect this just yet. Might log user in
-    // and redirect him straight to Account Information for updatePassword.
+    // and redirect him straight to Account Information for updatePassword. 
     const passRedirect = "https://group1largeproject.herokuapp.com/login";
 
     // DEBUG for emailConf
     // return res.redirect("http://localhost:5000/login");
-    return res.redirect(
-      endpoint === "emailConf" ? emailRedirect : passRedirect
-    );
-  })
-);
+    return res.redirect(endpoint === "emailConf" ? emailRedirect : passRedirect);
+  }));
 
 router.post(
   `/login`,
@@ -300,9 +299,10 @@ router.post(
       process.env.EMAIL_TOKEN_SECRET,
       { expiresIn: "15m" },
       (err, emailToken) => {
+
         // DEBUG
-        const url = `http://localhost:5000/api/confirmation/passConf/${emailToken}`;
-        // const url = `https://group1largeproject.herokuapp.com/api/confirmation/passConf/${emailToken}`;
+        // const url = `http://localhost:5000/api/confirmation/passConf/${emailToken}`;
+        const url = `https://group1largeproject.herokuapp.com/api/confirmation/passConf/${emailToken}`;
         const text = `A request was sent to reset your FoodBuddy password. If you simply forgot
         your password and want to remember it, your old password is ${user.password}. Otherwise, to reset
         your password entirely, visit the following link:${url}`;
@@ -311,17 +311,16 @@ router.post(
         Otherwise, to reset your password entirely, visit the following link to update your account\
           : <a href="${url}">${url}</a></h4>`;
 
-        const html2 = renderEmail(<ResetPwEmail emailLink={url} />);
         sgMail.send({
           from: "yousefeid707@gmail.com",
           to: email,
           subject: "FoodBuddy Password Reset",
           text,
-          html2,
+          html,
         });
       }
     );
-
+    
     res.status(200).json(response);
   })
 );
@@ -401,46 +400,13 @@ router.post(
         .updateOne({ userId: req.user._id }, { $push: { fridge: fridgeItem } });
     } catch (e) {
       console.log(e);
-      res.status(400).json();
+      res.send(400).json();
       return;
     }
     res.json();
   })
 );
 
-router.post(
-  `/editFood`,
-  wrapAsync(async (req, res, next) => {
-    const newItem = req.body;
-
-    const db = client.db();
-
-    try {
-      await db
-        .collection("Fridge")
-        .updateOne({ userId: req.user._id }, { $set: { fridge: { newItem } } });
-    } catch (e) {
-      console.log(e);
-      res.status(400).json();
-      return;
-    }
-    res.json();
-  })
-);
-/*
-router.post(
-  `/searchFood`,
-  wrapAsync(async (req, res, next) => {
-    const { item } = req.body;
-
-    const db = client.db();
-
-    const searchResults = db
-      .collection("Fridge")
-      .find({ userId: req.user._id, Fridge: { item } });
-  })
-);
-*/
 router.post(
   `/loadFridge`,
   wrapAsync(async (req, res, next) => {
