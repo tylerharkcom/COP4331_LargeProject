@@ -20,7 +20,6 @@ import Container from "react-bootstrap/Container";
 
 function MyAccount() {
   // Info update vars
-  var infoUpdated = new Boolean(false);;
   var newFName = "";
   var newLName ="";
   var newEmail;
@@ -75,8 +74,6 @@ function MyAccount() {
   };
 
   var user = JSON.parse(localStorage.getItem("user_data"));
-  // const updatedUser = user;
-  // const [user, setUser] = useState("");
   const [fName, setfName] = useState("");
   const [lName, setlName] = useState("");
   const [email, setEmail] = useState("");
@@ -85,18 +82,6 @@ function MyAccount() {
   const [gender, setGender] = useState("Prefer not to say");
   const [country, setCountry] = useState("location");
   const [lang, setLang] = useState("English");
-
-  // setUser(() =>{
-  //   setUser(JSON.parse(localStorage.getItem("user_data"));
-  //   setfName(updatedUser.firstName);
-  //   setlName(updatedUser.lastName);
-  //   setEmail(updatedUser.email);
-  //   setLoginName(updatedUser.loginName);
-  //   setBday(updatedUser.birthday);
-  //   setGender(updatedUser.gender);
-  //   setCountry(updatedUser.country);
-  //   setLang(updatedUser.language);
-  //  });
 
   useEffect(() => {
     setfName(user.firstName);
@@ -166,15 +151,6 @@ function MyAccount() {
       Delete Account
     </Button>
   );
-
-  const nameReRender = async (event) => {
-    console.log("Value of infoUpdated: " + infoUpdated.valueOf());
-    if (infoUpdated.valueOf() == true)
-    {user.fName.concat(" ",user.lName)}
-    else 
-    user.firstName.concat(" ", user.lastName);
-
-  };
 
   const updatePasswordCheck = async (event) => {
     event.preventDefault();
@@ -328,7 +304,6 @@ function MyAccount() {
         // Setting local vars
         console.log("User.firstName before user.firstname = updatedUser.fName");
         console.log(user.firstName);
-        infoUpdated = true;
         user.firstName = updatedUser.fName;
         user.lastName = updatedUser.lName;
         user.email = updatedUser.email;
@@ -347,25 +322,6 @@ function MyAccount() {
         setGender(user.gender);
         setCountry(user.country);
         setLang(user.language);
-        // console.log(newFName.value.concat(" ",newLName.value));
-        // console.log("2nd Value Check****");
-        // console.log(newFName.value);
-        // setfName(newFName.value);
-        // console.log(newLName.value);
-        // setlName(newLName.value);
-        // console.log(newEmail.value);
-        // setEmail(newEmail.value);
-        // console.log(newUsername.value);
-        // setLoginName(newUsername.value);
-        // console.log(newBDay.value);
-        // setBday(newBDay.value);
-        // console.log(newGender.value);
-        // setGender(newGender.value);
-        // console.log(newCountry.value);
-        // setCountry(newCountry.value);
-        // console.log(newLang.value);
-        // setLang(newLang.value);
-        // console.log("After value check****");
         infoHandleClose();
       }
     } catch (e) {
@@ -394,16 +350,12 @@ function MyAccount() {
                 >
                   <b> Name : </b>
                 </Form.Label>
-                <div>
+                <Form.Label plaintext readOnly>
                 {fName.concat(" ", lName)}
-                {/* Below stays undefined no matter what */}
-                {/* {console.log(fName.value)}
-                {console.log(lName.value)} */}
-                {/* Below are different tries */}
-                {/* {nameReRender} */}
-                {/* {user.fName.concat(" ",user.lName)} */}
+                </Form.Label>
+                
 
-                </div>
+                
               </Col>
             </Form.Group>
             <Form.Group as={Row}>
