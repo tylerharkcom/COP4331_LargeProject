@@ -10,13 +10,6 @@ const EditFoodModal = (props) =>
     const [unit, setUnit] = useState('');
     const [dateString, setDateString] = useState('');
 
-    useEffect(() => {
-        setFood(props.food);
-        setAmount(props.foodAmount);
-        setUnit(props.foodUnit);
-        setDateString(props.expDate);
-    }, []);
-    
     let expDate = null;
     let check = false;
 
