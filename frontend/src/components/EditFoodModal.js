@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 
 const EditFoodModal = (props) => 
@@ -9,6 +9,13 @@ const EditFoodModal = (props) =>
     const [amount, setAmount] = useState(0);
     const [unit, setUnit] = useState('');
     const [dateString, setDateString] = useState('');
+
+    useEffect(() => {
+        setFood(props.food);
+        setAmount(props.foodAmount);
+        setUnit(props.foodUnit);
+        setDateString(props.expDate);
+    }, []);
     
     let expDate = null;
     let check = false;
