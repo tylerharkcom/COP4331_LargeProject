@@ -116,8 +116,8 @@ function MyAccount() {
     //  setGender("user.gender");
     //  setCountry("user.country");
     //  setLang("user.language");
-  }, [user]);
-
+  }, []);
+  // Empty dependecy array means useEffect will only run once
  
 
   const renderPwReqTooltip = (props) => (
@@ -326,23 +326,27 @@ function MyAccount() {
         localStorage.setItem("user_data", js);
         
         // Setting local vars
-        console.log("User before user.firstname = updatedUser.fName");
+        console.log("User.firstName before user.firstname = updatedUser.fName");
         console.log(user.firstName);
         infoUpdated = true;
         user.firstName = updatedUser.fName;
-        console.log("After");
+        user.lastName = updatedUser.lName;
+        user.email = updatedUser.email;
+        user.loginName = updatedUser.loginName;
+        user.birthday = updatedUser.bDay;
+        user.gender = updatedUser.gender;
+        user.country = updatedUser.country;
+        user.language = updatedUser.lang;
+        console.log("user.firstName After");
         console.log(user.firstName);
-        console.log("Testing user.field values");
-        console.log("Testing field.value values");
-        console.log(newFName.value);
         setfName(user.firstName);
-        // setlName(user.lName);
-        // setEmail(user.email);
-        // setLoginName(user.username);
-        // setBday(user.bDay);
-        // setGender(user.gender);
-        // setCountry(user.country);
-        // setLang(user.language);
+        setlName(user.lastName);
+        setEmail(user.email);
+        setLoginName(user.loginName);
+        setBday(user.birthday);
+        setGender(user.gender);
+        setCountry(user.country);
+        setLang(user.language);
         // console.log(newFName.value.concat(" ",newLName.value));
         // console.log("2nd Value Check****");
         // console.log(newFName.value);
@@ -391,11 +395,12 @@ function MyAccount() {
                   <b> Name : </b>
                 </Form.Label>
                 <div>
-                
+                {fName.concat(" ", lName)}
                 {/* Below stays undefined no matter what */}
                 {/* {console.log(fName.value)}
                 {console.log(lName.value)} */}
-                {nameReRender}
+                {/* Below are different tries */}
+                {/* {nameReRender} */}
                 {/* {user.fName.concat(" ",user.lName)} */}
 
                 </div>
