@@ -11,7 +11,11 @@ const TableRow = (props) => {
   let timeDiffString = "";
   let icons = (
     <div>
-      <Icon name="edit" size="small" theme="dark" onClick={props.editFood} />
+      <Icon 
+        name="edit" 
+        size="small" 
+        theme="dark" 
+        onClick={(event) => props.editFood(event, props.id)} />
       <Icon
         name="delete"
         size="small"

@@ -8,6 +8,7 @@ import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
 import MyLoader from "./MyLoadingSymbol";
 import AddFood from "./AddFood";
+import EditFoodModal from "./EditFoodModal";
 
 const FoodTable = () => {
   const [results, setResults] = useState({
@@ -32,7 +33,9 @@ const FoodTable = () => {
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [checkmark, setCheckmark] = useState([]);
-  const [showFoodModal, setShowFoodModal] = useState(false);
+  const [showAddFood, setShowAddFood] = useState(false);
+  const [showEditFood, setShowEditFood] = useState(false);
+  const [foodToEdit, setFoodToEdit] = useState( {} );
   const [food, setFood] = useState({
     foods: [
       {
@@ -75,6 +78,10 @@ const FoodTable = () => {
     loadFridgeHandler();
   }, []);
 
+  const clearEditFood = () => {
+    setFoodToEdit( {} );
+  };
+
   const clearRecipeStates = () => {
     setResults({
       results: [
@@ -103,14 +110,15 @@ const FoodTable = () => {
     console.log(checkmark);
   };
 
-  const editFood = (event) => {
+  const editFood = (event, index) => {
     event.preventDefault();
-    alert("Thought you could edit, did ya?");
+    setFoodToEdit(food.foods[index]);
+    setShowEditFood(true);
   };
 
   const addFood = (event) => {
     event.preventDefault();
-    setShowFoodModal(true);
+    setShowAddFood(true);
   }
 
   const getExpired = (event) => {
@@ -251,7 +259,10 @@ const FoodTable = () => {
                 expDate={p.expDate}
                 foodAmount={p.foodAmt}
                 foodUnit={p.foodUt}
-                editFood={editFood}
+                editFood={(event, index) => {
+                  editFood(event, index);
+                  clearEditFood();
+                }}
                 deleteFood={ async (event, foodName) => {
                     await deleteFood(event,foodName);
                     await loadFridgeHandler();
@@ -320,9 +331,21 @@ const FoodTable = () => {
       </Modal>
       <MyLoader loading={loading} />
       <AddFood
-        show={showFoodModal}
+        show={showAddFood}
         close={() => {
-          setShowFoodModal(false);
+          setShowAddFood(false);
+          loadFridgeHandler();
+        }}
+      />
+      <EditFoodModal
+        show={showEditFood}
+        food={foodToEdit.food}
+        foodAmount={foodToEdit.foodAmount}
+        foodUnit={foodToEdit.foodUnit}
+        expDate={foodToEdit.expDate}
+        close={()=> {
+          setShowEditFood(false);
+          clearEditFood();
           loadFridgeHandler();
         }}
       />

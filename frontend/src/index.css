@@ -86,7 +86,7 @@ code {
   background-color: #464646;
   padding: 10px;
 }
-#accountModalWrapper, #addFoodWrapper {
+#accountModalWrapper, #addFoodWrapper, #editFoodWrapper {
   background-color: #DADADA;
 }
 
