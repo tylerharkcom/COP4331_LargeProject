@@ -169,7 +169,7 @@ function MyAccount() {
 
   const nameReRender = async (event) => {
     if (infoUpdated == 1)
-      newFName.concat(" ",newLName);
+    {user.fName.concat(" ",user.lName)}
     else 
     fName.concat(" ", lName);
 
@@ -393,7 +393,8 @@ function MyAccount() {
                 {/* Below stays undefined no matter what */}
                 {/* {console.log(fName.value)}
                 {console.log(lName.value)} */}
-                {user.fName.concat(" ",user.lName)}
+                {nameReRender}
+                {/* {user.fName.concat(" ",user.lName)} */}
 
                 </div>
               </Col>
