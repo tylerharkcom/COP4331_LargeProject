@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 
 const EditFoodModal = (props) => 
@@ -7,6 +7,12 @@ const EditFoodModal = (props) =>
     let a = props.foodAmount;
     let u = props.foodUnit;
     let d = props.expDate;
+    let check = false;
+    let messageStyle = {
+        color: "red",
+        textAlign: "center"
+    };
+    let expDate;
 
     const [message, setMessage] = useState('');
     const [food, setFood] = useState('');
@@ -14,20 +20,12 @@ const EditFoodModal = (props) =>
     const [unit, setUnit] = useState('');
     const [dateString, setDateString] = useState('');
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setFood(f);
         setAmount(a);
         setUnit(u);
         setDateString(d);
     }, []);
-
-    let expDate = null;
-    let check = false;
-
-    let messageStyle = {
-        color: "red",
-        textAlign: "center"
-    };
 
     const checkDate = () =>
     {
@@ -144,7 +142,7 @@ const EditFoodModal = (props) =>
                                 type="text" 
                                 className="form-control" 
                                 id="foodName" 
-                                value={food === '' ? props.food : food}
+                                defaultValue={props.food}
                                 onChange={foodChangeHandler} 
                             />
                         </div>
@@ -155,7 +153,7 @@ const EditFoodModal = (props) =>
                                     type="text" 
                                     className="form-control" 
                                     id="foodAmount" 
-                                    value={amount == 0 ? props.foodAmount : amount} 
+                                    defaultValue={props.foodAmount} 
                                     onChange={amountChangeHandler} 
                                 />
                             </div>
@@ -166,7 +164,7 @@ const EditFoodModal = (props) =>
                                     style={{marginLeft: "10px"}}
                                     className="form-control" 
                                     id="foodUnit" 
-                                    value={unit === '' ? props.foodUnit : unit}
+                                    defaultValue={props.foodUnit}
                                     onChange={unitChangeHandler} 
                                 >
                                     <option value =" "> </option>
@@ -184,7 +182,7 @@ const EditFoodModal = (props) =>
                                 type="date" 
                                 className="form-control" 
                                 id="foodExpDate" 
-                                value={dateString === '' ? props.expDate : dateString}
+                                value={props.expDate}
                                 onChange={dateChangeHandler} 
                             />
                         </div>
