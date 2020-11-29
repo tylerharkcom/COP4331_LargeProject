@@ -331,12 +331,12 @@ function MyAccount() {
         infoUpdated = true;
         user.firstName = updatedUser.fName;
         user.lastName = updatedUser.lName;
-        user.email = updated.email;
-        user.loginName = updated.loginName;
-        user.birthday = updated.bDay;
-        user.gender = updated.gender;
-        user.country = updated.country;
-        user.language = updated.lang;
+        user.email = updatedUser.email;
+        user.loginName = updatedUser.loginName;
+        user.birthday = updatedUser.bDay;
+        user.gender = updatedUser.gender;
+        user.country = updatedUser.country;
+        user.language = updatedUser.lang;
         console.log("user.firstName After");
         console.log(user.firstName);
         setfName(user.firstName);
