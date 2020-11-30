@@ -69,7 +69,6 @@ function authenticateToken(req, res, next) {
   }
 
   jwt.verify(token, process.env.LOGIN_TOKEN_SECRET, async (err, data) => {
-    console.log(err);
     if (err) {
       response.error = err;
       return res.status(403).json(response);
@@ -411,26 +410,20 @@ router.post(
   `/editFood`,
   wrapAsync(async (req, res, next) => {
     const newItem = req.body;
-    const { item } = req.body.item;
+    const { item } = req.body;
 
     const db = client.db();
     try {
       await db
         .collection("Fridge")
+        .updateOne({ userId: req.user._id }, { $pull: { fridge: { item } } });
+      await db
+        .collection("Fridge")
         .updateOne({ userId: req.user._id }, { $push: { fridge: newItem } });
     } catch (e) {
-      console.log("problem here");
       res.status(400).json();
       return;
     }
-    try {
-      await db
-        .collection("Fridge")
-        .updateOne({ userId: req.user._id }, { $pull: { fridge: { item } } });
-    } catch (e) {
-      console.log("houston we have a problem");
-    }
-
     res.json();
   })
 );
@@ -451,8 +444,6 @@ router.post(
     let searchResults = myFoods.filter(function (foodObject) {
       return foodObject.item.includes(item);
     });
-    console.log(searchResults);
-
     res.json(searchResults);
   })
 );

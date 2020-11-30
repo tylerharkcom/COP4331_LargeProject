@@ -11,9 +11,7 @@ async function myFunction() {
       password:
         "13e4ae9a195a5f2cbb46f755b61789ee64a0c1ea14d56b90d0c2c0ab331c99a3",
     }),
-  })
-    .then((r) => r.json())
-    .then(console.log);
+  }).then((r) => r.json());
 
   await fetch(`/api/searchFood`, {
     method: "POST",
@@ -22,9 +20,7 @@ async function myFunction() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      item: "plum",
+      item: "sushi",
     }),
-  })
-    .then((r) => r.json())
-    .then(console.log);
+  }).then((r) => r.json());
 }
