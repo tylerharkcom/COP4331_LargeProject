@@ -203,11 +203,10 @@ router.get(
 
         req.user = await db.collection("Users").findOne({ _id: ObjectId(id)});
 
-        if (req.user) {
-          res.redirect
-        } else {
+        if (!req.user){
           response.error = "req.user was not real";
           res.status(403).json(response);
+          return;
         }
       }
     } catch (e) {
