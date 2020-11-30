@@ -153,16 +153,7 @@ router.post(
         account for registration.<br /></h3><h4>To complete your account registration, visit\
         the following link: <a href="${url}">${url}</a></h4>`;
         // const html2 = renderEmail(<ResetPwEmail emailLink={url} />);
-        // Trying reccommended sendgrid format
-        const msg = {
-          to: email,
-          from: "yousefeid707@gmail.com",
-          subject: "FoodBuddy Email Confirmation",
-          html: renderEmail(<ResetPwEmail emailLink={url} />),
-        };
 
-        sgMail.send(msg);
-        //
         sgMail.send({
           from: "yousefeid707@gmail.com",
           to: email,
