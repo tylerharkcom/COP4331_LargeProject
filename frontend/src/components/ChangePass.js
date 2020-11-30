@@ -20,7 +20,10 @@ function ChangePass() {
       return;
     }
 
-    let expression = /[!@#$%*]/;
+    // For some reason, this was not
+    // matching on passwords like Inc0rrect!
+    // let expression = /[!@#$%*]/;
+    let expression = new RegExp("[!@#$%*]");
     if (!expression.test(password.value)) {
       setMessage(
         "Your password must contain at least one of the following special character: @, !, #, $, %, *"
@@ -46,12 +49,13 @@ function ChangePass() {
       return;
     }
 
-    if (password !== confirmPassword) {
-      console.log("password:",password);
-      console.log("confirmPassword:", confirmPassword);
+    if (password.value !== confirmPassword.value) {
       setMessage("Passwords don't match");
       return;
     }
+
+    // console.log("password:", password.value);
+    // console.log("confirmPassword:", confirmPassword.value);
 
     password = sha256(password);
 
