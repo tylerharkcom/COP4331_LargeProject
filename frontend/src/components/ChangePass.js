@@ -57,7 +57,7 @@ function ChangePass() {
     // console.log("password:", password.value);
     // console.log("confirmPassword:", confirmPassword.value);
 
-    password = sha256(password);
+    password = sha256(password.value);
 
     let js = JSON.stringify({ password });
 
@@ -96,11 +96,24 @@ function ChangePass() {
             <div className="form-group col-md">
               <label for="changePassPassword">New Password</label>
               <input
-                type="text"
+                type="password"
                 className="form-control"
                 id="changePassPassword"
+                data-tip data-for="passwordTip"
                 ref={(c) => (password = c)}
               />
+              <ReactTooltip
+                id="passwordTip"
+                place="bottom"
+                effect="solid"
+              >
+                Your password should:
+                <ul>
+                    <li>be at least 8 characters long</li>
+                    <li>contain at least one capital letter, at least one lowercase letter, and at least one digit</li>
+                    <li>contain at least one of the following special characters: @, !, #, $, %, *</li>
+                </ul>
+              </ReactTooltip>
             </div>
           </div>
           {/*Add React tooltip later*/}
@@ -108,11 +121,24 @@ function ChangePass() {
             <div className="form-group col-md">
               <label for="changePassConfirm">Confirm New Password</label>
               <input
-                type="text"
+                type="password"
                 className="form-control"
                 id="changePassConfirm"
+                data-tip data-for="passwordTip"
                 ref={(c) => (confirmPassword = c)}
               />
+              <ReactTooltip
+                id="passwordTip"
+                place="bottom"
+                effect="solid"
+              >
+                Your password should:
+                <ul>
+                    <li>be at least 8 characters long</li>
+                    <li>contain at least one capital letter, at least one lowercase letter, and at least one digit</li>
+                    <li>contain at least one of the following special characters: @, !, #, $, %, *</li>
+                </ul>
+              </ReactTooltip>
             </div>
           </div>
           <div id="changePassButton">
