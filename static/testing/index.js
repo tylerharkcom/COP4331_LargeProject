@@ -15,14 +15,17 @@ async function myFunction() {
     .then((r) => r.json())
     .then(console.log);
 
-  await fetch(`/api/searchFood`, {
+  await fetch(`/api/editFood`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      item: "plum",
+      item: "kebab",
+      expDate: "2020-12-26",
+      foodAmt: "6969",
+      foodUt: "gal",
     }),
   })
     .then((r) => r.json())
