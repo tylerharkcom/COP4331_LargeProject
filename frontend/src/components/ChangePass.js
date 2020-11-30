@@ -47,6 +47,8 @@ function ChangePass() {
     }
 
     if (password !== confirmPassword) {
+      console.log("password:",password);
+      console.log("confirmPassword:", confirmPassword);
       setMessage("Passwords don't match");
       return;
     }
@@ -125,7 +127,7 @@ function ChangePass() {
             </button>
           </div>
         </form>
-        <span id="changePassResult" className="lightText">
+        <span id="changePassResult" className="lightText center">
           {message}
         </span>
       </div>

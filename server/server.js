@@ -171,7 +171,7 @@ router.post(
 
 router.get(
   "/confirmation/:endpoint/:token",
-  wrapAsync(async (req, res) => {
+  wrapAsync(async (req, res, next) => {
     let response = {
       error: "",
     };
@@ -204,11 +204,11 @@ router.get(
         req.user = await db.collection("Users").findOne({ _id: ObjectId(id)});
 
         if (req.user) {
-          return next();
+          res.redirect
+        } else {
+          response.error = "req.user was not real";
+          res.status(403).json(response);
         }
-
-        response.error = "req.user was not real";
-        res.status(403).json(response);
       }
     } catch (e) {
       console.log(e);
@@ -217,11 +217,11 @@ router.get(
       return;
     }
 
-    const emailRedirect = "https://group1largeproject.herokuapp.com/login";
+    const emailRedirect = "/login";
 
     // Not sure where to redirect this just yet. Might log user in
     // and redirect him straight to Account Information for updatePassword.
-    const passRedirect = "https://group1largeproject.herokuapp.com/changePass";
+    const passRedirect = "/changePass";
 
     // DEBUG for emailConf
     // return res.redirect("http://localhost:5000/login");
@@ -323,8 +323,8 @@ router.post(
       { expiresIn: "15m" },
       (err, emailToken) => {
         // DEBUG
-        // const url = `http://localhost:5000/api/confirmation/passConf/${emailToken}`;
-        const url = `https://group1largeproject.herokuapp.com/api/confirmation/passConf/${emailToken}`;
+        const url = `http://localhost:5000/api/confirmation/passConf/${emailToken}`;
+        // const url = `https://group1largeproject.herokuapp.com/api/confirmation/passConf/${emailToken}`;
         const text = `A request was sent to reset your FoodBuddy password. If you simply forgot
         your password and want to remember it, your old password is ${user.password}. Otherwise, to reset
         your password entirely, visit the following link:${url}`;
