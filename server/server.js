@@ -221,7 +221,7 @@ router.get(
 
     // Not sure where to redirect this just yet. Might log user in
     // and redirect him straight to Account Information for updatePassword.
-    const passRedirect = "https://group1largeproject.herokuapp.com/api/changePass";
+    const passRedirect = "https://group1largeproject.herokuapp.com/changePass";
 
     // DEBUG for emailConf
     // return res.redirect("http://localhost:5000/login");
