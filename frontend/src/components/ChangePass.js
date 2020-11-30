@@ -127,7 +127,7 @@ function ChangePass() {
             </button>
           </div>
         </form>
-        <span id="changePassResult" className="lightText center">
+        <span id="changePassResult" className="lightText">
           {message}
         </span>
       </div>
