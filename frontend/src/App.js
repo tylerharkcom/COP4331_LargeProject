@@ -11,6 +11,10 @@ import ResetPassPage from './pages/ResetPassPage';
 import resetPwEmailPage from './pages/EmailResetPage';
 import verifyEmail from './pages/EmailVerifyPage';
 
+// DEBUG
+import ChangePassPage from './pages/ChangePassPage';
+
+
 function App() {
   return (
     <Router>
@@ -22,6 +26,8 @@ function App() {
         <Route exact path="/resetPass" component={ResetPassPage} />
         <Route exact path="/emailTest" component={resetPwEmailPage}/>
         <Route exact path="/emailVerify" component={verifyEmail}/>
+        {/*DEBUG*/}
+        <Route exact path="/changePass" component={ChangePassPage}/>
         <Redirect to="/" />
       </Switch>
     </Router>

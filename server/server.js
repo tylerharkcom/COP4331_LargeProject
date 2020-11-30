@@ -523,6 +523,10 @@ router.post(
   })
 );
 
+router.post('/updatePassword', async (req, res, next) => {
+  const password = req.body;
+});
+
 router.post(
   "/updateAccount",
   wrapAsync(async (req, res, next) => {

@@ -35,7 +35,7 @@ function ResetPass()
     }
 
     let expression = /\S+@\S+/;
-
+  
     if (!expression.test(String(email.value).toLowerCase()))
     {
       setMessage('Please enter a valid email address');
