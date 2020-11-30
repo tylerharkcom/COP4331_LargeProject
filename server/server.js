@@ -413,11 +413,16 @@ router.post(
     const newItem = req.body;
 
     const db = client.db();
-
     try {
       await db
         .collection("Fridge")
-        .updateOne({ userId: req.user._id }, { $set: { fridge: { newItem } } });
+        .updateOne(
+          { userId: req.user._id },
+          { $pull: { fridge: { item: "newItem.item" } } }
+        );
+      await db
+        .collection("Fridge")
+        .updateOne({ userId: req.user._id }, { $push: { fridge: newItem } });
     } catch (e) {
       console.log(e);
       res.status(400).json();
