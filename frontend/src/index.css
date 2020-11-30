@@ -70,14 +70,14 @@ code {
   text-decoration: underline;
 }
 
-#loginButton, #resetPassButton{
+#loginButton, #resetPassButton, #changePassButton{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 
-#loginWrapper, #registerWrapper, #resetPassWrapper {
+#loginWrapper, #registerWrapper, #resetPassWrapper, #changePassWrapper{
   background-color: #464646;
   padding: 10px;
   border: 1px solid #DADADA;
@@ -109,7 +109,7 @@ code {
   text-align: left;
 }
 
-#loginForm, #registerForm, #resetPassForm{
+#loginForm, #registerForm, #resetPassForm, #changePassForm {
   padding-right: 25px;
   padding-left: 25px;
   padding-top: 10px;
