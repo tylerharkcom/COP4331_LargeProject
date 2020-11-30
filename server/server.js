@@ -408,6 +408,26 @@ router.post(
 );
 
 router.post(
+  `/editFood`,
+  wrapAsync(async (req, res, next) => {
+    const newItem = req.body;
+
+    const db = client.db();
+
+    try {
+      await db
+        .collection("Fridge")
+        .updateOne({ userId: req.user._id }, { $set: { fridge: { newItem } } });
+    } catch (e) {
+      console.log(e);
+      res.status(400).json();
+      return;
+    }
+    res.json();
+  })
+);
+
+router.post(
   `/searchFood`,
   wrapAsync(async (req, res, next) => {
     const { item } = req.body;
