@@ -411,15 +411,13 @@ router.post(
   `/editFood`,
   wrapAsync(async (req, res, next) => {
     const newItem = req.body;
+    const { item } = req.body.item;
 
     const db = client.db();
     try {
       await db
         .collection("Fridge")
-        .updateOne(
-          { userId: req.user._id },
-          { $pull: { fridge: { item: "newItem.item" } } }
-        );
+        .updateOne({ userId: req.user._id }, { $pull: { fridge: { item } } });
       await db
         .collection("Fridge")
         .updateOne({ userId: req.user._id }, { $push: { fridge: newItem } });
