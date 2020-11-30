@@ -444,7 +444,6 @@ router.post(
     let searchResults = myFoods.filter(function (foodObject) {
       return foodObject.item.includes(item);
     });
-
     res.json(searchResults);
   })
 );
