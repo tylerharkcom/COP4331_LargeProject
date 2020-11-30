@@ -423,7 +423,7 @@ router.post(
     res.json();
   })
 );
-/*
+
 router.post(
   `/searchFood`,
   wrapAsync(async (req, res, next) => {
@@ -431,12 +431,21 @@ router.post(
 
     const db = client.db();
 
-    const searchResults = db
+    const fridge = await db
       .collection("Fridge")
-      .find({ userId: req.user._id, Fridge: { item } });
+      .findOne({ userId: req.user._id });
+
+    let myFoods = fridge.fridge;
+
+    let searchResults = myFoods.filter(function (foodObject) {
+      return foodObject.item.includes(item);
+    });
+    console.log(searchResults);
+
+    res.json(searchResults);
   })
 );
-*/
+
 router.post(
   `/loadFridge`,
   wrapAsync(async (req, res, next) => {
