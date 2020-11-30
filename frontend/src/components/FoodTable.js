@@ -332,10 +332,10 @@ const FoodTable = () => {
       />
       <EditFoodModal
         show={showEditFood}
-        food={food.foods[editIndex].item}
-        foodAmount={food.foods[editIndex].foodAmt}
-        foodUnit={food.foods[editIndex].foodUt}
-        expDate={food.foods[editIndex].expDate}
+        food={food.foods[editIndex] ? food.foods[editIndex].item : ''}
+        foodAmount={food.foods[editIndex] ? food.foods[editIndex].foodAmt : -1}
+        foodUnit={food.foods[editIndex] ? food.foods[editIndex].foodUt : ''}
+        expDate={food.foods[editIndex] ? food.foods[editIndex].expDate : ''}
         close={()=> {
           setShowEditFood(false);
           loadFridgeHandler();

@@ -20,6 +20,8 @@ const fs = require("fs");
 const sha256 = require("./sha256");
 const sgMail = require("@sendgrid/mail");
 const { userInfo } = require("os");
+// const { ResetPwEmail } = require("../components/EmailVerify");
+// const { renderEmail } = require("react-html-email");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -152,6 +154,7 @@ router.post(
         const html = `<h3>A request was sent to confirm your FoodBuddy email as part of your\
         account for registration.<br /></h3><h4>To complete your account registration, visit\
         the following link: <a href="${url}">${url}</a></h4>`;
+        // const html2 = renderEmail(<ResetPwEmail emailLink={url} />);
 
         sgMail.send({
           from: "yousefeid707@gmail.com",
@@ -298,8 +301,8 @@ router.post(
       { expiresIn: "15m" },
       (err, emailToken) => {
         // DEBUG
-        const url = `http://localhost:5000/api/confirmation/passConf/${emailToken}`;
-        // const url = `https://group1largeproject.herokuapp.com/api/confirmation/passConf/${emailToken}`;
+        // const url = `http://localhost:5000/api/confirmation/passConf/${emailToken}`;
+        const url = `https://group1largeproject.herokuapp.com/api/confirmation/passConf/${emailToken}`;
         const text = `A request was sent to reset your FoodBuddy password. If you simply forgot
         your password and want to remember it, your old password is ${user.password}. Otherwise, to reset
         your password entirely, visit the following link:${url}`;
@@ -397,27 +400,7 @@ router.post(
         .updateOne({ userId: req.user._id }, { $push: { fridge: fridgeItem } });
     } catch (e) {
       console.log(e);
-      res.status(400).json();
-      return;
-    }
-    res.json();
-  })
-);
-
-router.post(
-  `/editFood`,
-  wrapAsync(async (req, res, next) => {
-    const newItem = req.body;
-
-    const db = client.db();
-
-    try {
-      await db
-        .collection("Fridge")
-        .updateOne({ userId: req.user._id }, { $set: { fridge: { newItem } } });
-    } catch (e) {
-      console.log(e);
-      res.status(400).json();
+      res.send(400).json();
       return;
     }
     res.json();
