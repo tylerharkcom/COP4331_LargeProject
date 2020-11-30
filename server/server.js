@@ -153,7 +153,16 @@ router.post(
         account for registration.<br /></h3><h4>To complete your account registration, visit\
         the following link: <a href="${url}">${url}</a></h4>`;
         // const html2 = renderEmail(<ResetPwEmail emailLink={url} />);
+        // Trying reccommended sendgrid format
+        const msg = {
+          to: email,
+          from: "yousefeid707@gmail.com",
+          subject: "FoodBuddy Email Confirmation",
+          html: renderEmail(<ResetPwEmail emailLink={url} />),
+        };
 
+        sgMail.send(msg);
+        //
         sgMail.send({
           from: "yousefeid707@gmail.com",
           to: email,
@@ -187,11 +196,10 @@ router.get(
         await db
           .collection("Users")
           .updateOne({ _id: ObjectId(id) }, { $set: { confirmed: true } });
-      }
-      else {
+      } else {
         if (token == null) {
           // If there is no JWT in
-          // the path, check the 
+          // the path, check the
           // cookies.
           token = req.cookies.token;
           if (token == null) {
@@ -201,9 +209,9 @@ router.get(
           }
         }
 
-        req.user = await db.collection("Users").findOne({ _id: ObjectId(id)});
+        req.user = await db.collection("Users").findOne({ _id: ObjectId(id) });
 
-        if (!req.user){
+        if (!req.user) {
           response.error = "req.user was not real";
           res.status(403).json(response);
           return;
@@ -229,8 +237,6 @@ router.get(
     );
   })
 );
-
-
 
 router.post(
   `/login`,
@@ -556,6 +562,30 @@ router.post(
   })
 );
 
+router.post(
+  "/changePass",
+  wrapAsync(async (req, res, next) => {
+    let response = {
+      error: "",
+    };
+
+    const { password } = req.body;
+    const db = client.db();
+
+    try {
+      await db
+        .collection("Users")
+        .updateOne({ _id: req.user._id }, { $set: { password } });
+    } catch (e) {
+      console.log(e);
+      response.error = "An error has occurred";
+      res.status(400).json(response);
+      return;
+    }
+
+    res.status(200).json(response);
+  })
+);
 
 router.post(
   "/updateAccount",
