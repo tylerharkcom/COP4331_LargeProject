@@ -240,7 +240,6 @@ router.get(
           .collection("Users")
           .updateOne({ _id: ObjectId(id) }, { $set: { confirmed: true } });
       } else {
-
         req.user = await db.collection("Users").findOne({ _id: ObjectId(id) });
 
         if (!req.user) {
@@ -259,13 +258,15 @@ router.get(
     const emailRedirect = "/login";
     const passRedirect = "/changePass";
 
-    if (endpiont === "emailConf") {
+    if (endpoint === "emailConf") {
       return res.redirect(emailRedirect);
     } else {
-      return res.cookie('resetToken', token, {
-        maxAge: 900000,
-        httpOnly: true
-      }).redirect(passRedirect);
+      return res
+        .cookie("resetToken", token, {
+          maxAge: 900000,
+          httpOnly: true,
+        })
+        .redirect(passRedirect);
     }
   })
 );
