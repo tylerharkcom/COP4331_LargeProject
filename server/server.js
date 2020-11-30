@@ -346,6 +346,26 @@ router.post(
   })
 );
 
+router.post('/changePass', wrapAsync(async (req, res, next) => {
+  let response = {
+    error: ""
+  };
+
+  const {password} = req.body;
+  const db = client.db();
+  
+  try {
+    await db.collection("Users").updateOne({_id: req.user._id}, {$set: {password}});
+  } catch (e) {
+    console.log(e);
+    response.error = "An error has occurred";
+    res.status(400).json(response);
+    return;
+  }
+
+  res.status(200).json(response);
+}));
+
 router.get(
   `/getRecipes`,
   wrapAsync(async (req, res) => {
@@ -535,26 +555,6 @@ router.post(
     res.json(response);
   })
 );
-
-router.post('/changePass', wrapAsync(async (req, res, next) => {
-  let response = {
-    error: ""
-  };
-
-  const {password} = req.body;
-  const db = client.db();
-  
-  try {
-    await db.collection("Users").updateOne({_id: req.user._id}, {$set: {password}});
-  } catch (e) {
-    console.log(e);
-    response.error = "An error has occurred";
-    res.status(400).json(response);
-    return;
-  }
-
-  res.status(200).json(response);
-}));
 
 
 router.post(
