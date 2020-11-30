@@ -56,10 +56,6 @@ function ChangePass() {
     let js = JSON.stringify({ password });
 
     try {
-      // This route looks unsafe, but really the only
-      // way you'll make it to this page in the first place
-      // is if you get verified through the JWT. In fact,
-      // there is no react route to here at all!
       const response = await fetch("/api/changePass", {
         method: "POST",
         body: js,

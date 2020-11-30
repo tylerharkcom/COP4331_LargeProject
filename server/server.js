@@ -144,8 +144,8 @@ router.post(
       { expiresIn: "15m" },
       (err, emailToken) => {
         // DEBUG
-        const url = `http://localhost:5000/api/confirmation/emailConf/${emailToken}`;
-        // const url = `https://group1largeproject.herokuapp.com/api/confirmation/emailConf/${emailToken}`;
+        // const url = `http://localhost:5000/api/confirmation/emailConf/${emailToken}`;
+        const url = `https://group1largeproject.herokuapp.com/api/confirmation/emailConf/${emailToken}`;
 
         const text = `A request was sent to confirm your FoodBuddy email as part of your account\
         for registration. To complete your account registration, visit the following link: ${url}`;

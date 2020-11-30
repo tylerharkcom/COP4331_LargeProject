@@ -44,7 +44,7 @@ function ResetPass()
 
     expression = /^\w+$/;
 
-    if (!expression.test(String(email.value)).toLowerCase())
+    if (!expression.test(String(email.value).toLowerCase()))
     {
       setMessage('Your username may only contain letters, numbers, and underscores');
       return;
