@@ -189,6 +189,28 @@ router.get(
           .collection("Users")
           .updateOne({ _id: ObjectId(id) }, { $set: { confirmed: true } });
       }
+      else {
+        if (token == null) {
+          // If there is no JWT in
+          // the path, check the 
+          // cookies.
+          token = req.cookies.token;
+          if (token == null) {
+            response.error = "Don't come back here ever again";
+            res.status(403).json(response);
+            return;
+          }
+        }
+
+        req.user = await db.collection("Users").findOne({ _id: ObjectId(id)});
+
+        if (req.user) {
+          return next();
+        }
+
+        response.error = "req.user was not real";
+        res.status(403).json(response);
+      }
     } catch (e) {
       console.log(e);
       response.error = "An error has occurred";
@@ -200,7 +222,7 @@ router.get(
 
     // Not sure where to redirect this just yet. Might log user in
     // and redirect him straight to Account Information for updatePassword.
-    const passRedirect = "https://group1largeproject.herokuapp.com/login";
+    const passRedirect = "https://group1largeproject.herokuapp.com/changePass";
 
     // DEBUG for emailConf
     // return res.redirect("http://localhost:5000/login");
@@ -209,6 +231,8 @@ router.get(
     );
   })
 );
+
+
 
 router.post(
   `/login`,
@@ -513,6 +537,26 @@ router.post(
     res.json(response);
   })
 );
+
+router.post('/changePass', wrapAsync(async (req, res, next) => {
+  let response = {
+    error: ""
+  };
+
+  const {password} = req.body;
+  const db = client.db();
+  
+  try {
+    await db.collection("Users").updateOne({_id: req.user._id}, {$set: {password}});
+  } catch (e) {
+    console.log(e);
+    response.error = "An error has occurred";
+    res.status(400).json(response);
+    return;
+  }
+
+  res.status(200).json(response);
+}));
 
 
 router.post(
