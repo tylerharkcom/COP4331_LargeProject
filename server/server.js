@@ -48,39 +48,91 @@ router.use((req, res, next) => {
   next();
 });
 
-function authenticateToken(req, res, next) {
-  // Gather the jwt access token from the request header
-  const authHeader = req.headers["authorization"];
-  //let token = authHeader && authHeader.split(" ")[1];
-  let token = req.cookies.token;
-  if (token == null) {
-    token = req.cookies.token;
-  } // if there isn't any token
+// function authenticateToken(req, res, next) {
+// // Gather the jwt access token from the request header
+// const authHeader = req.headers["authorization"];
+// //let token = authHeader && authHeader.split(" ")[1];
+// let token = req.cookies.token;
+// if (token == null) {
+// token = req.cookies.token;
+// } // if there isn't any token
 
-  const response = {
-    error: "",
-  };
+// const response = {
+// error: "",
+// };
 
-  response.error = "plain text error";
-  if (!token) {
-    response.error = "the error is here tho";
-    return res.status(403).json(response);
-  }
+// response.error = "plain text error";
+// if (!token) {
+// response.error = "the error is here tho";
+// return res.status(403).json(response);
+// }
 
-  jwt.verify(token, process.env.LOGIN_TOKEN_SECRET, async (err, data) => {
-    if (err) {
-      response.error = err;
+// jwt.verify(token, process.env.LOGIN_TOKEN_SECRET, async (err, data) => {
+// if (err) {
+// response.error = err;
+// return res.status(403).json(response);
+// }
+// const db = client.db();
+// req.user = await db.collection("Users").findOne({ _id: ObjectId(data.id) });
+// if (req.user) {
+// return next();
+// }
+// response.error = "req.user was not real";
+// return res.status(403).json(response);
+// // pass the execution off to whatever request the client intended
+// });
+// }
+
+// accessOrReset has a value of true if it's verifying an access token
+// and false if it's verifying a reset token. Mosty just keeps code dry.
+function authenticateToken(accessOrReset) {
+  return (req, res, next) => {
+    // Gather the jwt access token from the request header
+    const authHeader = req.headers["authorization"];
+    let token = accessOrReset ? req.cookies.token : req.cookies.resetToken;
+    // let token = authHeader && authHeader.split(" ")[1];
+    // if (token == null) {
+    // token = req.cookies.token;
+    // }
+
+    const response = {
+      error: "",
+    };
+
+    response.error = "plain text error";
+
+    if (!token) {
+      response.error = "the error is here tho";
       return res.status(403).json(response);
     }
-    const db = client.db();
-    req.user = await db.collection("Users").findOne({ _id: ObjectId(data.id) });
-    if (req.user) {
-      return next();
-    }
-    response.error = "req.user was not real";
-    return res.status(403).json(response);
-    // pass the execution off to whatever request the client intended
-  });
+
+    let env = accessOrReset
+      ? process.env.LOGIN_TOKEN_SECRET
+      : process.env.EMAIL_TOKEN_SECRET;
+
+    jwt.verify(token, env, async (err, data) => {
+      if (err) {
+        console.log(err);
+        response.error = err;
+        return res.status(403).json(response);
+      }
+
+      const db = client.db();
+      // Mostly banking on the fact that it would get overwritten
+      // on login if someone happens to have reset their password first
+      req.user = await db
+        .collection("Users")
+        .findOne({ _id: ObjectId(data.id) });
+
+      if (req.user) {
+        return next();
+      }
+
+      response.error = "req.user was not real";
+      return res.status(403).json(response);
+      // pass the execuion off to whatever request the client intended
+    });
+  };
 }
 
 function generateAccessToken(id) {
@@ -188,17 +240,6 @@ router.get(
           .collection("Users")
           .updateOne({ _id: ObjectId(id) }, { $set: { confirmed: true } });
       } else {
-        if (token == null) {
-          // If there is no JWT in
-          // the path, check the
-          // cookies.
-          token = req.cookies.token;
-          if (token == null) {
-            response.error = "Don't come back here ever again";
-            res.status(403).json(response);
-            return;
-          }
-        }
 
         req.user = await db.collection("Users").findOne({ _id: ObjectId(id) });
 
@@ -216,16 +257,16 @@ router.get(
     }
 
     const emailRedirect = "/login";
-
-    // Not sure where to redirect this just yet. Might log user in
-    // and redirect him straight to Account Information for updatePassword.
     const passRedirect = "/changePass";
 
-    // DEBUG for emailConf
-    // return res.redirect("http://localhost:5000/login");
-    return res.redirect(
-      endpoint === "emailConf" ? emailRedirect : passRedirect
-    );
+    if (endpiont === "emailConf") {
+      return res.redirect(emailRedirect);
+    } else {
+      return res.cookie('resetToken', token, {
+        maxAge: 900000,
+        httpOnly: true
+      }).redirect(passRedirect);
+    }
   })
 );
 
@@ -343,25 +384,31 @@ router.post(
   })
 );
 
-router.post('/changePass', wrapAsync(async (req, res, next) => {
-  let response = {
-    error: ""
-  };
+router.post(
+  "/changePass",
+  authenticateToken(false),
+  wrapAsync(async (req, res, next) => {
+    let response = {
+      error: "",
+    };
 
-  const {password} = req.body;
-  const db = client.db();
-  
-  try {
-    await db.collection("Users").updateOne({_id: req.user._id}, {$set: {password}});
-  } catch (e) {
-    console.log(e);
-    response.error = "An error has occurred";
-    res.status(400).json(response);
-    return;
-  }
+    const { password } = req.body;
+    const db = client.db();
 
-  res.status(200).json(response);
-}));
+    try {
+      await db
+        .collection("Users")
+        .updateOne({ _id: req.user._id }, { $set: { password } });
+    } catch (e) {
+      console.log(e);
+      response.error = "An error has occurred";
+      res.status(400).json(response);
+      return;
+    }
+
+    res.status(200).json(response);
+  })
+);
 
 router.get(
   `/getRecipes`,
@@ -415,7 +462,7 @@ router.get(
   })
 );
 
-router.use(authenticateToken);
+router.use(authenticateToken(true));
 
 router.post(
   `/logout`,
@@ -550,31 +597,6 @@ router.post(
       return;
     }
     res.json(response);
-  })
-);
-
-router.post(
-  "/changePass",
-  wrapAsync(async (req, res, next) => {
-    let response = {
-      error: "",
-    };
-
-    const { password } = req.body;
-    const db = client.db();
-
-    try {
-      await db
-        .collection("Users")
-        .updateOne({ _id: req.user._id }, { $set: { password } });
-    } catch (e) {
-      console.log(e);
-      response.error = "An error has occurred";
-      res.status(400).json(response);
-      return;
-    }
-
-    res.status(200).json(response);
   })
 );
 
