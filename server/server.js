@@ -330,7 +330,7 @@ router.post(
       process.env.EMAIL_TOKEN_SECRET,
       { expiresIn: "15m" },
       (err, emailToken) => {
-        if (err){
+        if (err) {
           console.log(err);
           response.error = "An error has occurred";
           res.status(500).json(response);
@@ -373,10 +373,11 @@ router.post(
     const { password } = req.body;
     const db = client.db();
 
-    const user = await db.collection("Users").findOne({_id: req.user._id});
+    const user = await db.collection("Users").findOne({ _id: req.user._id });
 
     if (password === user.password) {
-      response.error = "Your new password can't be the same as your old password";
+      response.error =
+        "Your new password can't be the same as your old password";
       res.status(400).json(response);
       return;
     }
@@ -392,7 +393,7 @@ router.post(
       return;
     }
 
-    res.clearCookie('resetToken');
+    res.clearCookie("resetToken");
     res.status(200).json(response);
   })
 );
@@ -604,13 +605,6 @@ router.post(
   })
 );
 
-<<<<<<< HEAD
-router.post("/updatePassword", async (req, res, next) => {
-  const password = req.body;
-});
-
-=======
->>>>>>> e7950661c94fd38215dfc8cd31d68a5a43be54d3
 router.post(
   "/updateAccount",
   wrapAsync(async (req, res, next) => {
