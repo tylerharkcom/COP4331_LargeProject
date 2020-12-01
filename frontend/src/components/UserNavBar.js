@@ -32,11 +32,16 @@ function UserNavBar() {
     }
   };
 
-  const navMsg = async (props) => {
+  const navMsg = async () => {
     console.log(window.location.pathname);
-    if (window.location.pathname == "./pages/FeedPage") {
-      return "Welcome " + fName.concat(" ", lName);
-    } else return "Logged in as " + fName.concat(" ", lName);
+    if (window.location.pathname == "/pages/FeedPage") {
+      <span className="navbar-text" style={{ marginRight: "10px" }}>
+        Welcome &nbsp {fName.concat(" ", lName)}
+      </span>;
+    } else
+      <span className="navbar-text" style={{ marginRight: "10px" }}>
+        Logged in as &nbsp {fName.concat(" ", lName)}
+      </span>;
   };
 
   const goToFridge = (event) => {
