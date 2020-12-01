@@ -151,6 +151,8 @@ const AddFoodModal = (props) =>
                                     <option value = "fl. oz">fl. oz</option>
                                     <option value = "ct">ct</option>
                                     <option value = "gal">gal</option>
+                                    <option value = "bx">bx</option>
+                                    <option value = "pkg">pkg</option>"
                                 </select>
                             </div>
                         </div>
