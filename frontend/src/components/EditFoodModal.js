@@ -8,14 +8,12 @@ const EditFoodModal = (props) =>
         color: "red",
         textAlign: "center"
     };
-    let f;
     let a;
     let u;
     let expDate;
     let date;
 
     const [message, setMessage] = useState('');
-    const [food, setFood] = useState('');
     const [amount, setAmount] = useState(0);
     const [unit, setUnit] = useState('');
     const [dateString, setDateString] = useState('');
@@ -37,11 +35,6 @@ const EditFoodModal = (props) =>
         event.preventDefault();
         props.close();
         return;
-    }
-
-    const foodChangeHandler = (event) =>
-    {
-        setFood(event.target.value);
     }
 
     const amountChangeHandler = (event) =>
@@ -78,12 +71,6 @@ const EditFoodModal = (props) =>
             return;
         }
         
-        if (food === '') {
-            f = props.food;
-        } else {
-            f = food;
-        }
-
         if (amount === 0) {
             a = props.foodAmount;
         } else {
@@ -97,7 +84,7 @@ const EditFoodModal = (props) =>
         }
 
         let d = dateString === '' ? props.expDate : dateString;
-        var obj = { item: f, foodAmt: a, foodUt: u, expDate: d };
+        var obj = { item: props.food, foodAmt: a, foodUt: u, expDate: d };
         var js = JSON.stringify(obj);
         try 
         {
@@ -143,8 +130,7 @@ const EditFoodModal = (props) =>
                                 type="text" 
                                 className="form-control" 
                                 id="foodName" 
-                                value={food === '' ? props.food : food}
-                                onChange={foodChangeHandler} 
+                                value={props.food}
                             />
                         </div>
                         <div className="form-row">
