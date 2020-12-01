@@ -16,6 +16,8 @@ import Row from "react-bootstrap/Row";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import sha256 from "../sha256";
 import Container from "react-bootstrap/Container";
+import delAcctImg from "../images/sadFruit.png";
+import Image from "react-bootstrap/Image";
 
 function MyAccount() {
   // Info update vars
@@ -774,11 +776,25 @@ function MyAccount() {
                 </Modal.Title>
               </Col>
             </Modal.Header>
+            <Image
+              src={delAcctImg}
+              style={{
+                width: "8em",
+                height: "8em",
+                // margin: "1em",
+              }}
+              alt="ffff"
+            />
             <h6 style={{ margin: "5px" }}>
               How did it come to this. Was there just too many cooks in the
               kitchen? Well if you're sure about deleting your account go ahead,
               we can't stop you. We're not cops, we're FoodBuddy.{" "}
             </h6>
+            <span>
+              Please note that this action is permanent. All data will be lost
+              if you delete your account.
+            </span>
+
             <Form>
               <Modal.Footer>
                 <div>{delFinal ? <DelFinalButton /> : null}</div>
