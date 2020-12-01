@@ -249,7 +249,7 @@ const FoodTable = () => {
           </div>
           <div style={{ marginLeft: "5px" }}>
             <button className="btn btn-secondary" onClick={getExpired}>
-              All expired
+              Show expired
             </button>
           </div>
           <div style={{ marginLeft: "5px" }}>
