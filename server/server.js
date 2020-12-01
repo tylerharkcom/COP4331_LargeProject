@@ -449,7 +449,7 @@ router.get(
     await db.collection("Feed").insertOne({
       eventType: "found a recipe for",
       item: res1.title,
-      name: user.userInfo.fName,
+      name: req.user.userInfo.fName,
       date: new Date(),
     });
 
@@ -484,15 +484,15 @@ router.post(
       return;
     }
 
-    let chance = Math.floor(Math.random * 3);
-    if (chance == 1) {
-      await db.collection("Feed").insertOne({
-        eventType: "bought",
-        item: fridgeItem.item,
-        name: user.userInfo.fName,
-        date: new Date(),
-      });
-    }
+    //let chance = Math.floor(Math.random * 3);
+    //if (chance == 1) {
+    await db.collection("Feed").insertOne({
+      eventType: "bought",
+      item: fridgeItem.item,
+      name: req.user.userInfo.fName,
+      date: new Date(),
+    });
+    // }
     res.json();
   })
 );
@@ -704,16 +704,13 @@ router.post(
       return;
     }
 
-    let chance = Math.floor(Math.random * 2);
-    if (chance) {
-      await db.collection("Feed").insertOne({
-        eventType: "threw out",
-        item: item,
-        name: user.userInfo.fName,
-        date: new Date(),
-      });
-    }
-
+    await db.collection("Feed").insertOne({
+      eventType: "threw out",
+      item: item,
+      name: req.user.userInfo.fName,
+      date: new Date(),
+    });
+    console.log(trying);
     res.json(response);
   })
 );
