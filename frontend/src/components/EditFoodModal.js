@@ -95,7 +95,7 @@ const EditFoodModal = (props) =>
         } else {
             u = unit;
         }
-        
+
         let d = dateString === '' ? props.expDate : dateString;
         var obj = { item: f, foodAmt: a, foodUt: u, expDate: d };
         var js = JSON.stringify(obj);
@@ -143,7 +143,7 @@ const EditFoodModal = (props) =>
                                 type="text" 
                                 className="form-control" 
                                 id="foodName" 
-                                defaultValue={props.food}
+                                value={food === '' ? props.food : food}
                                 onChange={foodChangeHandler} 
                             />
                         </div>
@@ -154,7 +154,7 @@ const EditFoodModal = (props) =>
                                     type="text" 
                                     className="form-control" 
                                     id="foodAmount" 
-                                    defaultValue={props.foodAmount} 
+                                    value={amount === 0 ? props.foodAmount : amount} 
                                     onChange={amountChangeHandler} 
                                 />
                             </div>
@@ -165,7 +165,7 @@ const EditFoodModal = (props) =>
                                     style={{marginLeft: "10px"}}
                                     className="form-control" 
                                     id="foodUnit" 
-                                    defaultValue={props.foodUnit}
+                                    value={unit === '' ? props.foodUnit : unit}
                                     onChange={unitChangeHandler} 
                                 >
                                     <option value =" "> </option>
@@ -183,7 +183,7 @@ const EditFoodModal = (props) =>
                                 type="date" 
                                 className="form-control" 
                                 id="foodExpDate" 
-                                value={props.expDate}
+                                value={dateString === '' ? props.expDate : dateString}
                                 onChange={dateChangeHandler} 
                             />
                         </div>
