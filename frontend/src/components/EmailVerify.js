@@ -40,23 +40,13 @@ function EmailTemplate({ emailLink }) {
             <h2 style={{ fontSize: "2rem" }}>Welcome to FoodBuddy!</h2>
             <h2
               style={{
-                fontSize: "2rem",
-                marginLeft: "2rem",
-                marginRight: "2rem",
+                fontSize: "1.75em",
+                marginLeft: "2em",
+                marginRight: "2em",
               }}
             >
               Please verify your account by clicking this link.
             </h2>
-            <body
-              style={{
-                fontSize: "1.25rem",
-                marginBottom: ".25rem",
-                marginLeft: "2rem",
-                marginRight: "2rem",
-              }}
-            >
-              {emailLink}
-            </body>
           </Item>
 
           <Button
@@ -65,18 +55,19 @@ function EmailTemplate({ emailLink }) {
             style={{
               backgroundColor: "#049A9E",
               outlineColor: "#049A9E",
-              marginLeft: "15rem",
-              marginTop: "1rem",
+              marginTop: "6rem",
               marginBottom: "1rem",
-              maxWidth: "10rem",
+              marginLeft: "auto",
+              marginRight: "auto",
+              maxWidth: "20rem",
             }}
           >
             <A
               color="#0B2B53"
               style={{ padding: "10", textDecorationLine: "none" }}
-              href="group1largeproject.herokuapp.com/"
+              href={emailLink}
             >
-              Take me to log in!
+              Verify Account
             </A>
           </Button>
         </Card>
