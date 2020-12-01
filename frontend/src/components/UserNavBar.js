@@ -34,14 +34,18 @@ function UserNavBar() {
 
   const NavMsg = () => {
     console.log(window.location.pathname);
-    if (window.location.pathname == "/pages/FeedPage") {
-      <span className="navbar-text" style={{ marginRight: "10px" }}>
-        Welcome &nbsp {fName.concat(" ", lName)}
-      </span>;
+    if (window.location.pathname == "/dashboard") {
+      return (
+        <div className="navbar-text" style={{ marginRight: "10px" }}>
+          Welcome {fName.concat(" ", lName)}
+        </div>
+      );
     } else
-      <span className="navbar-text" style={{ marginRight: "10px" }}>
-        Logged in as &nbsp {fName.concat(" ", lName)}
-      </span>;
+      return (
+        <span className="navbar-text" style={{ marginRight: "10px" }}>
+          Logged in as {fName.concat(" ", lName)}
+        </span>
+      );
   };
 
   const goToFridge = (event) => {
@@ -97,10 +101,11 @@ function UserNavBar() {
             />
           </li>
         </ul>
-        <span className="navbar-text" style={{ marginRight: "10px" }}>
-          {/* Welcome, {fName} {lName} */}
+        <NavMsg />
+        {/* <span className="navbar-text" style={{ marginRight: "10px" }}>
+          {/* Welcome, {fName} {lName} }
           {<NavMsg />}
-        </span>
+        </span> */}
         <form className="form-inline">
           <button
             type="button"
