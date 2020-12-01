@@ -705,7 +705,7 @@ router.post(
     }
 
     let chance = Math.floor(Math.random * 2);
-    if (chance == 1) {
+    if (chance) {
       await db.collection("Feed").insertOne({
         eventType: "threw out",
         item: item,
