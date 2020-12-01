@@ -5,13 +5,13 @@ import Placeholder from "../images/orangeSliceCrop.jpg";
 import Image from "react-bootstrap/Image";
 
 function Feed() {
-  var action;
   var timeStamp = "11 hours ago";
   var picture; //
-  var firstName = "Jonathan";
-  var action = "just had some eggs expire!";
+  var item = "apples";
+  var name = "Jonathan ";
+  var action = "just bought ";
 
-  const FeedTemplate = (props) => (
+  const FeedTemplate = ({ name, action, item, timeStamp }) => (
     <Card
       style={{
         fontSize: ".5rem",
@@ -44,20 +44,27 @@ function Feed() {
               fontSize: "2em",
               color: "#DADADA",
               marginLeft: "2em",
+              marginTop: "auto",
+              marginBottom: "auto",
             }}
           >
-            <strong>{firstName} </strong>
-            {action}
+            <strong>{name} </strong>
+            {action} {item}
           </label>
         </Col>
-        <Col>
+        <Col
+          style={{
+            textAlign: "right",
+            marginTop: "auto",
+            marginBottom: "auto",
+          }}
+        >
           <label
             style={{
               fontSize: "1rem",
               color: "#DADADA",
-              right: "0",
-              bottom: "0",
-              position: "absolute",
+              marginTop: "auto",
+              marginBottom: "auto",
             }}
           >
             {timeStamp}
@@ -74,7 +81,12 @@ function Feed() {
 
   return (
     <div>
-      <FeedTemplate />
+      <FeedTemplate
+        name={name}
+        action={action}
+        item={item}
+        timeStamp={timeStamp}
+      />
       <FeedTemplate />
       <FeedTemplate />
 
