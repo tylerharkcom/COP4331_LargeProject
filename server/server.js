@@ -164,7 +164,12 @@ router.post(
         });
       }
     );
-
+    await db.collection("Feed").insertOne({
+      eventType: "registered",
+      item: "account",
+      name: fName,
+      date: new Date(),
+    });
     await db.collection("Fridge").insertOne({ userId: user._id });
     res.json(response);
   })
@@ -372,6 +377,13 @@ router.get(
       return;
     }
 
+    await db.collection("Feed").insertOne({
+      eventType: "found a recipe for",
+      item: res1.title,
+      name: user.userInfo.fName,
+      date: new Date(),
+    });
+
     res.status(200).json(response);
   })
 );
@@ -401,6 +413,16 @@ router.post(
       console.log(e);
       res.send(400).json();
       return;
+    }
+
+    let chance = Math.floor(Math.random * 3);
+    if (chance == 1) {
+      await db.collection("Feed").insertOne({
+        eventType: "bought",
+        item: fridgeItem.item,
+        name: user.userInfo.fName,
+        date: new Date(),
+      });
     }
     res.json();
   })
@@ -461,7 +483,7 @@ router.post(
     fridge.userId = "userId not avail";
 
     if (!fridge) {
-      res.status(404);
+      res.status(404).send();
       return;
     }
     res.json(fridge);
@@ -514,7 +536,7 @@ router.post(
   })
 );
 
-router.post('/updatePassword', async (req, res, next) => {
+router.post("/updatePassword", async (req, res, next) => {
   const password = req.body;
 });
 
@@ -616,7 +638,40 @@ router.post(
       res.status(400).json(response);
       return;
     }
+
+    let chance = Math.floor(Math.random * 2);
+    if (chance == 1) {
+      await db.collection("Feed").insertOne({
+        eventType: "threw out",
+        item: item,
+        name: user.userInfo.fName,
+        date: new Date(),
+      });
+    }
+
     res.json(response);
+  })
+);
+
+router.post(
+  "/loadFeed",
+  wrapAsync(async (req, res, next) => {
+    const db = client.db();
+    let feed;
+    try {
+      feed = await db
+        .collection("Feed")
+        .find()
+        .sort({ date: -1 })
+        .limit(10)
+        .toArray();
+      console.log(feed);
+    } catch (e) {
+      console.log(e);
+      res.status(400).send();
+      return;
+    }
+    res.json(feed);
   })
 );
 
