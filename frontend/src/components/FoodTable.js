@@ -181,12 +181,12 @@ const FoodTable = () => {
       if (response.status !== 200) {
         alert("There was an issue finding the search results.");
       } else {
-        if (res.searchResults) {
+        if (res) {
           let initializeChecks = [];
-          for (let i = 0; i<res.searchResults.length; i++) {
+          for (let i = 0; i<res.length; i++) {
             initializeChecks = [...initializeChecks, false];
           }
-          setFood({ foods: res.searchResults });
+          setFood({ foods: res });
           setCheckmark( [...initializeChecks] );
         }
       }
