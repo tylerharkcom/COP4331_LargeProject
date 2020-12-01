@@ -32,6 +32,13 @@ function UserNavBar() {
     }
   };
 
+  const NavMsg = async (event) => {
+    console.log(window.location.pathname);
+    if (window.location.pathname == "./pages/FeedPage") {
+      return "Welcome " + fName.concat(" ", lName);
+    } else return "Logged in as " + fName.concat(" ", lName);
+  };
+
   const goToFridge = (event) => {
     event.preventDefault();
     window.location.href = "/dashboard";
@@ -86,7 +93,8 @@ function UserNavBar() {
           </li>
         </ul>
         <span className="navbar-text" style={{ marginRight: "10px" }}>
-          Welcome, {fName} {lName}
+          {/* Welcome, {fName} {lName} */}
+          {NavMsg()}
         </span>
         <form className="form-inline">
           <button
