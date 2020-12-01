@@ -32,7 +32,7 @@ function UserNavBar() {
     }
   };
 
-  const navMsg = async () => {
+  const NavMsg = () => {
     console.log(window.location.pathname);
     if (window.location.pathname == "/pages/FeedPage") {
       <span className="navbar-text" style={{ marginRight: "10px" }}>
@@ -99,7 +99,7 @@ function UserNavBar() {
         </ul>
         <span className="navbar-text" style={{ marginRight: "10px" }}>
           {/* Welcome, {fName} {lName} */}
-          {navMsg()}
+          {<NavMsg />}
         </span>
         <form className="form-inline">
           <button
