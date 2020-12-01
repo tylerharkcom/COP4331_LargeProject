@@ -484,15 +484,15 @@ router.post(
       return;
     }
 
-    //let chance = Math.floor(Math.random * 3);
-    //if (chance == 1) {
-    await db.collection("Feed").insertOne({
-      eventType: "bought",
-      item: fridgeItem.item,
-      name: req.user.userInfo.fName,
-      date: new Date(),
-    });
-    // }
+    let num = Math.floor(Math.random() * 2);
+    if (num < 1) {
+      await db.collection("Feed").insertOne({
+        eventType: "bought",
+        item: fridgeItem.item,
+        name: req.user.userInfo.fName,
+        date: new Date(),
+      });
+    }
     res.json();
   })
 );
@@ -703,14 +703,15 @@ router.post(
       res.status(400).json(response);
       return;
     }
-
-    await db.collection("Feed").insertOne({
-      eventType: "threw out",
-      item: item,
-      name: req.user.userInfo.fName,
-      date: new Date(),
-    });
-    console.log(trying);
+    let num = Math.floor(Math.random() * 2);
+    if (num < 1) {
+      await db.collection("Feed").insertOne({
+        eventType: "threw out",
+        item: item,
+        name: req.user.userInfo.fName,
+        date: new Date(),
+      });
+    }
     res.json(response);
   })
 );
@@ -725,9 +726,8 @@ router.post(
         .collection("Feed")
         .find()
         .sort({ date: -1 })
-        .limit(10)
+        .limit(20)
         .toArray();
-      console.log(feed);
     } catch (e) {
       console.log(e);
       res.status(400).send();
