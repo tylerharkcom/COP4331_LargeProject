@@ -36,6 +36,7 @@ const FoodTable = () => {
   const [showAddFood, setShowAddFood] = useState(false);
   const [showEditFood, setShowEditFood] = useState(false);
   const [editIndex, setEditIndex] = useState(0);
+  const [searchVal, setSearchVal] = useState('');
   const [food, setFood] = useState({
     foods: [
       {
@@ -158,9 +159,41 @@ const FoodTable = () => {
     }
   };
 
-  const searchFood = (event, criteria) => {
+  const searchValChange = event => {
     event.preventDefault();
-    alert("You're not getting any results, buddy!");
+    setSearchVal(event.target.value);
+  }
+
+  const searchFood = async (event) => {
+    event.preventDefault();
+
+    var obj = { item: searchVal };
+    var js = JSON.stringify(obj);
+
+    try {
+      const response = await fetch("/api/searchFood", {
+        method: "POST",
+        body: js,
+        headers: { "Content-Type": "application/json" },
+      });
+      var res = JSON.parse(await response.text());
+
+      if (response.status !== 200) {
+        alert("There was an issue finding the search results.");
+      } else {
+        if (res) {
+          let initializeChecks = [];
+          for (let i = 0; i<res.length; i++) {
+            initializeChecks = [...initializeChecks, false];
+          }
+          setFood({ foods: res });
+          setCheckmark( [...initializeChecks] );
+        }
+      }
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
   };
 
   const fetchWithTimeout = async (resource, options) => 
@@ -216,7 +249,7 @@ const FoodTable = () => {
           </div>
           <div style={{ marginLeft: "5px" }}>
             <button className="btn btn-secondary" onClick={getExpired}>
-              All expired
+              Show expired
             </button>
           </div>
           <div style={{ marginLeft: "5px" }}>
@@ -224,7 +257,13 @@ const FoodTable = () => {
               Show all
             </button>
           </div>
-          <FormControl style={{ marginLeft: "5px" }} type="text" placeholder="Search" className=" mr-sm-2" />
+          <FormControl
+            style={{ marginLeft: "5px" }} 
+            type="text" 
+            placeholder="Search" 
+            className=" mr-sm-2"
+            onChange={searchValChange}
+             />
           <button
             className="btn btn-secondary"
             type="submit"

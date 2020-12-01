@@ -34,22 +34,6 @@ function ResetPass()
       return;
     }
 
-    let expression = /\S+@\S+/;
-  
-    if (!expression.test(String(email.value).toLowerCase()))
-    {
-      setMessage('Please enter a valid email address');
-      return;
-    }
-
-    expression = /^\w+$/;
-
-    if (!expression.test(String(email.value)).toLowerCase())
-    {
-      setMessage('Your username may only contain letters, numbers, and underscores');
-      return;
-    }
-
     let obj = {username: username.value, email: email.value};
     console.log(obj);
     let js = JSON.stringify(obj);

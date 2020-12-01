@@ -1,19 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import '../node_modules/bootstrap/dist/css/bootstrap.css';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch,
+} from "react-router-dom";
+import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import "./App.css";
 
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
-import RegisterPage from './pages/RegisterPage';
-import AccountPage from './pages/AccountPage';
-import ResetPassPage from './pages/ResetPassPage';
-import resetPwEmailPage from './pages/EmailResetPage';
-import verifyEmail from './pages/EmailVerifyPage';
-
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import RegisterPage from "./pages/RegisterPage";
+import AccountPage from "./pages/AccountPage";
+import ResetPassPage from "./pages/ResetPassPage";
+import resetPwEmailPage from "./pages/EmailResetPage";
+import verifyEmail from "./pages/EmailVerifyPage";
+import feed from "./pages/FeedPage";
 // DEBUG
-import ChangePassPage from './pages/ChangePassPage';
-
+import ChangePassPage from "./pages/ChangePassPage";
 
 function App() {
   return (
@@ -24,10 +28,12 @@ function App() {
         <Route exact path="/register" component={RegisterPage} />
         <Route exact path="/account" component={AccountPage} />
         <Route exact path="/resetPass" component={ResetPassPage} />
-        <Route exact path="/emailTest" component={resetPwEmailPage}/>
-        <Route exact path="/emailVerify" component={verifyEmail}/>
+        <Route exact path="/emailTest" component={resetPwEmailPage} />
+        <Route exact path="/emailVerify" component={verifyEmail} />
+        <Route exact path="/feed" component={feed} />
+
         {/*DEBUG*/}
-        <Route exact path="/changePass" component={ChangePassPage}/>
+        <Route exact path="/changePass" component={ChangePassPage} />
         <Redirect to="/" />
       </Switch>
     </Router>

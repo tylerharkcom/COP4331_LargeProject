@@ -17,7 +17,6 @@ const cookieParser = require(`cookie-parser`);
 const cors = require(`cors`);
 const { Router } = require("express");
 const fs = require("fs");
-const sha256 = require("./sha256");
 const sgMail = require("@sendgrid/mail");
 const { userInfo } = require("os");
 // const { ResetPwEmail } = require("../components/EmailVerify");
@@ -49,39 +48,56 @@ router.use((req, res, next) => {
   next();
 });
 
-function authenticateToken(req, res, next) {
-  // Gather the jwt access token from the request header
-  const authHeader = req.headers["authorization"];
-  //let token = authHeader && authHeader.split(" ")[1];
-  let token = req.cookies.token;
-  if (token == null) {
-    token = req.cookies.token;
-  } // if there isn't any token
+// accessOrReset has a value of true if it's verifying an access token
+// and false if it's verifying a reset token. Mosty just keeps code dry.
+function authenticateToken(accessOrReset) {
+  return (req, res, next) => {
+    // Gather the jwt access token from the request header
+    const authHeader = req.headers["authorization"];
+    let token = accessOrReset ? req.cookies.token : req.cookies.resetToken;
+    // let token = authHeader && authHeader.split(" ")[1];
+    // if (token == null) {
+    // token = req.cookies.token;
+    // }
 
-  const response = {
-    error: "",
-  };
+    const response = {
+      error: "",
+    };
 
-  response.error = "plain text error";
-  if (!token) {
-    response.error = "the error is here tho";
-    return res.status(403).json(response);
-  }
+    response.error = "plain text error";
 
-  jwt.verify(token, process.env.LOGIN_TOKEN_SECRET, async (err, data) => {
-    if (err) {
-      response.error = err;
+    if (!token) {
+      response.error = "the error is here tho";
       return res.status(403).json(response);
     }
-    const db = client.db();
-    req.user = await db.collection("Users").findOne({ _id: ObjectId(data.id) });
-    if (req.user) {
-      return next();
-    }
-    response.error = "req.user was not real";
-    return res.status(403).json(response);
-    // pass the execution off to whatever request the client intended
-  });
+
+    let env = accessOrReset
+      ? process.env.LOGIN_TOKEN_SECRET
+      : process.env.EMAIL_TOKEN_SECRET;
+
+    jwt.verify(token, env, async (err, data) => {
+      if (err) {
+        console.log(err);
+        response.error = err;
+        return res.status(403).json(response);
+      }
+
+      const db = client.db();
+      // Mostly banking on the fact that it would get overwritten
+      // on login if someone happens to have reset their password first
+      req.user = await db
+        .collection("Users")
+        .findOne({ _id: ObjectId(data.id) });
+
+      if (req.user) {
+        return next();
+      }
+
+      response.error = "req.user was not real";
+      return res.status(403).json(response);
+      // pass the execuion off to whatever request the client intended
+    });
+  };
 }
 
 function generateAccessToken(id) {
@@ -145,8 +161,8 @@ router.post(
       { expiresIn: "15m" },
       (err, emailToken) => {
         // DEBUG
-        const url = `http://localhost:5000/api/confirmation/emailConf/${emailToken}`;
-        // const url = `https://group1largeproject.herokuapp.com/api/confirmation/emailConf/${emailToken}`;
+        // const url = `http://localhost:5000/api/confirmation/emailConf/${emailToken}`;
+        const url = `https://group1largeproject.herokuapp.com/api/confirmation/emailConf/${emailToken}`;
 
         const text = `A request was sent to confirm your FoodBuddy email as part of your account\
         for registration. To complete your account registration, visit the following link: ${url}`;
@@ -177,7 +193,7 @@ router.post(
 
 router.get(
   "/confirmation/:endpoint/:token",
-  wrapAsync(async (req, res) => {
+  wrapAsync(async (req, res, next) => {
     let response = {
       error: "",
     };
@@ -193,6 +209,14 @@ router.get(
         await db
           .collection("Users")
           .updateOne({ _id: ObjectId(id) }, { $set: { confirmed: true } });
+      } else {
+        req.user = await db.collection("Users").findOne({ _id: ObjectId(id) });
+
+        if (!req.user) {
+          response.error = "req.user was not real";
+          res.status(403).json(response);
+          return;
+        }
       }
     } catch (e) {
       console.log(e);
@@ -201,17 +225,19 @@ router.get(
       return;
     }
 
-    const emailRedirect = "https://group1largeproject.herokuapp.com/login";
+    const emailRedirect = "/login";
+    const passRedirect = "/changePass";
 
-    // Not sure where to redirect this just yet. Might log user in
-    // and redirect him straight to Account Information for updatePassword.
-    const passRedirect = "https://group1largeproject.herokuapp.com/login";
-
-    // DEBUG for emailConf
-    // return res.redirect("http://localhost:5000/login");
-    return res.redirect(
-      endpoint === "emailConf" ? emailRedirect : passRedirect
-    );
+    if (endpoint === "emailConf") {
+      return res.redirect(emailRedirect);
+    } else {
+      return res
+        .cookie("resetToken", token, {
+          maxAge: 900000,
+          httpOnly: true,
+        })
+        .redirect(passRedirect);
+    }
   })
 );
 
@@ -304,6 +330,13 @@ router.post(
       process.env.EMAIL_TOKEN_SECRET,
       { expiresIn: "15m" },
       (err, emailToken) => {
+        if (err){
+          console.log(err);
+          response.error = "An error has occurred";
+          res.status(500).json(response);
+          return;
+        }
+
         // DEBUG
         // const url = `http://localhost:5000/api/confirmation/passConf/${emailToken}`;
         const url = `https://group1largeproject.herokuapp.com/api/confirmation/passConf/${emailToken}`;
@@ -325,6 +358,41 @@ router.post(
       }
     );
 
+    res.status(200).json(response);
+  })
+);
+
+router.post(
+  "/changePass",
+  authenticateToken(false),
+  wrapAsync(async (req, res, next) => {
+    let response = {
+      error: "",
+    };
+
+    const { password } = req.body;
+    const db = client.db();
+
+    const user = await db.collection("Users").findOne({_id: req.user._id});
+
+    if (password === user.password) {
+      response.error = "Your new password can't be the same as your old password";
+      res.status(400).json(response);
+      return;
+    }
+
+    try {
+      await db
+        .collection("Users")
+        .updateOne({ _id: req.user._id }, { $set: { password } });
+    } catch (e) {
+      console.log(e);
+      response.error = "An error has occurred";
+      res.status(400).json(response);
+      return;
+    }
+
+    res.clearCookie('resetToken');
     res.status(200).json(response);
   })
 );
@@ -388,7 +456,7 @@ router.get(
   })
 );
 
-router.use(authenticateToken);
+router.use(authenticateToken(true));
 
 router.post(
   `/logout`,
@@ -536,10 +604,13 @@ router.post(
   })
 );
 
+<<<<<<< HEAD
 router.post("/updatePassword", async (req, res, next) => {
   const password = req.body;
 });
 
+=======
+>>>>>>> e7950661c94fd38215dfc8cd31d68a5a43be54d3
 router.post(
   "/updateAccount",
   wrapAsync(async (req, res, next) => {

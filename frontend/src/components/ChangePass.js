@@ -20,7 +20,10 @@ function ChangePass() {
       return;
     }
 
-    let expression = /[!@#$%*]/;
+    // For some reason, this was not
+    // matching on passwords like Inc0rrect!
+    // let expression = /[!@#$%*]/;
+    let expression = new RegExp("[!@#$%*]");
     if (!expression.test(password.value)) {
       setMessage(
         "Your password must contain at least one of the following special character: @, !, #, $, %, *"
@@ -46,21 +49,20 @@ function ChangePass() {
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (password.value !== confirmPassword.value) {
       setMessage("Passwords don't match");
       return;
     }
 
-    password = sha256(password);
+    // console.log("password:", password.value);
+    // console.log("confirmPassword:", confirmPassword.value);
+
+    password = sha256(password.value);
 
     let js = JSON.stringify({ password });
 
     try {
-      // This route looks unsafe, but really the only
-      // way you'll make it to this page in the first place
-      // is if you get verified through the JWT. In fact,
-      // there is no react route to here at all!
-      const response = await fetch("/api/changePassword", {
+      const response = await fetch("/api/changePass", {
         method: "POST",
         body: js,
         headers: { "Content-Type": "application/json" },
@@ -94,11 +96,24 @@ function ChangePass() {
             <div className="form-group col-md">
               <label for="changePassPassword">New Password</label>
               <input
-                type="text"
+                type="password"
                 className="form-control"
                 id="changePassPassword"
+                data-tip data-for="passwordTip"
                 ref={(c) => (password = c)}
               />
+              <ReactTooltip
+                id="passwordTip"
+                place="bottom"
+                effect="solid"
+              >
+                Your password should:
+                <ul>
+                    <li>be at least 8 characters long</li>
+                    <li>contain at least one capital letter, at least one lowercase letter, and at least one digit</li>
+                    <li>contain at least one of the following special characters: @, !, #, $, %, *</li>
+                </ul>
+              </ReactTooltip>
             </div>
           </div>
           {/*Add React tooltip later*/}
@@ -106,11 +121,24 @@ function ChangePass() {
             <div className="form-group col-md">
               <label for="changePassConfirm">Confirm New Password</label>
               <input
-                type="text"
+                type="password"
                 className="form-control"
                 id="changePassConfirm"
+                data-tip data-for="passwordTip"
                 ref={(c) => (confirmPassword = c)}
               />
+              <ReactTooltip
+                id="passwordTip"
+                place="bottom"
+                effect="solid"
+              >
+                Your password should:
+                <ul>
+                    <li>be at least 8 characters long</li>
+                    <li>contain at least one capital letter, at least one lowercase letter, and at least one digit</li>
+                    <li>contain at least one of the following special characters: @, !, #, $, %, *</li>
+                </ul>
+              </ReactTooltip>
             </div>
           </div>
           <div id="changePassButton">
