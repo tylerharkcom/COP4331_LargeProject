@@ -3,29 +3,22 @@ import Modal from 'react-bootstrap/Modal';
 
 const EditFoodModal = (props) => 
 {
-    let f = props.food;
-    let a = props.foodAmount;
-    let u = props.foodUnit;
-    let d = props.expDate;
     let check = false;
     let messageStyle = {
         color: "red",
         textAlign: "center"
     };
+    let f;
+    let a;
+    let u;
     let expDate;
+    let date;
 
     const [message, setMessage] = useState('');
     const [food, setFood] = useState('');
     const [amount, setAmount] = useState(0);
     const [unit, setUnit] = useState('');
     const [dateString, setDateString] = useState('');
-
-    useLayoutEffect(() => {
-        setFood(f);
-        setAmount(a);
-        setUnit(u);
-        setDateString(d);
-    }, []);
 
     const checkDate = () =>
     {
@@ -69,59 +62,67 @@ const EditFoodModal = (props) =>
     const handleSubmit = async (event) =>
     {
         event.preventDefault();
-        let date = new Date(dateString);
-        expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
 
-        if(!(expDate instanceof Date)){
-            setMessage('Check your date');
-            return;
+        if (dateString != '') 
+        {
+            date = new Date(dateString);
+            expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+        } else {
+            date = new Date(props.expDate);
+            expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
         }
+
         checkDate();
         if (!check) {
             setMessage('Check your date');
             return;
         }
-        else if (dateString === ""){
-            setMessage('Check your date');
-            return;
-        }
-        else if (food === ""){
-            setMessage('Please enter a food');
-            return;
-        }
-        else if (amount === "" || amount <= 0){
-            setMessage('Please enter the amount of food');
-            return;
-        }
-        else {
-            var obj = { item: food, foodAmt: amount, foodUt: unit, expDate: dateString };
-            var js = JSON.stringify(obj);
-            try 
-            {
-                const response = await fetch("/api/editFood", {
-                method: "POST",
-                body: js,
-                headers: { "Content-Type": "application/json" }
-                });
         
-                if (response.status !== 200) {
-                    setMessage("Ope! An error occurred");
-                    return;
-                } else {
-                    messageStyle = {
-                        color: "#DADADA",
-                        textAlign: "center"
-                    }
-                    setMessage("Success");
-                    document.getElementById("editFoodForm").reset();
-                    return;
-                }
-            } catch (e) {
-                alert(e.toString());
-                return;
-            };
+        if (food === '') {
+            f = props.food;
+        } else {
+            f = food;
         }
 
+        if (amount === 0) {
+            a = props.foodAmount;
+        } else {
+            a = amount;
+        }
+
+        if (unit === '') {
+            u = props.foodUnit;
+        } else {
+            u = unit;
+        }
+        
+        let d = dateString === '' ? props.expDate : dateString;
+        var obj = { item: f, foodAmt: a, foodUt: u, expDate: d };
+        var js = JSON.stringify(obj);
+        try 
+        {
+            const response = await fetch("/api/editFood", {
+            method: "POST",
+            body: js,
+            headers: { "Content-Type": "application/json" }
+            });
+    
+            if (response.status !== 200) {
+                setMessage("Ope! An error occurred");
+                return;
+            } else {
+                messageStyle = {
+                    color: "#DADADA",
+                    textAlign: "center"
+                }
+                setMessage("Success");
+                document.getElementById("editFoodForm").reset();
+                return;
+            }
+        } catch (e) {
+            alert(e.toString());
+            return;
+        }
     }
 
     return(
