@@ -32,7 +32,7 @@ function UserNavBar() {
     }
   };
 
-  const NavMsg = async (event) => {
+  const NavMsg = async (props) => {
     console.log(window.location.pathname);
     if (window.location.pathname == "./pages/FeedPage") {
       return "Welcome " + fName.concat(" ", lName);
