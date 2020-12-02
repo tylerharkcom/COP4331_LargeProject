@@ -473,10 +473,9 @@ router.post(
 router.post(
   `/addFood`,
   wrapAsync(async (req, res, next) => {
-    const fridgeItem = req.body;
+    const fridgeItem{ item, expDate, foodAmt, foodUt} = req.body;
 
     const db = client.db();
-
     try {
       await db
         .collection("Fridge")
