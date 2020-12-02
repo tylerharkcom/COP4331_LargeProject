@@ -59,7 +59,9 @@ function authenticateToken(accessOrReset) {
     // if (token == null) {
     // token = req.cookies.token;
     // }
-
+    if (!token) {
+      token = req.body.token;
+    }
     const response = {
       error: "",
     };
