@@ -400,66 +400,6 @@ router.post(
   })
 );
 
-router.get(
-  `/getRecipes`,
-  wrapAsync(async (req, res) => {
-    var resp1 = await fetch(
-      "https://api.spoonacular.com/recipes/findByIngredients?apiKey=" +
-        process.env.SPOON_API_KEY +
-        "&ingredients=" +
-        req.query.search +
-        "&number=2",
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-
-    var res1 = JSON.parse(await resp1.text());
-
-    var resp2 = await fetch(
-      "https://api.spoonacular.com/recipes/" +
-        res1[0].id +
-        "/information?apiKey=" +
-        process.env.SPOON_API_KEY +
-        "&includeNutrition=false",
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    var res2 = JSON.parse(await resp2.text());
-    var resp3 = await fetch(
-      "https://api.spoonacular.com/recipes/" +
-        res1[1].id +
-        "/information?apiKey=" +
-        process.env.SPOON_API_KEY +
-        "&includeNutrition=false",
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    var res3 = JSON.parse(await resp3.text());
-
-    var response = { results: [res2, res3] };
-    if (!response) {
-      res.status(400).json();
-      return;
-    }
-
-    const db = client.db();
-    await db.collection("Feed").insertOne({
-      eventType: "found a recipe for",
-      item: res1.title,
-      name: req.user.userInfo.fName,
-      date: new Date(),
-    });
-
-    res.status(200).json(response);
-  })
-);
-
 router.use(authenticateToken(true));
 
 router.post(
@@ -736,6 +676,66 @@ router.post(
       return;
     }
     res.json(feed);
+  })
+);
+
+router.get(
+  `/getRecipes`,
+  wrapAsync(async (req, res) => {
+    var resp1 = await fetch(
+      "https://api.spoonacular.com/recipes/findByIngredients?apiKey=" +
+        process.env.SPOON_API_KEY +
+        "&ingredients=" +
+        req.query.search +
+        "&number=2",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    var res1 = JSON.parse(await resp1.text());
+
+    var resp2 = await fetch(
+      "https://api.spoonacular.com/recipes/" +
+        res1[0].id +
+        "/information?apiKey=" +
+        process.env.SPOON_API_KEY +
+        "&includeNutrition=false",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    var res2 = JSON.parse(await resp2.text());
+    var resp3 = await fetch(
+      "https://api.spoonacular.com/recipes/" +
+        res1[1].id +
+        "/information?apiKey=" +
+        process.env.SPOON_API_KEY +
+        "&includeNutrition=false",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    var res3 = JSON.parse(await resp3.text());
+
+    var response = { results: [res2, res3] };
+    if (!response) {
+      res.status(400).json();
+      return;
+    }
+
+    const db = client.db();
+    await db.collection("Feed").insertOne({
+      eventType: "found a recipe for",
+      item: res1.title,
+      name: req.user.userInfo.fName,
+      date: new Date(),
+    });
+
+    res.status(200).json(response);
   })
 );
 
