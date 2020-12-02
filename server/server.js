@@ -27,15 +27,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const app = express();
 const router = Router();
 
-app.use(express.static(`static`));
-app.use(`/api`, router);
-app.use(express.static(`frontend/build`));
-
-router.use(cors());
-router.use(bodyparser.json());
-router.use(cookieParser());
-
-router.use((req, res, next) => {
+app.use((req, res, next) => {
   res.setHeader(`Access-Control-Allow-Origin`, `*`);
   res.setHeader(
     `Access-Control-Allow-Headers`,
@@ -47,6 +39,14 @@ router.use((req, res, next) => {
   );
   next();
 });
+
+app.use(express.static(`static`));
+app.use(`/api`, router);
+app.use(express.static(`frontend/build`));
+
+router.use(cors());
+router.use(bodyparser.json());
+router.use(cookieParser());
 
 // accessOrReset has a value of true if it's verifying an access token
 // and false if it's verifying a reset token. Mosty just keeps code dry.
