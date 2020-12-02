@@ -198,7 +198,7 @@ const FoodTable = () => {
 
   const fetchWithTimeout = async (resource, options) => 
   {
-    const { timeout = 8000 } = options;
+    const { timeout = 35000 } = options;
     
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
@@ -218,7 +218,7 @@ const FoodTable = () => {
     var resp = await fetchWithTimeout("/api/getRecipes?search=" + name, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      timeout: 10000
+      timeout: 30000
     });
 
     var res = JSON.parse(await resp.text());
