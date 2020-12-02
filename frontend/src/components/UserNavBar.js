@@ -37,13 +37,13 @@ function UserNavBar() {
     if (window.location.pathname == "/dashboard") {
       return (
         <div className="navbar-text" style={{ marginRight: "10px" }}>
-          Welcome {fName.concat(" ", lName)}
+          {/* Welcome {fName.concat(" ", lName)} */}
         </div>
       );
     } else
       return (
         <span className="navbar-text" style={{ marginRight: "10px" }}>
-          Logged in as {fName.concat(" ", lName)}
+          {/* Logged in as {fName.concat(" ", lName)} */}
         </span>
       );
   };
