@@ -22,7 +22,7 @@ const { userInfo } = require("os");
 // const { ResetPwEmail } = require("../components/EmailVerify");
 // const { renderEmail } = require("react-html-email");
 
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const app = express();
 const router = Router();
