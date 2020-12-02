@@ -473,8 +473,8 @@ router.post(
 router.post(
   `/addFood`,
   wrapAsync(async (req, res, next) => {
-    const fridgeItem{ item, expDate, foodAmt, foodUt} = req.body;
-
+    const { item, expDate, foodAmt, foodUt } = req.body;
+    const fridgeItem = { item, expDate, foodAmt, foodUt };
     const db = client.db();
     try {
       await db
