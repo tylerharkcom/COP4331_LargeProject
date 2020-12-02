@@ -446,6 +446,7 @@ router.get(
       return;
     }
 
+    const db = client.db();
     await db.collection("Feed").insertOne({
       eventType: "found a recipe for",
       item: res1.title,
