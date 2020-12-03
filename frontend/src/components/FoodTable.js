@@ -134,6 +134,7 @@ const FoodTable = () => {
         for (let i = 0; i<expired.length; i++) {
           initializeChecks = [...initializeChecks, false];
         }
+    setExpiredFilter(true);
     setFood({foods: expired});
     setCheckmark( [...initializeChecks] );
   }
@@ -253,7 +254,6 @@ const FoodTable = () => {
             <button 
               className="btn btn-secondary" 
               onClick={() => {
-                setExpiredFilter(true);
                 getExpired();
               }}
             >
