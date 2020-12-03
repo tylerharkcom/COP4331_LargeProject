@@ -61,6 +61,52 @@ const FoodTable = () => {
 
       if (response.status !== 200) {
         alert("There was an issue loading the fridge.");
+      } else if (expiredFilter) {
+        let expired = [];
+        let today = new Date();
+        if (res.fridge) {
+          res.fridge.map((p) => {
+            let exp = new Date(p.expDate);
+            if(exp<today){
+              expired = [...expired, p]
+            }
+          });
+          let initializeChecks = [];
+              for (let i = 0; i<expired.length; i++) {
+                initializeChecks = [...initializeChecks, false];
+              }
+          setExpiredFilter(true);
+          setFood({foods: expired});
+          setCheckmark( [...initializeChecks] );
+        }
+      } else if (searchFilter) {
+        var obj = { item: searchVal };
+        var js = JSON.stringify(obj);
+
+        try {
+          const response = await fetch("/api/searchFood", {
+            method: "POST",
+            body: js,
+            headers: { "Content-Type": "application/json" },
+          });
+          var res = JSON.parse(await response.text());
+
+          if (response.status !== 200) {
+            alert("There was an issue finding the search results.");
+          } else {
+            if (res) {
+              let initializeChecks = [];
+              for (let i = 0; i<res.length; i++) {
+                initializeChecks = [...initializeChecks, false];
+              }
+              setFood({ foods: res });
+              setCheckmark( [...initializeChecks] );
+            }
+          }
+        } catch (e) {
+          alert(e.toString());
+          return;
+        }
       } else {
         if (res.fridge) {
           let initializeChecks = [];
@@ -120,7 +166,7 @@ const FoodTable = () => {
     setShowAddFood(true);
   }
 
-  const getEventlessExpired = async () => {
+  /*const getEventlessExpired = async () => {
     let expired = [];
     let today = new Date();
     try {
@@ -160,19 +206,46 @@ const FoodTable = () => {
     event.preventDefault();
     let expired = [];
     let today = new Date();
-    food.foods.map((p) => {
-      let exp = new Date(p.expDate);
-      if(exp<today){
-        expired = [...expired, p]
-      }
-    });
-    let initializeChecks = [];
-        for (let i = 0; i<expired.length; i++) {
-          initializeChecks = [...initializeChecks, false];
+    try {
+      const response = await fetch("/api/loadFridge", {
+        method: "POST",
+        body: null,
+        headers: { "Content-Type": "application/json" },
+      });
+      var res = JSON.parse(await response.text());
+
+      if (response.status !== 200) {
+        alert("There was an issue loading the fridge.");
+      } else {
+        if (res.fridge) {
+          res.fridge.map((p) => {
+            let exp = new Date(p.expDate);
+            if(exp<today){
+              expired = [...expired, p]
+            }
+          });
+          let initializeChecks = [];
+              for (let i = 0; i<expired.length; i++) {
+                initializeChecks = [...initializeChecks, false];
+              }
+          setExpiredFilter(true);
+          setFood({foods: expired});
+          setCheckmark( [...initializeChecks] );
         }
+      }
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  }*/
+
+  const getExpired = (event) => {
+    event.preventDefault();
     setExpiredFilter(true);
-    setFood({foods: expired});
-    setCheckmark( [...initializeChecks] );
+  }
+
+  const getEventlessExpired = () => {
+    setExpiredFilter(true);
   }
 
   const deleteFood = async (event, foodName) => {
@@ -203,37 +276,14 @@ const FoodTable = () => {
     setSearchVal(event.target.value);
   }
 
-  const searchFood = async (event) => {
+  const searchFood = (event) => {
     event.preventDefault();
+    setSearchFilter(true);
+  }
 
-    var obj = { item: searchVal };
-    var js = JSON.stringify(obj);
-
-    try {
-      const response = await fetch("/api/searchFood", {
-        method: "POST",
-        body: js,
-        headers: { "Content-Type": "application/json" },
-      });
-      var res = JSON.parse(await response.text());
-
-      if (response.status !== 200) {
-        alert("There was an issue finding the search results.");
-      } else {
-        if (res) {
-          let initializeChecks = [];
-          for (let i = 0; i<res.length; i++) {
-            initializeChecks = [...initializeChecks, false];
-          }
-          setFood({ foods: res });
-          setCheckmark( [...initializeChecks] );
-        }
-      }
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
-  };
+  const searchEventlessFood = () => {
+    setSearchFilter(true);
+  }
 
   const fetchWithTimeout = async (resource, options) => 
   {
@@ -289,7 +339,10 @@ const FoodTable = () => {
           <div style={{ marginLeft: "5px" }}>
             <button 
               className="btn btn-secondary" 
-              onClick={getExpired}
+              onClick={() => {
+                getExpired();
+                loadFridgeHandler();
+              }}
             >
               Show expired
             </button>
@@ -316,8 +369,8 @@ const FoodTable = () => {
             className="btn btn-secondary"
             type="submit"
             onClick={() => {
-              setSearchFilter(true);
               searchFood();
+              loadFridgeHandler();
             }}
           >
             Search
@@ -349,11 +402,6 @@ const FoodTable = () => {
                 deleteFood={ async (event, foodName) => {
                     await deleteFood(event,foodName);
                     await loadFridgeHandler();
-                    if (expiredFilter) {
-                      getExpired(event);
-                    } else if (searchFilter) {
-                      searchFood(event);
-                    }
                 }}
                 getRecipe={async (event, name) => {
                   try {
@@ -431,14 +479,9 @@ const FoodTable = () => {
         foodAmount={food.foods[editIndex] ? food.foods[editIndex].foodAmt : -1}
         foodUnit={food.foods[editIndex] ? food.foods[editIndex].foodUt : ''}
         expDate={food.foods[editIndex] ? food.foods[editIndex].expDate : ''}
-        close={ async () => {
+        close={ () => {
           setShowEditFood(false);
-          await loadFridgeHandler();
-          if (expiredFilter) {
-            getEventlessExpired();
-          } else if (searchFilter) {
-            searchFood();
-          }
+          loadFridgeHandler();
         }}
       />
     </div>
