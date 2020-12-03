@@ -209,7 +209,7 @@ const FoodTable = () => {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
   
-    let response = await fetch(resource, {
+    const response = await fetch(resource, {
       ...options,
       signal: controller.signal  
     });
@@ -261,9 +261,9 @@ const FoodTable = () => {
           <div style={{ marginLeft: "5px" }}>
             <button 
               className="btn btn-secondary" 
-              onClick={ async () => {
+              onClick={() => {
                 getExpired();
-                await loadFridgeHandler();
+                loadFridgeHandler();
               }}
             >
               Show expired
@@ -272,9 +272,9 @@ const FoodTable = () => {
           <div style={{ marginLeft: "5px" }}>
             <button 
               className="btn btn-secondary" 
-              onClick={ async () => {
+              onClick={() => {
                 showAllHandler();
-                await loadFridgeHandler();
+                loadFridgeHandler();
               }}>
               Show all
             </button>
@@ -289,9 +289,9 @@ const FoodTable = () => {
           <button
             className="btn btn-secondary"
             type="submit"
-            onClick={ async () => {
+            onClick={() => {
               searchFood();
-              await loadFridgeHandler();
+              loadFridgeHandler();
             }}
           >
             Search
