@@ -69,7 +69,6 @@ function MyAccount() {
     setDelFinalShow(true);
   };
   const genderNameChange = (event) => {
-    event.preventDefault();
     if (gender.localeCompare("prefNoSay") == 1) setGender("Prefer not to say");
     else setGender(gender);
   };
@@ -93,6 +92,7 @@ function MyAccount() {
     setGender(user.gender);
     setCountry(user.country);
     setLang(user.language);
+    genderNameChange();
     // Testing for localmachine use
     //  setfName("user.firstName");
     //  setlName("user.lastName");
