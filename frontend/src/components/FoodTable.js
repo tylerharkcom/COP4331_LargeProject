@@ -268,6 +268,22 @@ const FoodTable = () => {
     setSearchFilter(false);
   }
 
+  const selectAll = (event) => {
+    if(event.target.checked) {
+      let initializeChecks = [];
+      for (let i = 0; i<food.foods.length; i++) {
+        initializeChecks = [...initializeChecks, true];
+      }
+      setCheckmark( [...initializeChecks] );
+    } else {
+      let initializeChecks = [];
+      for (let i = 0; i<food.foods.length; i++) {
+        initializeChecks = [...initializeChecks, false];
+      }
+      setCheckmark( [...initializeChecks] );
+    }
+  }
+
   let printTable = (
     <div>
       <div id="fridgeCRUD">
@@ -327,7 +343,17 @@ const FoodTable = () => {
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
-            <th></th>
+            <th>
+              <div>
+                <label for="selectAll">Select all</label>
+                <input 
+                  style={{ marginLeft: "10px" }} 
+                  id="selectAll"
+                  type="checkbox"
+                  onChange={selectAll}
+                />
+              </div>
+            </th>
             <th>Food</th>
             <th>Expires in</th>
             <th>Amount</th>
