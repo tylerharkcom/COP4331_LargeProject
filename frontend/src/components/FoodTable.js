@@ -166,85 +166,7 @@ const FoodTable = () => {
     setShowAddFood(true);
   }
 
-  /*const getEventlessExpired = async () => {
-    let expired = [];
-    let today = new Date();
-    try {
-      const response = await fetch("/api/loadFridge", {
-        method: "POST",
-        body: null,
-        headers: { "Content-Type": "application/json" },
-      });
-      var res = JSON.parse(await response.text());
-
-      if (response.status !== 200) {
-        alert("There was an issue loading the fridge.");
-      } else {
-        if (res.fridge) {
-          res.fridge.map((p) => {
-            let exp = new Date(p.expDate);
-            if(exp<today){
-              expired = [...expired, p]
-            }
-          });
-          let initializeChecks = [];
-              for (let i = 0; i<expired.length; i++) {
-                initializeChecks = [...initializeChecks, false];
-              }
-          setExpiredFilter(true);
-          setFood({foods: expired});
-          setCheckmark( [...initializeChecks] );
-        }
-      }
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
-  }
-
-  const getExpired = (event) => {
-    event.preventDefault();
-    let expired = [];
-    let today = new Date();
-    try {
-      const response = await fetch("/api/loadFridge", {
-        method: "POST",
-        body: null,
-        headers: { "Content-Type": "application/json" },
-      });
-      var res = JSON.parse(await response.text());
-
-      if (response.status !== 200) {
-        alert("There was an issue loading the fridge.");
-      } else {
-        if (res.fridge) {
-          res.fridge.map((p) => {
-            let exp = new Date(p.expDate);
-            if(exp<today){
-              expired = [...expired, p]
-            }
-          });
-          let initializeChecks = [];
-              for (let i = 0; i<expired.length; i++) {
-                initializeChecks = [...initializeChecks, false];
-              }
-          setExpiredFilter(true);
-          setFood({foods: expired});
-          setCheckmark( [...initializeChecks] );
-        }
-      }
-    } catch (e) {
-      alert(e.toString());
-      return;
-    }
-  }*/
-
-  const getExpired = (event) => {
-    event.preventDefault();
-    setExpiredFilter(true);
-  }
-
-  const getEventlessExpired = () => {
+  const getExpired = () => {
     setExpiredFilter(true);
   }
 
@@ -276,12 +198,7 @@ const FoodTable = () => {
     setSearchVal(event.target.value);
   }
 
-  const searchFood = (event) => {
-    event.preventDefault();
-    setSearchFilter(true);
-  }
-
-  const searchEventlessFood = () => {
+  const searchFood = () => {
     setSearchFilter(true);
   }
 
@@ -327,6 +244,11 @@ const FoodTable = () => {
     clearRecipeStates();
   };
 
+  const showAllHandler = () => {
+    setExpiredFilter(false);
+    setSearchFilter(false);
+  }
+
   let printTable = (
     <div>
       <div id="fridgeCRUD">
@@ -351,8 +273,7 @@ const FoodTable = () => {
             <button 
               className="btn btn-secondary" 
               onClick={() => {
-                setExpiredFilter(false);
-                setSearchFilter(false);
+                showAllHandler();
                 loadFridgeHandler();
               }}>
               Show all
