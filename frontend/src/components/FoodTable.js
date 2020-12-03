@@ -208,6 +208,22 @@ const FoodTable = () => {
     }
   };
 
+  const getSelectedRecipes = (event) => {
+    event.preventDefault();
+    let name = "";
+    checkmark.map((p,index) => 
+    {
+      if(p){
+        if(name === "") {
+          name = food.foods[index].item;
+        } else {
+          name = name + "," + food.foods[index].item;
+        }
+      }
+    });
+    getRecipeHandler(event, name);
+  }
+
   const selectRowHandler = (event, foodIndex) => {
     let checks = [...checkmark];
     checks[foodIndex] = event.target.checked;
@@ -275,6 +291,14 @@ const FoodTable = () => {
               onClick={showAllHandler}
               >
               Show all
+            </button>
+          </div>
+          <div style={{ marginLeft: "5px" }}>
+            <button 
+              className="btn btn-secondary" 
+              onClick={getSelectedRecipes}
+              >
+              Selected recipes
             </button>
           </div>
           <FormControl
