@@ -120,6 +120,24 @@ const FoodTable = () => {
     setShowAddFood(true);
   }
 
+  const getEventlessExpired = () => {
+    let expired = [];
+    let today = new Date();
+    food.foods.map((p) => {
+      let exp = new Date(p.expDate);
+      if(exp<today){
+        expired = [...expired, p]
+      }
+    });
+    let initializeChecks = [];
+        for (let i = 0; i<expired.length; i++) {
+          initializeChecks = [...initializeChecks, false];
+        }
+    setExpiredFilter(true);
+    setFood({foods: expired});
+    setCheckmark( [...initializeChecks] );
+  }
+
   const getExpired = (event) => {
     event.preventDefault();
     let expired = [];
@@ -314,7 +332,7 @@ const FoodTable = () => {
                     await deleteFood(event,foodName);
                     await loadFridgeHandler();
                     if (expiredFilter) {
-                      getExpired();
+                      getExpired(event);
                     } else if (searchFilter) {
                       searchFood(event);
                     }
@@ -395,11 +413,11 @@ const FoodTable = () => {
         foodAmount={food.foods[editIndex] ? food.foods[editIndex].foodAmt : -1}
         foodUnit={food.foods[editIndex] ? food.foods[editIndex].foodUt : ''}
         expDate={food.foods[editIndex] ? food.foods[editIndex].expDate : ''}
-        close={ async (event) => {
+        close={ async () => {
           setShowEditFood(false);
           await loadFridgeHandler();
           if (expiredFilter) {
-            getExpired(event);
+            getEventlessExpired();
           } else if (searchFilter) {
             searchFood();
           }
