@@ -282,6 +282,7 @@ function MyAccount() {
     console.log(newCountry.value);
     console.log(newLang.value);
     console.log(updatedUser);
+
     console.log("End of Value check");
 
     var js = JSON.stringify(updatedUser);
@@ -298,7 +299,6 @@ function MyAccount() {
       } else {
         alert("Account Updated!");
         console.log(js);
-        localStorage.setItem("user_data", js);
 
         // Setting local vars
         console.log("User.firstName before user.firstname = updatedUser.fName");
@@ -321,6 +321,7 @@ function MyAccount() {
         setGender(user.gender);
         setCountry(user.country);
         setLang(user.language);
+        localStorage.setItem("user_data", JSON.stringify(user));
         infoHandleClose();
       }
     } catch (e) {
