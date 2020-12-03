@@ -32,6 +32,8 @@ const FoodTable = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const [expiredFilter, setExpiredFilter] = useState(false);
+  const [searchFilter, setSearchFilter] = useState(false);
   const [checkmark, setCheckmark] = useState([]);
   const [showAddFood, setShowAddFood] = useState(false);
   const [showEditFood, setShowEditFood] = useState(false);
@@ -248,12 +250,24 @@ const FoodTable = () => {
             </button>
           </div>
           <div style={{ marginLeft: "5px" }}>
-            <button className="btn btn-secondary" onClick={getExpired}>
+            <button 
+              className="btn btn-secondary" 
+              onClick={() => {
+                setExpiredFilter(true);
+                getExpired();
+              }}
+            >
               Show expired
             </button>
           </div>
           <div style={{ marginLeft: "5px" }}>
-            <button className="btn btn-secondary" onClick={loadFridgeHandler}>
+            <button 
+              className="btn btn-secondary" 
+              onClick={() => {
+                setExpiredFilter(false);
+                setSearchFilter(false);
+                loadFridgeHandler();
+              }}>
               Show all
             </button>
           </div>
@@ -267,7 +281,10 @@ const FoodTable = () => {
           <button
             className="btn btn-secondary"
             type="submit"
-            onClick={searchFood}
+            onClick={() => {
+              setSearchFilter(true);
+              searchFood();
+            }}
           >
             Search
           </button>
@@ -298,6 +315,11 @@ const FoodTable = () => {
                 deleteFood={ async (event, foodName) => {
                     await deleteFood(event,foodName);
                     await loadFridgeHandler();
+                    if (expiredFilter) {
+                      getExpired(event);
+                    } else if (searchFilter) {
+                      searchFood(event);
+                    }
                 }}
                 getRecipe={async (event, name) => {
                   try {
@@ -375,9 +397,14 @@ const FoodTable = () => {
         foodAmount={food.foods[editIndex] ? food.foods[editIndex].foodAmt : -1}
         foodUnit={food.foods[editIndex] ? food.foods[editIndex].foodUt : ''}
         expDate={food.foods[editIndex] ? food.foods[editIndex].expDate : ''}
-        close={()=> {
+        close={ async () => {
           setShowEditFood(false);
-          loadFridgeHandler();
+          await loadFridgeHandler();
+          if (expiredFilter) {
+            getExpired();
+          } else if (searchFilter) {
+            searchFood();
+          }
         }}
       />
     </div>
