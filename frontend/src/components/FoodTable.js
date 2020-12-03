@@ -120,22 +120,40 @@ const FoodTable = () => {
     setShowAddFood(true);
   }
 
-  const getEventlessExpired = () => {
+  const getEventlessExpired = async () => {
     let expired = [];
     let today = new Date();
-    food.foods.map((p) => {
-      let exp = new Date(p.expDate);
-      if(exp<today){
-        expired = [...expired, p]
-      }
-    });
-    let initializeChecks = [];
-        for (let i = 0; i<expired.length; i++) {
-          initializeChecks = [...initializeChecks, false];
+    try {
+      const response = await fetch("/api/loadFridge", {
+        method: "POST",
+        body: null,
+        headers: { "Content-Type": "application/json" },
+      });
+      var res = JSON.parse(await response.text());
+
+      if (response.status !== 200) {
+        alert("There was an issue loading the fridge.");
+      } else {
+        if (res.fridge) {
+          res.fridge.map((p) => {
+            let exp = new Date(p.expDate);
+            if(exp<today){
+              expired = [...expired, p]
+            }
+          });
+          let initializeChecks = [];
+              for (let i = 0; i<expired.length; i++) {
+                initializeChecks = [...initializeChecks, false];
+              }
+          setExpiredFilter(true);
+          setFood({foods: expired});
+          setCheckmark( [...initializeChecks] );
         }
-    setExpiredFilter(true);
-    setFood({foods: expired});
-    setCheckmark( [...initializeChecks] );
+      }
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
   }
 
   const getExpired = (event) => {
