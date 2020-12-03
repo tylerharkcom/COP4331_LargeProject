@@ -261,9 +261,9 @@ const FoodTable = () => {
           <div style={{ marginLeft: "5px" }}>
             <button 
               className="btn btn-secondary" 
-              onClick={() => {
+              onClick={ async () => {
                 getExpired();
-                loadFridgeHandler();
+                await loadFridgeHandler();
               }}
             >
               Show expired
@@ -272,9 +272,9 @@ const FoodTable = () => {
           <div style={{ marginLeft: "5px" }}>
             <button 
               className="btn btn-secondary" 
-              onClick={() => {
+              onClick={ async () => {
                 showAllHandler();
-                loadFridgeHandler();
+                await loadFridgeHandler();
               }}>
               Show all
             </button>
@@ -289,9 +289,9 @@ const FoodTable = () => {
           <button
             className="btn btn-secondary"
             type="submit"
-            onClick={() => {
+            onClick={ async () => {
               searchFood();
-              loadFridgeHandler();
+              await loadFridgeHandler();
             }}
           >
             Search
