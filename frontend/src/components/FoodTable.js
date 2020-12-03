@@ -341,6 +341,7 @@ const FoodTable = () => {
               <TableRow
                 id={index}
                 item={p.item}
+                checked={checkmark[index]}
                 selected={(event) => selectRowHandler(event, index)}
                 expDate={p.expDate}
                 foodAmount={p.foodAmt}
