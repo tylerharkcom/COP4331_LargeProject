@@ -120,7 +120,8 @@ const FoodTable = () => {
     setShowAddFood(true);
   }
 
-  const getExpired = () => {
+  const getExpired = (event) => {
+    event.preventDefault();
     let expired = [];
     let today = new Date();
     food.foods.map((p) => {
@@ -252,7 +253,7 @@ const FoodTable = () => {
           <div style={{ marginLeft: "5px" }}>
             <button 
               className="btn btn-secondary" 
-              onClick={() => getExpired()}
+              onClick={getExpired}
             >
               Show expired
             </button>
@@ -394,11 +395,11 @@ const FoodTable = () => {
         foodAmount={food.foods[editIndex] ? food.foods[editIndex].foodAmt : -1}
         foodUnit={food.foods[editIndex] ? food.foods[editIndex].foodUt : ''}
         expDate={food.foods[editIndex] ? food.foods[editIndex].expDate : ''}
-        close={ async () => {
+        close={ async (event) => {
           setShowEditFood(false);
           await loadFridgeHandler();
           if (expiredFilter) {
-            getExpired();
+            getExpired(event);
           } else if (searchFilter) {
             searchFood();
           }
