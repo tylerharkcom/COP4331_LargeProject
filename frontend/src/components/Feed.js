@@ -3,15 +3,55 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Placeholder from "../images/orangeSliceCrop.jpg";
 import Image from "react-bootstrap/Image";
+import React, { useState, useEffect } from "react";
 
 function Feed() {
-  var timeStamp = "11 hours ago";
-  var picture; //
-  var item = "apples";
-  var name = "Jonathan ";
-  var action = "just bought ";
+  const [feedData, setFeed] = useState({
+    posts: [
+      {
+        eventType: "",
+        item: "",
+        name: "",
+        data: "",
+      },
+    ],
+  });
 
-  const FeedTemplate = ({ name, action, item, timeStamp }) => (
+  useEffect(() => {
+    loadFeedData();
+  }, []);
+
+  const loadFeedData = async () => {
+    try {
+      const response = await fetch("/api/loadFeed", {
+        method: "POST",
+        body: null,
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
+      var res = JSON.parse(await response.text());
+      if (response.status !== 200) {
+        alert(res.error);
+      } else {
+        setFeed({ posts: res.feed });
+        console.log(feedData.posts);
+      }
+    } catch (e) {
+      console.log(e.toString());
+      return;
+    }
+  };
+  const GenerateFeed = async () => {
+    for (let i = 0; i < feedData.posts.length; i++) {
+      <FeedTemplate
+        name={feedData.posts.name}
+        eventType={feedData.posts.eventType}
+        item={feedData.posts.item}
+        date={feedData.posts.date}
+      />;
+    }
+  };
+  const FeedTemplate = ({ name, eventType, item, date }) => (
     <Card
       style={{
         fontSize: ".5rem",
@@ -49,7 +89,7 @@ function Feed() {
             }}
           >
             <strong>{name} </strong>
-            {action} {item}
+            {eventType} {item}
           </label>
         </Col>
         <Col
@@ -67,7 +107,7 @@ function Feed() {
               marginBottom: "auto",
             }}
           >
-            {timeStamp}
+            {date}
           </label>
         </Col>
       </Row>
@@ -79,32 +119,7 @@ function Feed() {
     </Card>
   );
 
-  return (
-    <div>
-      <FeedTemplate
-        name={name}
-        action={action}
-        item={item}
-        timeStamp={timeStamp}
-      />
-      <FeedTemplate />
-      <FeedTemplate />
-
-      <FeedTemplate />
-      <FeedTemplate />
-
-      <FeedTemplate />
-      <FeedTemplate />
-
-      <FeedTemplate />
-      <FeedTemplate />
-
-      <FeedTemplate />
-      <FeedTemplate />
-
-      <FeedTemplate />
-    </div>
-  );
+  return <div>Ok</div>;
 }
 
 export default Feed;
