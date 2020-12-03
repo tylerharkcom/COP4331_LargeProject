@@ -49,7 +49,7 @@ const AddFoodModal = (props) =>
         }
 
         let date = new Date(expDateString.value);
-        expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
+        expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
 
         if(!(expDate instanceof Date)){
             setMessage('Check your date');
