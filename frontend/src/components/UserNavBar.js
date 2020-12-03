@@ -8,6 +8,8 @@ function UserNavBar() {
   useEffect(() => {
     setfName(user.firstName);
     setlName(user.lastName);
+    // setfName("Jon");
+    // setlName("Frucht");
   });
 
   const doLogout = async (event) => {
@@ -36,14 +38,16 @@ function UserNavBar() {
     console.log(window.location.pathname);
     if (window.location.pathname == "/dashboard") {
       return (
-        <div className="navbar-text" style={{ marginRight: "10px" }}>
-          {/* Welcome {fName.concat(" ", lName)} */}
-        </div>
+        <span className="navbar-text" style={{ marginRight: "10px" }}>
+          Welcome, {fName} {lName}
+        </span>
       );
+    } else if (window.location.pathname == "/account") {
+      return null;
     } else
       return (
         <span className="navbar-text" style={{ marginRight: "10px" }}>
-          {/* Logged in as {fName.concat(" ", lName)} */}
+          Logged in as {fName} {lName}
         </span>
       );
   };
