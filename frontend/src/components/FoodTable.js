@@ -319,9 +319,9 @@ const FoodTable = () => {
                     await deleteFood(event,foodName);
                     await loadFridgeHandler();
                 }}
-                getRecipe={async (event, name) => {
+                getRecipe={(event, name) => {
                   try {
-                    await getRecipeHandler(event, name);
+                    getRecipeHandler(event, name);
                   } catch (e) {
                     setLoading(false);
                     alert("There was an error loading the recipes");
