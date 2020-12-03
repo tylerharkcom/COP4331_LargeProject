@@ -148,29 +148,6 @@ const FoodTable = () => {
     });
   };
 
-  const selectRowHandler = (event, foodIndex) => {
-    let checks = [...checkmark];
-    checks[foodIndex] = event.target.checked;
-    setCheckmark([...checks]);
-    console.log(checkmark);
-  };
-
-  const editFood = (event, index) => {
-    event.preventDefault();
-    setEditIndex(index);
-    setShowEditFood(true);
-  };
-
-  const addFood = (event) => {
-    event.preventDefault();
-    setShowAddFood(true);
-  }
-
-  const getExpired = (event) => {
-    event.preventDefault();
-    setExpiredFilter(true);
-  }
-
   const deleteFood = async (event, foodName) => {
     event.preventDefault();
     let obj = { item: foodName };
@@ -193,16 +170,6 @@ const FoodTable = () => {
       return;
     }
   };
-
-  const searchValChange = event => {
-    event.preventDefault();
-    setSearchVal(event.target.value);
-  }
-
-  const searchFood = (event) => {
-    event.preventDefault();
-    setSearchFilter(true);
-  }
 
   const fetchWithTimeout = async (resource, options) => 
   {
@@ -240,6 +207,39 @@ const FoodTable = () => {
       setLoading(false);
     }
   };
+
+  const selectRowHandler = (event, foodIndex) => {
+    let checks = [...checkmark];
+    checks[foodIndex] = event.target.checked;
+    setCheckmark([...checks]);
+    console.log(checkmark);
+  };
+
+  const editFood = (event, index) => {
+    event.preventDefault();
+    setEditIndex(index);
+    setShowEditFood(true);
+  };
+
+  const addFood = (event) => {
+    event.preventDefault();
+    setShowAddFood(true);
+  }
+
+  const getExpired = (event) => {
+    event.preventDefault();
+    setExpiredFilter(true);
+  }
+
+  const searchValChange = event => {
+    event.preventDefault();
+    setSearchVal(event.target.value);
+  }
+
+  const searchFood = (event) => {
+    event.preventDefault();
+    setSearchFilter(true);
+  }
 
   const closeRecipeHandler = () => {
     setShow(false);
