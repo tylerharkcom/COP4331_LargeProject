@@ -125,7 +125,7 @@ const FoodTable = () => {
 
   useEffect(() => {
     loadFridgeHandler();
-  }, []);
+  }, [expiredFilter, searchFilter]);
 
   const clearRecipeStates = () => {
     setResults({
@@ -263,7 +263,6 @@ const FoodTable = () => {
               className="btn btn-secondary" 
               onClick={() => {
                 getExpired();
-                loadFridgeHandler();
               }}
             >
               Show expired
@@ -274,7 +273,6 @@ const FoodTable = () => {
               className="btn btn-secondary" 
               onClick={() => {
                 showAllHandler();
-                loadFridgeHandler();
               }}>
               Show all
             </button>
@@ -291,7 +289,6 @@ const FoodTable = () => {
             type="submit"
             onClick={() => {
               searchFood();
-              loadFridgeHandler();
             }}
           >
             Search
