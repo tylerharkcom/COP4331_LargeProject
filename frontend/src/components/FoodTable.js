@@ -57,7 +57,7 @@ const FoodTable = () => {
         body: null,
         headers: { "Content-Type": "application/json" },
       });
-      var res = JSON.parse(await response.text());
+      let res = JSON.parse(await response.text());
 
       if (response.status !== 200) {
         alert("There was an issue loading the fridge.");
@@ -80,16 +80,16 @@ const FoodTable = () => {
           setCheckmark( [...initializeChecks] );
         }
       } else if (searchFilter) {
-        var obj = { item: searchVal };
-        var js = JSON.stringify(obj);
+        let obj = { item: searchVal };
+        let js = JSON.stringify(obj);
 
         try {
-          const response = await fetch("/api/searchFood", {
+          let response = await fetch("/api/searchFood", {
             method: "POST",
             body: js,
             headers: { "Content-Type": "application/json" },
           });
-          var res = JSON.parse(await response.text());
+          let res = JSON.parse(await response.text());
 
           if (response.status !== 200) {
             alert("There was an issue finding the search results.");
@@ -172,17 +172,17 @@ const FoodTable = () => {
 
   const deleteFood = async (event, foodName) => {
     event.preventDefault();
-    var obj = { item: foodName };
-    var js = JSON.stringify(obj);
+    let obj = { item: foodName };
+    let js = JSON.stringify(obj);
 
     try {
-      var response = await fetch("/api/deleteFood", {
+      let response = await fetch("/api/deleteFood", {
         method: "POST",
         body: js,
         headers: { "Content-Type": "application/json" }
       });
 
-      var res = JSON.parse(await response.text());
+      let res = JSON.parse(await response.text());
 
       if (response.status !== 200) {
         alert('There was an issue deleting the food');
@@ -209,7 +209,7 @@ const FoodTable = () => {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
   
-    const response = await fetch(resource, {
+    let response = await fetch(resource, {
       ...options,
       signal: controller.signal  
     });
@@ -221,13 +221,13 @@ const FoodTable = () => {
   const getRecipeHandler = async (event, name) => {
     event.preventDefault();
     setLoading(true);
-    var resp = await fetchWithTimeout("/api/getRecipes?search=" + name, {
+    let resp = await fetchWithTimeout("/api/getRecipes?search=" + name, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       timeout: 30000
     });
 
-    var res = JSON.parse(await resp.text());
+    let res = JSON.parse(await resp.text());
     if (resp.status != 200) {
       setLoading(false);
       alert("Ope, something went wrong!");
