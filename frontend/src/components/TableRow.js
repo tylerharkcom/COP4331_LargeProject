@@ -5,7 +5,8 @@ import "../../node_modules/react-crud-icons/dist/css/react-crud-icons.css";
 
 const TableRow = (props) => {
   let food = props.item;
-  let expDate = new Date(props.expDate);
+  let date = new Date(props.expDate);
+  let expDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
   expDate.setHours(23, 59, 59, 999);
   let current = new Date();
   let timeDiff = Math.round((expDate.getTime() - current.getTime())/(1000*60*60*24));
