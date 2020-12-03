@@ -166,7 +166,8 @@ const FoodTable = () => {
     setShowAddFood(true);
   }
 
-  const getExpired = () => {
+  const getExpired = (event) => {
+    event.preventDefault();
     setExpiredFilter(true);
   }
 
@@ -198,7 +199,8 @@ const FoodTable = () => {
     setSearchVal(event.target.value);
   }
 
-  const searchFood = () => {
+  const searchFood = (event) => {
+    event.preventDefault();
     setSearchFilter(true);
   }
 
@@ -244,7 +246,8 @@ const FoodTable = () => {
     clearRecipeStates();
   };
 
-  const showAllHandler = () => {
+  const showAllHandler = (event) => {
+    event.preventDefault();
     setExpiredFilter(false);
     setSearchFilter(false);
   }
@@ -261,9 +264,7 @@ const FoodTable = () => {
           <div style={{ marginLeft: "5px" }}>
             <button 
               className="btn btn-secondary" 
-              onClick={() => {
-                getExpired();
-              }}
+              onClick={getExpired}
             >
               Show expired
             </button>
@@ -271,9 +272,8 @@ const FoodTable = () => {
           <div style={{ marginLeft: "5px" }}>
             <button 
               className="btn btn-secondary" 
-              onClick={() => {
-                showAllHandler();
-              }}>
+              onClick={showAllHandler}
+              >
               Show all
             </button>
           </div>
@@ -287,9 +287,7 @@ const FoodTable = () => {
           <button
             className="btn btn-secondary"
             type="submit"
-            onClick={() => {
-              searchFood();
-            }}
+            onClick={searchFood}
           >
             Search
           </button>
