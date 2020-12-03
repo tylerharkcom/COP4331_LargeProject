@@ -296,8 +296,15 @@ const FoodTable = () => {
           <div style={{ marginLeft: "5px" }}>
             <button 
               className="btn btn-secondary" 
-              onClick={getSelectedRecipes}
-              >
+              onClick={(event) => {
+                try {
+                  getSelectedRecipes(event);
+                } catch (e) {
+                  setLoading(false);
+                  alert("There was an error loading the recipes");
+                }
+              }}
+            >
               Selected recipes
             </button>
           </div>
