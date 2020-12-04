@@ -661,10 +661,11 @@ router.post(
 router.post(
   `/deleteManyFoods`,
   wrapAsync(async (req, res, next) => {
-    const foodList = req.body;
+    const { foodArray } = req.body;
 
     const db = client.db();
-    for (const item of foodList) {
+    let i = 0;
+    for (const item of foodArray) {
       await db
         .collection("Fridge")
         .updateOne({ userId: req.user._id }, { $pull: { fridge: { item } } });
