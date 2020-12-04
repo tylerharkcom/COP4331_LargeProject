@@ -664,7 +664,7 @@ router.post(
     const { foodArray } = req.body;
 
     const db = client.db();
-    let i = 0;
+
     for (const item of foodArray) {
       await db
         .collection("Fridge")
