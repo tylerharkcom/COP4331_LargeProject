@@ -172,7 +172,7 @@ const Feed = () => {
                     marginBottom: "auto",
                   }}
                 >
-                  {p.date}
+                  {/* {p.date} */}
                 </label>
               </Col>
             </Row>
