@@ -659,6 +659,21 @@ router.post(
 );
 
 router.post(
+  `/deleteManyFoods`,
+  wrapAsync(async (req, res, next) => {
+    const foodList = req.body;
+
+    const db = client.db();
+    for (const item of foodList) {
+      await db
+        .collection("Fridge")
+        .updateOne({ userId: req.user._id }, { $pull: { fridge: { item } } });
+    }
+    res.json();
+  })
+);
+
+router.post(
   "/loadFeed",
   wrapAsync(async (req, res, next) => {
     const db = client.db();
