@@ -197,8 +197,8 @@ const Feed = () => {
     </div>
   );
 
-  const formattedDate = (date) => {
-    let actionDate = new Date(date);
+  const formattedDate = (props) => {
+    let actionDate = new Date(props.date);
     let formattedDate = new Date(
       actionDate.getTime() + actionDate.getTimezoneOffset() * 60000
     );
