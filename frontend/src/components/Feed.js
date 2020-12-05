@@ -2,6 +2,8 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Placeholder from "../images/orangeSliceCrop.jpg";
+import Placeholder2 from "../images/happyToast.png";
+
 import Image from "react-bootstrap/Image";
 import React, { useState, useEffect } from "react";
 
@@ -33,6 +35,11 @@ const Feed = () => {
       if (response.status !== 200) {
         console.log(res.error);
       } else {
+        console.log(res);
+        console.log(res.feed);
+        console.log(res.feed.eventType);
+        console.log(res.feed.item);
+
         setFeed({ posts: res.feed });
         console.log(feedData.posts);
       }
@@ -60,7 +67,7 @@ const Feed = () => {
         <Row xs="3">
           <Col xs={1}>
             <Image
-              src={Placeholder}
+              src={Placeholder2}
               roundedCircle
               align="left"
               style={{
@@ -132,7 +139,7 @@ const Feed = () => {
             <Row xs="3">
               <Col xs={1}>
                 <Image
-                  src={Placeholder}
+                  src={Placeholder2}
                   roundedCircle
                   align="left"
                   style={{
