@@ -205,7 +205,7 @@ const Feed = () => {
     formattedDate.setHours(23, 59, 59, 999);
     let current = new Date();
     return Math.round(
-      (current.getTime() - expDate.getTime()) / (1000 * 60 * 60 * 24)
+      (current.getTime() - formattedDate.getTime()) / (1000 * 60 * 60 * 24)
     );
   };
 
