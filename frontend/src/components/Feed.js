@@ -179,7 +179,7 @@ const Feed = () => {
                     marginBottom: "auto",
                   }}
                 >
-                  {formattedDate(p.date)}
+                  {<FormattedDate date={p.date} />}
                 </label>
               </Col>
             </Row>
@@ -197,7 +197,7 @@ const Feed = () => {
     </div>
   );
 
-  const formattedDate = (props) => {
+  const FormattedDate = (props) => {
     let actionDate = new Date(props.date);
     let formattedDate = new Date(
       actionDate.getTime() + actionDate.getTimezoneOffset() * 60000
