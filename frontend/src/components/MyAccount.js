@@ -1,10 +1,5 @@
 // TODO
-// So fname is first just a value, but when it gets updated it become undefined
-// Is this because the set funcs are different?
-// EX. setfName(user.firstName) vs setfName(newFName.value)
-// referencing newFName returns an html element, not the value
-// On the first render fName.concat works, but on the second render it says that fName is undef.
-
+// Find out why the setTimeout  func fails after multiple calls
 import React, { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
@@ -33,10 +28,12 @@ function MyAccount() {
   var newPassword1;
   var newPassword2;
   var currPassword;
+
   const pwRequirements = " ";
 
   const [pwShow, setPwShow] = useState(false);
   const [infoShow, setInfoShow] = useState(false);
+  const [didUpdateAcct, setDidUpdateAcct] = useState(false);
   const [delMShow, setDelShow] = useState(false);
   const [delFinal, setDelFinalShow] = useState(false);
   // PW msg
@@ -44,6 +41,7 @@ function MyAccount() {
   const [messageNewPW, setMessageNewPW] = useState("");
 
   const pwHandleClose = (event) => {
+    event.preventDefault();
     setPwShow(false);
   };
   const pwHandleShow = (event) => {
@@ -51,11 +49,24 @@ function MyAccount() {
     setPwShow(true);
   };
   const infoHandleClose = (event) => {
-    setInfoShow(false);
+    if (didUpdateAcct == true) setInfoShow(false);
+    setDidUpdateAcct(false);
   };
   const infoHandleShow = (event) => {
     event.preventDefault();
     setInfoShow(true);
+  };
+  const toggleUpdateMsg = (event) => {
+    // event.preventDefault();
+    {
+      setTimeout(() => {
+        foo();
+      }, 1000);
+    }
+    if (didUpdateAcct == true) {
+      setInfoShow(false);
+      setDidUpdateAcct(false);
+    } else setDidUpdateAcct(true);
   };
   const delHandleClose = (event) => {
     setDelShow(false);
@@ -223,8 +234,9 @@ function MyAccount() {
       });
       var res = JSON.parse(await response.text());
       if (response.status !== 200) {
-        alert(res.error);
+        console.log(res.error);
       } else {
+        // ADD REPLACEMENT FOR ALERT
         alert("Password change successful!");
         pwHandleClose();
       }
@@ -246,7 +258,7 @@ function MyAccount() {
       });
       var res = JSON.parse(await response.text());
       if (response.status !== 200) {
-        alert(res.error);
+        console.log(res.error);
       } else {
         alert("Account Deleted. Goodbye!");
         window.location.href = "/";
@@ -295,14 +307,13 @@ function MyAccount() {
       });
       var res = JSON.parse(await response.text());
       if (response.status !== 200) {
-        alert(res.error);
+        console.log(res.error);
       } else {
-        alert("Account Updated!");
-        console.log(js);
+        // // ADD REPLACEMENT FOR ALERT
+        // alert("Account Updated!");
 
         // Setting local vars
-        console.log("User.firstName before user.firstname = updatedUser.fName");
-        console.log(user.firstName);
+        console.log("Account updated");
         user.firstName = updatedUser.fName;
         user.lastName = updatedUser.lName;
         user.email = updatedUser.email;
@@ -311,8 +322,7 @@ function MyAccount() {
         user.gender = updatedUser.gender;
         user.country = updatedUser.country;
         user.language = updatedUser.language;
-        console.log("user.firstName After");
-        console.log(user.firstName);
+
         setfName(user.firstName);
         setlName(user.lastName);
         setEmail(user.email);
@@ -322,14 +332,18 @@ function MyAccount() {
         setCountry(user.country);
         setLang(user.language);
         localStorage.setItem("user_data", JSON.stringify(user));
-        infoHandleClose();
+        toggleUpdateMsg();
+        // infoHandleClose();
       }
     } catch (e) {
       console.log(e.toString());
       return;
     }
   };
-  // Called after account has been updated
+
+  const foo = () => {
+    return 1;
+  };
 
   return (
     <div id="accountDiv" class="center">
@@ -479,226 +493,260 @@ function MyAccount() {
         </Card>
         {/* Update Account Modal */}
         <Modal centered show={infoShow} onHide={infoHandleClose}>
-          <div style={{ backgroundColor: "#DADADA", padding: "10px" }}>
-            <Modal.Header>
-              <Modal.Title>
-                <h1 style={{ textAlign: "center" }}>
-                  Update Account Information
-                </h1>
-              </Modal.Title>
-            </Modal.Header>
-            <Form>
-              <Form.Row>
-                <Form.Group
-                  id="fNameField"
-                  className="form-inline"
-                  style={{
-                    marginLeft: "1rem",
-                    marginTop: "1rem",
-                    paddingRight: ".5em",
-                  }}
-                  as={Col}
-                >
-                  <Form.Label class="col-sm-2.5 col-form-label">
-                    <b>First Name</b>
-                  </Form.Label>
-                  <Col sm="8">
-                    <Form.Control
-                      type="text"
-                      defaultValue={fName}
-                      ref={(c) => (newFName = c)}
-                      style={{ marginLeft: ".5rem" }}
-                    />
-                  </Col>
-                </Form.Group>
-              </Form.Row>
-              <Form.Row>
-                <Form.Group
-                  id="lNameField"
-                  className="form-inline"
-                  style={{ marginLeft: "1rem" }}
-                  as={Col}
-                >
-                  <Form.Label class="col-sm-2.5 col-form-label">
-                    <b>Last Name</b>&nbsp;
-                  </Form.Label>
-                  <Col sm="8">
-                    <Form.Control
-                      type="text"
-                      defaultValue={lName}
-                      ref={(c) => (newLName = c)}
-                      style={{ marginLeft: ".5rem" }}
-                    />
-                  </Col>
-                </Form.Group>
-              </Form.Row>
-              <Form.Row>
-                <Form.Group
-                  id="emailField"
-                  className="form-inline"
-                  style={{ marginLeft: "1rem" }}
-                  as={Col}
-                >
+          {!didUpdateAcct && (
+            <div
+              // show={didUpdateAcct}
+              // id="AcctUpdtMsg"
+              style={{ backgroundColor: "#DADADA", padding: "10px" }}
+            >
+              <Modal.Header>
+                <Modal.Title>
+                  <h1 style={{ textAlign: "center" }}>
+                    Update Account Information
+                  </h1>
+                </Modal.Title>
+              </Modal.Header>
+              <Form>
+                <Form.Row>
+                  <Form.Group
+                    id="fNameField"
+                    className="form-inline"
+                    style={{
+                      marginLeft: "1rem",
+                      marginTop: "1rem",
+                      paddingRight: ".5em",
+                    }}
+                    as={Col}
+                  >
+                    <Form.Label class="col-sm-2.5 col-form-label">
+                      <b>First Name</b>
+                    </Form.Label>
+                    <Col sm="8">
+                      <Form.Control
+                        type="text"
+                        defaultValue={fName}
+                        ref={(c) => (newFName = c)}
+                        style={{ marginLeft: ".5rem" }}
+                      />
+                    </Col>
+                  </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                  <Form.Group
+                    id="lNameField"
+                    className="form-inline"
+                    style={{ marginLeft: "1rem" }}
+                    as={Col}
+                  >
+                    <Form.Label class="col-sm-2.5 col-form-label">
+                      <b>Last Name</b>&nbsp;
+                    </Form.Label>
+                    <Col sm="8">
+                      <Form.Control
+                        type="text"
+                        defaultValue={lName}
+                        ref={(c) => (newLName = c)}
+                        style={{ marginLeft: ".5rem" }}
+                      />
+                    </Col>
+                  </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                  <Form.Group
+                    id="emailField"
+                    className="form-inline"
+                    style={{ marginLeft: "1rem" }}
+                    as={Col}
+                  >
+                    <Form.Label
+                      class="col-sm-2.5 col-form-label"
+                      style={{ paddingRight: "2.4em" }}
+                    >
+                      <b>Email</b>&nbsp;
+                    </Form.Label>
+                    <Col sm="8">
+                      <Form.Control
+                        type="email"
+                        defaultValue={email}
+                        ref={(c) => (newEmail = c)}
+                        style={{ marginLeft: ".5rem" }}
+                      />
+                    </Col>
+                  </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                  <Form.Group
+                    id="usernameField"
+                    className="form-inline"
+                    style={{ marginLeft: "1rem" }}
+                    as={Col}
+                  >
+                    <Form.Label
+                      class="col-sm-2.5 col-form-label"
+                      style={{ paddingRight: ".3em" }}
+                    >
+                      <b>Username</b>&nbsp;
+                    </Form.Label>
+                    <Col sm="8">
+                      <Form.Control
+                        type="text"
+                        defaultValue={loginName}
+                        ref={(c) => (newUsername = c)}
+                        style={{ marginLeft: ".5rem" }}
+                      />
+                    </Col>
+                  </Form.Group>
+                </Form.Row>
+                <Form.Row>
+                  <Form.Group
+                    id="bDayField"
+                    style={{ marginLeft: "1rem" }}
+                  ></Form.Group>
                   <Form.Label
                     class="col-sm-2.5 col-form-label"
-                    style={{ paddingRight: "2.4em" }}
+                    style={{ paddingRight: "2.2em" }}
                   >
-                    <b>Email</b>&nbsp;
+                    <b>Birthday</b>
                   </Form.Label>
-                  <Col sm="8">
-                    <Form.Control
-                      type="email"
-                      defaultValue={email}
-                      ref={(c) => (newEmail = c)}
-                      style={{ marginLeft: ".5rem" }}
-                    />
-                  </Col>
-                </Form.Group>
-              </Form.Row>
-              <Form.Row>
-                <Form.Group
-                  id="usernameField"
-                  className="form-inline"
-                  style={{ marginLeft: "1rem" }}
-                  as={Col}
-                >
+                  <Form.Control
+                    type="date"
+                    defaultValue={bDay}
+                    ref={(c) => (newBDay = c)}
+                    style={{ marginLeft: ".5rem", width: "12.8rem" }}
+                  />
+                </Form.Row>
+                <Form.Row>
+                  <Form.Group
+                    id="genderField"
+                    style={{ marginLeft: "1rem" }}
+                  ></Form.Group>
                   <Form.Label
                     class="col-sm-2.5 col-form-label"
-                    style={{ paddingRight: ".3em" }}
+                    style={{ marginTop: "1rem", paddingRight: "2.9em" }}
                   >
-                    <b>Username</b>&nbsp;
+                    <b>Gender</b>
                   </Form.Label>
-                  <Col sm="8">
-                    <Form.Control
-                      type="text"
-                      defaultValue={loginName}
-                      ref={(c) => (newUsername = c)}
-                      style={{ marginLeft: ".5rem" }}
-                    />
-                  </Col>
-                </Form.Group>
-              </Form.Row>
-              <Form.Row>
-                <Form.Group
-                  id="bDayField"
-                  style={{ marginLeft: "1rem" }}
-                ></Form.Group>
-                <Form.Label
-                  class="col-sm-2.5 col-form-label"
-                  style={{ paddingRight: "2.2em" }}
-                >
-                  <b>Birthday</b>
-                </Form.Label>
-                <Form.Control
-                  type="date"
-                  defaultValue={bDay}
-                  ref={(c) => (newBDay = c)}
-                  style={{ marginLeft: ".5rem", width: "12.8rem" }}
-                />
-              </Form.Row>
-              <Form.Row>
-                <Form.Group
-                  id="genderField"
-                  style={{ marginLeft: "1rem" }}
-                ></Form.Group>
-                <Form.Label
-                  class="col-sm-2.5 col-form-label"
-                  style={{ marginTop: "1rem", paddingRight: "2.9em" }}
-                >
-                  <b>Gender</b>
-                </Form.Label>
-                <select
-                  class="form-control"
-                  id="sel1"
-                  defaultValue={gender}
-                  ref={(c) => (newGender = c)}
-                  style={{
-                    marginLeft: ".5rem",
-                    marginTop: "1rem",
-                    width: "12.8rem",
-                  }}
-                >
-                  <option value="prefNoSay">Prefer not to say</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-              </Form.Row>
-              <Form.Row>
-                <Form.Group
-                  id="countryField"
-                  style={{ marginLeft: "1rem" }}
-                ></Form.Group>
-                <Form.Label
-                  class="col-sm-2.5 col-form-label"
-                  style={{ marginTop: "1rem", paddingRight: "2.6em" }}
-                >
-                  <b>Country</b>
-                </Form.Label>
-                <select
-                  class="form-control"
-                  id="sel2"
-                  defaultValue={country}
-                  ref={(c) => (newCountry = c)}
-                  style={{
-                    marginLeft: ".5rem",
-                    marginTop: "1rem",
-                    width: "12.8rem",
-                  }}
-                >
-                  <option value="United States">United States</option>
-                  <option value="Canada">Canada</option>
-                  <option value="A">A</option>
-                  <option value="Other">Other</option>
-                </select>
-              </Form.Row>
-              <Form.Row>
-                <Form.Group
-                  id="LanguageField"
-                  style={{ marginLeft: "1rem" }}
-                ></Form.Group>
-                <Form.Label
-                  class="col-sm-2.5 col-form-label"
-                  style={{ marginTop: "1rem", paddingRight: "1.8em" }}
-                >
-                  <b>Language</b>
-                </Form.Label>
-                <select
-                  class="form-control"
-                  id="sel2"
-                  defaultValue={lang}
-                  ref={(c) => (newLang = c)}
-                  style={{
-                    marginLeft: ".5rem",
-                    marginTop: "1rem",
-                    marginBottom: "1rem",
-                    width: "12.8rem",
-                  }}
-                >
-                  <option value="English">English</option>
-                  <option value="Spanish">Spanish</option>
-                  <option value="French">French</option>
-                  <option value="Other">Other</option>
-                </select>
-              </Form.Row>
-              <Modal.Footer>
-                <div class="form-group align-right">
-                  <Button
-                    id="updateInfoBut"
-                    variant="primary"
-                    type="submit"
-                    style={{ margin: "5px" }}
-                    onClick={updateAccountInfo}
+                  <select
+                    class="form-control"
+                    id="sel1"
+                    defaultValue={gender}
+                    ref={(c) => (newGender = c)}
+                    style={{
+                      marginLeft: ".5rem",
+                      marginTop: "1rem",
+                      width: "12.8rem",
+                    }}
                   >
-                    Update Info.
-                  </Button>
-                  <Button variant="secondary" onClick={infoHandleClose}>
-                    Close
-                  </Button>
-                </div>
-              </Modal.Footer>
-            </Form>
-          </div>
+                    <option value="prefNoSay">Prefer not to say</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </Form.Row>
+                <Form.Row>
+                  <Form.Group
+                    id="countryField"
+                    style={{ marginLeft: "1rem" }}
+                  ></Form.Group>
+                  <Form.Label
+                    class="col-sm-2.5 col-form-label"
+                    style={{ marginTop: "1rem", paddingRight: "2.6em" }}
+                  >
+                    <b>Country</b>
+                  </Form.Label>
+                  <select
+                    class="form-control"
+                    id="sel2"
+                    defaultValue={country}
+                    ref={(c) => (newCountry = c)}
+                    style={{
+                      marginLeft: ".5rem",
+                      marginTop: "1rem",
+                      width: "12.8rem",
+                    }}
+                  >
+                    <option value="United States">United States</option>
+                    <option value="Canada">Canada</option>
+                    <option value="A">A</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </Form.Row>
+                <Form.Row>
+                  <Form.Group
+                    id="LanguageField"
+                    style={{ marginLeft: "1rem" }}
+                  ></Form.Group>
+                  <Form.Label
+                    class="col-sm-2.5 col-form-label"
+                    style={{ marginTop: "1rem", paddingRight: "1.8em" }}
+                  >
+                    <b>Language</b>
+                  </Form.Label>
+                  <select
+                    class="form-control"
+                    id="sel2"
+                    defaultValue={lang}
+                    ref={(c) => (newLang = c)}
+                    style={{
+                      marginLeft: ".5rem",
+                      marginTop: "1rem",
+                      marginBottom: "1rem",
+                      width: "12.8rem",
+                    }}
+                  >
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="French">French</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </Form.Row>
+                <Modal.Footer>
+                  <div class="form-group align-right">
+                    <Button
+                      id="updateInfoBut"
+                      variant="primary"
+                      type="submit"
+                      style={{ margin: "5px" }}
+                      onClick={updateAccountInfo}
+                    >
+                      Update Info.
+                    </Button>
+                    {/* infoHandleClose toggleUpdateMsg */}
+                    <Button variant="secondary" onClick={infoHandleClose}>
+                      Close
+                    </Button>
+                  </div>
+                </Modal.Footer>
+              </Form>
+            </div>
+          )}
+          {didUpdateAcct && (
+            <div
+              id="AcctUpdtMsg"
+              show={didUpdateAcct}
+              style={{
+                backgroundColor: "#DADADA",
+                padding: "10px",
+              }}
+            >
+              <div style={{ color: "#DADADA" }}>
+                {setTimeout(() => {
+                  foo();
+                }, 7000)}
+              </div>
+              <h1 fontSize="5rem" style={{ textAlign: "center" }}>
+                Account Updated!
+              </h1>
+              <div style={{ textAlign: "center" }}>
+                Wait, or click anywhere to continue
+              </div>
+              <div style={{ color: "#DADADA" }}>
+                {setTimeout(() => {
+                  toggleUpdateMsg();
+                }, 6000)}
+              </div>
+            </div>
+          )}
         </Modal>
         {/* Update password Modal */}
         <Modal centered show={pwShow} onHide={pwHandleClose}>
