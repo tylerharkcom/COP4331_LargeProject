@@ -31,7 +31,7 @@ const Feed = () => {
       });
       var res = JSON.parse(await response.text());
       if (response.status !== 200) {
-        alert(res.error);
+        console.log(res.error);
       } else {
         setFeed({ posts: res.feed });
         console.log(feedData.posts);
@@ -172,7 +172,7 @@ const Feed = () => {
                     marginBottom: "auto",
                   }}
                 >
-                  {/* {p.date} */}
+                  {p.date}
                 </label>
               </Col>
             </Row>
