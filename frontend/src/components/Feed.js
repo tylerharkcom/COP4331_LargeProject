@@ -122,7 +122,7 @@ const Feed = () => {
 
   let printFeed = (
     <div>
-      {feedData.posts.map((p, index) => {
+      {feedData.posts.map((p) => {
         return (
           <Card
             style={{
@@ -160,8 +160,8 @@ const Feed = () => {
                     marginBottom: "auto",
                   }}
                 >
-                  <strong>{p[index].name} </strong>
-                  {p[index].eventType} {p[index].item}
+                  <strong>{p.name} </strong>
+                  {p.eventType} {p.item}
                 </label>
               </Col>
               <Col
@@ -179,7 +179,7 @@ const Feed = () => {
                     marginBottom: "auto",
                   }}
                 >
-                  {p[index].date}
+                  {p.date}
                 </label>
               </Col>
             </Row>
