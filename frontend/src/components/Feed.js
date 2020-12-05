@@ -2,7 +2,7 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Placeholder from "../images/orangeSliceCrop.jpg";
-import Placeholder2 from "../images/happyToast.png";
+// import Placeholder2 from "../images/happyToast.png";
 
 import Image from "react-bootstrap/Image";
 import React, { useState, useEffect } from "react";
@@ -67,7 +67,7 @@ const Feed = () => {
         <Row xs="3">
           <Col xs={1}>
             <Image
-              src={Placeholder2}
+              src={Placeholder}
               roundedCircle
               align="left"
               style={{
@@ -139,7 +139,7 @@ const Feed = () => {
             <Row xs="3">
               <Col xs={1}>
                 <Image
-                  src={Placeholder2}
+                  src={Placeholder}
                   roundedCircle
                   align="left"
                   style={{
