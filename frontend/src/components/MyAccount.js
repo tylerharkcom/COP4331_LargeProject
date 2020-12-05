@@ -49,8 +49,10 @@ function MyAccount() {
     setPwShow(true);
   };
   const infoHandleClose = (event) => {
-    if (didUpdateAcct == true) setInfoShow(false);
-    setDidUpdateAcct(false);
+    if (didUpdateAcct == true) {
+      setInfoShow(false);
+      setDidUpdateAcct(false);
+    } else setInfoShow(false);
   };
   const infoHandleShow = (event) => {
     event.preventDefault();
