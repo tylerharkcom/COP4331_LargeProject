@@ -36,11 +36,11 @@ const Feed = () => {
         console.log(res.error);
       } else {
         console.log(res);
-        console.log(res.feed);
-        console.log(res.feed.eventType);
-        console.log(res.feed.item);
+        console.log(res[0]);
+        console.log(res[1]);
+        console.log(res[0].eventType);
 
-        setFeed({ posts: res.feed });
+        setFeed({ posts: res[0] });
         console.log(feedData.posts);
       }
     } catch (e) {
