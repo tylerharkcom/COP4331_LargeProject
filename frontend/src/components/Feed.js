@@ -40,8 +40,8 @@ const Feed = () => {
         console.log(res[1]);
         console.log(res[0].eventType);
 
-        setFeed({ posts: res[0] });
-        console.log(feedData.posts);
+        setFeed({ posts: res });
+        console.log(feedData);
       }
     } catch (e) {
       console.log(e.toString());
@@ -122,7 +122,7 @@ const Feed = () => {
 
   let printFeed = (
     <div>
-      {feedData.posts.map((p) => {
+      {feedData.posts.map((p, index) => {
         return (
           <Card
             style={{
@@ -160,8 +160,8 @@ const Feed = () => {
                     marginBottom: "auto",
                   }}
                 >
-                  <strong>{p.name} </strong>
-                  {p.eventType} {p.item}
+                  <strong>{p[index].name} </strong>
+                  {p[index].eventType} {p[index].item}
                 </label>
               </Col>
               <Col
@@ -179,7 +179,7 @@ const Feed = () => {
                     marginBottom: "auto",
                   }}
                 >
-                  {p.date}
+                  {p[index].date}
                 </label>
               </Col>
             </Row>
