@@ -454,7 +454,7 @@ router.get(
     console.log(res1[0].title);
     await db.collection("Feed").insertOne({
       eventType: "found a recipe for",
-      item: res1.title,
+      item: res1[0].title,
       name: req.user.fName,
       date: new Date(),
     });
