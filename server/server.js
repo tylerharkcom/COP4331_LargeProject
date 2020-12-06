@@ -449,12 +449,19 @@ router.get(
       return;
     }
 
+    jwt.verify(req.cookies.token, env, async (err, data) => {
+      const db = client.db();
+      req.user = await db
+        .collection("Users")
+        .findOne({ _id: ObjectId(data.id) });
+    });
+
     const db = client.db();
     //const user = await db.collection("Users").findOne({ _id: req.user._id });
     await db.collection("Feed").insertOne({
       eventType: "found a recipe for",
       item: res1[0].title,
-      name: "Somebody",
+      name: req.user.userInfo.fName,
       date: new Date(),
     });
 
