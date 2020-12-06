@@ -403,6 +403,7 @@ router.post(
 router.get(
   `/getRecipes`,
   wrapAsync(async (req, res) => {
+    console.log(req.cookies.token);
     var resp1 = await fetch(
       "https://api.spoonacular.com/recipes/findByIngredients?apiKey=" +
         process.env.SPOON_API_KEY +
