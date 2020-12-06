@@ -451,11 +451,11 @@ router.get(
     const db = client.db();
 
     console.log(res1);
-    console.log(res1.title);
+    console.log(res1[0].title);
     await db.collection("Feed").insertOne({
       eventType: "found a recipe for",
       item: res1.title,
-      name: req.user.userInfo.fName,
+      name: req.user.fName,
       date: new Date(),
     });
 
