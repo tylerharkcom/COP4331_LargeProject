@@ -324,7 +324,11 @@ const FoodTable = () => {
   }
 
   const exitConfirmation = () => {
-    let whocares = 1;
+    let initializeChecks = [];
+      for (let i = 0; i < food.foods.length; i++) {
+        initializeChecks = [...initializeChecks, false];
+      }
+      setCheckmark([...initializeChecks]);
     return;
   }
 
