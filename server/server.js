@@ -453,7 +453,7 @@ router.get(
     await db.collection("Feed").insertOne({
       eventType: "found a recipe for a",
       item: res1[0].title,
-      name: user.fName,
+      name: user.userInfo.fName,
       date: new Date(),
     });
 
