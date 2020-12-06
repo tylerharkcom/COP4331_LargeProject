@@ -323,6 +323,11 @@ const FoodTable = () => {
     }
   }
 
+  const exitConfirmation = () => {
+    let whocares = 1;
+    return;
+  }
+
   const confirmDelete = (event) => {
     event.preventDefault();
     confirmAlert({
@@ -335,7 +340,7 @@ const FoodTable = () => {
         },
         {
           label: 'No',
-          onClick: () => return
+          onClick: () => exitConfirmation()
         }
       ],
       closeOnEscape: true,
