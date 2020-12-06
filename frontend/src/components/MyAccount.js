@@ -82,6 +82,9 @@ function MyAccount() {
     setDelFinalShow(true);
   };
   const genderNameChange = (event) => {
+    console.log(gender.localeCompare);
+    console.log(gender);
+    console.log(user.gender);
     if (gender.localeCompare("prefNoSay") == 1) setGender("Prefer not to say");
     else setGender(gender);
   };
@@ -331,6 +334,7 @@ function MyAccount() {
         setLoginName(user.loginName);
         setBday(user.birthday);
         setGender(user.gender);
+        genderNameChange();
         setCountry(user.country);
         setLang(user.language);
         localStorage.setItem("user_data", JSON.stringify(user));
