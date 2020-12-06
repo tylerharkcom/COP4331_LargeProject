@@ -282,12 +282,14 @@ const FoodTable = () => {
       for (let i = 0; i < food.foods.length; i++) {
         initializeChecks = [...initializeChecks, true];
       }
+      setSelectedCount(food.foods.length);
       setCheckmark([...initializeChecks]);
     } else {
       let initializeChecks = [];
       for (let i = 0; i < food.foods.length; i++) {
         initializeChecks = [...initializeChecks, false];
       }
+      setSelectedCount(0);
       setCheckmark([...initializeChecks]);
     }
   };
