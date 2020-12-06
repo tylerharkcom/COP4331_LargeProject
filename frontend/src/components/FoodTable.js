@@ -316,7 +316,9 @@ const FoodTable = () => {
 
       if (response.status !== 200) {
         alert('There was an issue deleting the food');
-      } 
+      } else {
+        await loadFridgeHandler();
+      }
     } catch (e) {
       alert(e.toString());
       return;
