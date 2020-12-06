@@ -38,18 +38,18 @@ const FoodTable = () => {
   const [showAddFood, setShowAddFood] = useState(false);
   const [showEditFood, setShowEditFood] = useState(false);
   const [editIndex, setEditIndex] = useState(0);
-  const [searchVal, setSearchVal] = useState('');
+  const [searchVal, setSearchVal] = useState("");
   const [food, setFood] = useState({
     foods: [
       {
         item: "",
         dateExp: "",
         foodUt: "",
-        foodAmt: -1
-      }
-    ]
+        foodAmt: -1,
+      },
+    ],
   });
-  
+
   const loadFridgeHandler = async () => {
     try {
       const response = await fetch("/api/loadFridge", {
@@ -67,17 +67,17 @@ const FoodTable = () => {
         if (res.fridge) {
           res.fridge.map((p) => {
             let exp = new Date(p.expDate);
-            if(exp<today){
-              expired = [...expired, p]
+            if (exp < today) {
+              expired = [...expired, p];
             }
           });
           let initializeChecks = [];
-              for (let i = 0; i<expired.length; i++) {
-                initializeChecks = [...initializeChecks, false];
-              }
+          for (let i = 0; i < expired.length; i++) {
+            initializeChecks = [...initializeChecks, false];
+          }
           setExpiredFilter(true);
-          setFood({foods: expired});
-          setCheckmark( [...initializeChecks] );
+          setFood({ foods: expired });
+          setCheckmark([...initializeChecks]);
         }
       } else if (searchFilter) {
         let obj = { item: searchVal };
@@ -96,11 +96,11 @@ const FoodTable = () => {
           } else {
             if (res) {
               let initializeChecks = [];
-              for (let i = 0; i<res.length; i++) {
+              for (let i = 0; i < res.length; i++) {
                 initializeChecks = [...initializeChecks, false];
               }
               setFood({ foods: res });
-              setCheckmark( [...initializeChecks] );
+              setCheckmark([...initializeChecks]);
             }
           }
         } catch (e) {
@@ -110,11 +110,11 @@ const FoodTable = () => {
       } else {
         if (res.fridge) {
           let initializeChecks = [];
-          for (let i = 0; i<res.fridge.length; i++) {
+          for (let i = 0; i < res.fridge.length; i++) {
             initializeChecks = [...initializeChecks, false];
           }
           setFood({ foods: res.fridge });
-          setCheckmark( [...initializeChecks] );
+          setCheckmark([...initializeChecks]);
         }
       }
     } catch (e) {
@@ -157,43 +157,43 @@ const FoodTable = () => {
       let response = await fetch("/api/deleteFood", {
         method: "POST",
         body: js,
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
       });
 
       let res = JSON.parse(await response.text());
 
       if (response.status !== 200) {
-        alert('There was an issue deleting the food');
-      } 
+        alert("There was an issue deleting the food");
+      }
     } catch (e) {
       alert(e.toString());
       return;
     }
   };
 
-  const fetchWithTimeout = async (resource, options) => 
-  {
+  const fetchWithTimeout = async (resource, options) => {
     const { timeout = 35000 } = options;
-    
+
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
-  
+
     const response = await fetch(resource, {
       ...options,
-      signal: controller.signal  
+      signal: controller.signal,
     });
     clearTimeout(id);
-  
+
     return response;
-  }
+  };
 
   const getRecipeHandler = async (event, name) => {
     event.preventDefault();
     setLoading(true);
     let resp = await fetchWithTimeout("/api/getRecipes?search=" + name, {
-      method: "GET",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      timeout: 30000
+      body: null,
+      timeout: 30000,
     });
 
     let res = JSON.parse(await resp.text());
@@ -211,10 +211,9 @@ const FoodTable = () => {
   const getSelectedRecipes = (event) => {
     event.preventDefault();
     let name = "";
-    checkmark.map((p,index) => 
-    {
-      if(p){
-        if(name === "") {
+    checkmark.map((p, index) => {
+      if (p) {
+        if (name === "") {
           name = food.foods[index].item;
         } else {
           name = name + "," + food.foods[index].item;
@@ -222,7 +221,7 @@ const FoodTable = () => {
       }
     });
     getRecipeHandler(event, name);
-  }
+  };
 
   const selectRowHandler = (event, foodIndex) => {
     let checks = [...checkmark];
@@ -240,22 +239,22 @@ const FoodTable = () => {
   const addFood = (event) => {
     event.preventDefault();
     setShowAddFood(true);
-  }
+  };
 
   const getExpired = (event) => {
     event.preventDefault();
     setExpiredFilter(true);
-  }
+  };
 
-  const searchValChange = event => {
+  const searchValChange = (event) => {
     event.preventDefault();
     setSearchVal(event.target.value);
-  }
+  };
 
   const searchFood = (event) => {
     event.preventDefault();
     setSearchFilter(true);
-  }
+  };
 
   const closeRecipeHandler = () => {
     setShow(false);
@@ -266,23 +265,23 @@ const FoodTable = () => {
     event.preventDefault();
     setExpiredFilter(false);
     setSearchFilter(false);
-  }
+  };
 
   const selectAll = (event) => {
-    if(event.target.checked) {
+    if (event.target.checked) {
       let initializeChecks = [];
-      for (let i = 0; i<food.foods.length; i++) {
+      for (let i = 0; i < food.foods.length; i++) {
         initializeChecks = [...initializeChecks, true];
       }
-      setCheckmark( [...initializeChecks] );
+      setCheckmark([...initializeChecks]);
     } else {
       let initializeChecks = [];
-      for (let i = 0; i<food.foods.length; i++) {
+      for (let i = 0; i < food.foods.length; i++) {
         initializeChecks = [...initializeChecks, false];
       }
-      setCheckmark( [...initializeChecks] );
+      setCheckmark([...initializeChecks]);
     }
-  }
+  };
 
   let printTable = (
     <div>
@@ -294,24 +293,18 @@ const FoodTable = () => {
             </button>
           </div>
           <div style={{ marginLeft: "5px" }}>
-            <button 
-              className="btn btn-secondary" 
-              onClick={getExpired}
-            >
+            <button className="btn btn-secondary" onClick={getExpired}>
               Show expired
             </button>
           </div>
           <div style={{ marginLeft: "5px" }}>
-            <button 
-              className="btn btn-secondary" 
-              onClick={showAllHandler}
-              >
+            <button className="btn btn-secondary" onClick={showAllHandler}>
               Show all
             </button>
           </div>
           <div style={{ marginLeft: "5px" }}>
-            <button 
-              className="btn btn-secondary" 
+            <button
+              className="btn btn-secondary"
               onClick={(event) => {
                 try {
                   getSelectedRecipes(event);
@@ -325,12 +318,12 @@ const FoodTable = () => {
             </button>
           </div>
           <FormControl
-            style={{ marginLeft: "5px" }} 
-            type="text" 
-            placeholder="Search" 
+            style={{ marginLeft: "5px" }}
+            type="text"
+            placeholder="Search"
             className=" mr-sm-2"
             onChange={searchValChange}
-             />
+          />
           <button
             className="btn btn-secondary"
             type="submit"
@@ -346,8 +339,8 @@ const FoodTable = () => {
             <th>
               <div>
                 <label for="selectAll">Select all</label>
-                <input 
-                  style={{ marginLeft: "10px" }} 
+                <input
+                  style={{ marginLeft: "10px" }}
                   id="selectAll"
                   type="checkbox"
                   onChange={selectAll}
@@ -361,8 +354,7 @@ const FoodTable = () => {
           </tr>
         </thead>
         <tbody>
-        {
-          food.foods.map((p, index) => {
+          {food.foods.map((p, index) => {
             return (
               <TableRow
                 id={index}
@@ -373,9 +365,9 @@ const FoodTable = () => {
                 foodAmount={p.foodAmt}
                 foodUnit={p.foodUt}
                 editFood={(event, index) => editFood(event, index)}
-                deleteFood={ async (event, foodName) => {
-                    await deleteFood(event,foodName);
-                    await loadFridgeHandler();
+                deleteFood={async (event, foodName) => {
+                  await deleteFood(event, foodName);
+                  await loadFridgeHandler();
                 }}
                 getRecipe={(event, name) => {
                   try {
@@ -387,8 +379,7 @@ const FoodTable = () => {
                 }}
               />
             );
-          })
-        }
+          })}
         </tbody>
       </Table>
     </div>
@@ -449,11 +440,11 @@ const FoodTable = () => {
       />
       <EditFoodModal
         show={showEditFood}
-        food={food.foods[editIndex] ? food.foods[editIndex].item : ''}
+        food={food.foods[editIndex] ? food.foods[editIndex].item : ""}
         foodAmount={food.foods[editIndex] ? food.foods[editIndex].foodAmt : -1}
-        foodUnit={food.foods[editIndex] ? food.foods[editIndex].foodUt : ''}
-        expDate={food.foods[editIndex] ? food.foods[editIndex].expDate : ''}
-        close={ () => {
+        foodUnit={food.foods[editIndex] ? food.foods[editIndex].foodUt : ""}
+        expDate={food.foods[editIndex] ? food.foods[editIndex].expDate : ""}
+        close={() => {
           setShowEditFood(false);
           loadFridgeHandler();
         }}

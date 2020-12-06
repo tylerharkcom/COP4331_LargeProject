@@ -400,7 +400,9 @@ router.post(
   })
 );
 
-router.get(
+router.use(authenticateToken(true));
+
+router.post(
   `/getRecipes`,
   wrapAsync(async (req, res) => {
     var resp1 = await fetch(
@@ -448,21 +450,6 @@ router.get(
       return;
     }
     const db = client.db();
-    jwt.verify(
-      req.cookies.token,
-      process.env.LOGIN_TOKEN_SECRET,
-      async (err, data) => {
-        if (err) {
-          console.log(err);
-        }
-        req.user = await db
-          .collection("Users")
-          .findOne({ _id: ObjectId(data.id) });
-      }
-    );
-    console.log(req.user);
-
-    //const user = await db.collection("Users").findOne({ _id: req.user._id });
     await db.collection("Feed").insertOne({
       eventType: "found a recipe for",
       item: res1[0].title,
@@ -473,8 +460,6 @@ router.get(
     res.status(200).json(response);
   })
 );
-
-router.use(authenticateToken(true));
 
 router.post(
   `/logout`,
