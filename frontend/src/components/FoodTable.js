@@ -316,8 +316,6 @@ const FoodTable = () => {
 
       if (response.status !== 200) {
         alert('There was an issue deleting the food');
-      } else {
-        await loadFridgeHandler();
       }
     } catch (e) {
       alert(e.toString());
@@ -342,7 +340,10 @@ const FoodTable = () => {
       buttons: [
         {
           label: 'Confirm',
-          onClick: () => deleteMultiple()
+          onClick: async () => {
+            await deleteMultiple();
+            await loadFridgeHandler();
+          }
         },
         {
           label: 'No',
