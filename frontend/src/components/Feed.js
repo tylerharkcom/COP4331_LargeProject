@@ -1,13 +1,16 @@
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Placeholder from "../images/orangeSliceCrop.jpg";
-// import Placeholder2 from "../images/happyToast.png";
+import Placeholder1 from "../images/orangeSliceCrop.jpg";
+import Placeholder2 from "../images/happyToast.png";
+import Placeholder3 from "../images/happyToast.png";
 
 import Image from "react-bootstrap/Image";
 import React, { useState, useEffect } from "react";
 
 const Feed = () => {
+  const picturePlaceholder = [];
+  // const [picturePlaceholder, setPic] = useState(0);
   const [feedData, setFeed] = useState({
     posts: [
       {
@@ -22,6 +25,20 @@ const Feed = () => {
   useEffect(() => {
     loadFeedData();
   }, []);
+
+  const getPicture = (event) => {
+    if (picturePlaceholder.length == 0) {
+      picturePlaceholder.push(1);
+      return Placeholder1;
+    } else if (picturePlaceholder.length == 1) {
+      picturePlaceholder.push(2);
+      return Placeholder2;
+    } else {
+      picturePlaceholder.pop();
+      picturePlaceholder.pop();
+      return Placeholder3;
+    }
+  };
 
   const loadFeedData = async () => {
     try {
@@ -67,7 +84,7 @@ const Feed = () => {
         <Row xs="3">
           <Col xs={1}>
             <Image
-              src={Placeholder}
+              src={Placeholder1}
               roundedCircle
               align="left"
               style={{
@@ -139,7 +156,7 @@ const Feed = () => {
             <Row xs="3">
               <Col xs={1}>
                 <Image
-                  src={Placeholder}
+                  src={getPicture}
                   roundedCircle
                   align="left"
                   style={{
