@@ -9,6 +9,8 @@ import CardDeck from "react-bootstrap/CardDeck";
 import MyLoader from "./MyLoadingSymbol";
 import AddFood from "./AddFood";
 import EditFoodModal from "./EditFoodModal";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const FoodTable = () => {
   const [results, setResults] = useState({
@@ -35,6 +37,7 @@ const FoodTable = () => {
   const [expiredFilter, setExpiredFilter] = useState(false);
   const [searchFilter, setSearchFilter] = useState(false);
   const [checkmark, setCheckmark] = useState([]);
+  const [selectedCount, setSelectedCount] = useState(0);
   const [showAddFood, setShowAddFood] = useState(false);
   const [showEditFood, setShowEditFood] = useState(false);
   const [editIndex, setEditIndex] = useState(0);
@@ -226,8 +229,14 @@ const FoodTable = () => {
   const selectRowHandler = (event, foodIndex) => {
     let checks = [...checkmark];
     checks[foodIndex] = event.target.checked;
+    let count = 0;
+    checks.map((p) => {
+      if(p){
+        count = count + 1;
+      }
+    })
+    setSelectedCount(count);
     setCheckmark([...checks]);
-    console.log(checkmark);
   };
 
   const editFood = (event, index) => {
@@ -283,6 +292,55 @@ const FoodTable = () => {
     }
   };
 
+  const deleteMultiple = async () => {
+    let items = [];
+    checkmark.map((p,index) => {
+      if(p){
+        items.push(food.foods[index].item);
+      }
+    })
+
+    let obj = { foodarray: items };
+    let js = JSON.stringify(obj);
+
+    try {
+      let response = await fetch("/api/deleteManyFoods", {
+        method: "POST",
+        body: js,
+        headers: { "Content-Type": "application/json" }
+      });
+
+      let res = JSON.parse(await response.text());
+
+      if (response.status !== 200) {
+        alert('There was an issue deleting the food');
+      } 
+    } catch (e) {
+      alert(e.toString());
+      return;
+    }
+  }
+
+  const confirmDelete = (event) => {
+    event.preventDefault();
+    confirmAlert({
+      title: 'Delete selected',
+      message: 'Delete ' + selectedCount + ' items from your fridge?',
+      buttons: [
+        {
+          label: 'Confirm',
+          onClick: () => deleteMultiple()
+        },
+        {
+          label: 'No',
+          onClick: () => alert('Click No')
+        }
+      ],
+      closeOnEscape: true,
+      closeOnClickOutside: true
+    });
+  }
+
   let printTable = (
     <div>
       <div id="fridgeCRUD">
@@ -315,6 +373,14 @@ const FoodTable = () => {
               }}
             >
               Selected recipes
+            </button>
+          </div>
+          <div style={{ marginLeft: "5px" }}>
+            <button 
+              className="btn btn-secondary" 
+              onClick={confirmDelete}
+            >
+              Delete
             </button>
           </div>
           <FormControl
