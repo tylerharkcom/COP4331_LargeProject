@@ -299,8 +299,10 @@ const FoodTable = () => {
         items.push(food.foods[index].item);
       }
     })
+    console.log(items);
 
     let obj = { foodarray: items };
+    console.log(obj);
     let js = JSON.stringify(obj);
 
     try {
@@ -333,7 +335,7 @@ const FoodTable = () => {
         },
         {
           label: 'No',
-          onClick: () => alert('Click No')
+          onClick: () => return
         }
       ],
       closeOnEscape: true,
