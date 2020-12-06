@@ -137,6 +137,18 @@ const Feed = () => {
     );
   };
 
+  const FormattedDate = (props) => {
+    let newDate = new Date(props.date);
+    let day = newDate.getDate();
+    let month = newDate.getMonth();
+    let year = newDate.getFullYear();
+    day += "/";
+    day += month;
+    day += "/";
+    day += year;
+    return day;
+  };
+
   let printFeed = (
     <div>
       {feedData.posts.map((p) => {
@@ -196,8 +208,8 @@ const Feed = () => {
                     marginBottom: "auto",
                   }}
                 >
-                  {/* {<FormattedDate date={p.date} />} */}
-                  {p.date}
+                  {<FormattedDate date={p.date} />}
+                  {/* {p.date} */}
                 </label>
               </Col>
             </Row>
@@ -214,18 +226,6 @@ const Feed = () => {
       })}
     </div>
   );
-
-  const FormattedDate = (props) => {
-    let actionDate = new Date(props.date);
-    let formattedDate = new Date(
-      actionDate.getTime() + actionDate.getTimezoneOffset() * 60000
-    );
-    formattedDate.setHours(23, 59, 59, 999);
-    let current = new Date();
-    return Math.round(
-      (current.getTime() - formattedDate.getTime()) / (1000 * 60 * 60 * 24)
-    );
-  };
 
   const GenerateFeed = async () => {
     for (let i = 0; i < feedData.posts.length; i++) {
