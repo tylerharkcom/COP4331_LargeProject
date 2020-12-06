@@ -312,8 +312,6 @@ const FoodTable = () => {
         headers: { "Content-Type": "application/json" }
       });
 
-      let res = JSON.parse(await response.text());
-
       if (response.status !== 200) {
         alert('There was an issue deleting the food');
       }
