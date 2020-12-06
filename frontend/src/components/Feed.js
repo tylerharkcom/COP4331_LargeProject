@@ -140,12 +140,14 @@ const Feed = () => {
   const FormattedDate = (props) => {
     let newDate = new Date(props.date);
     let day = newDate.getDate();
-    let month = newDate.getMonth();
+    let month = newDate.getMonth() + 1;
     let year = newDate.getFullYear();
+    let rVal = "";
+    rVal += month;
     day += "/";
-    day += month;
-    day += "/";
-    day += year;
+    rVal += day;
+    rVal += "/";
+    rVal += year;
     return day;
   };
 
