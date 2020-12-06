@@ -449,7 +449,7 @@ router.get(
     }
 
     const db = client.db();
-    const user = await db.collection("Users").findOne({ _id: req.user._id });
+    //const user = await db.collection("Users").findOne({ _id: req.user._id });
     await db.collection("Feed").insertOne({
       eventType: "found a recipe for a",
       item: res1[0].title,
