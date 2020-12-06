@@ -403,7 +403,6 @@ router.post(
 router.get(
   `/getRecipes`,
   wrapAsync(async (req, res) => {
-    console.log(req.cookies.token);
     var resp1 = await fetch(
       "https://api.spoonacular.com/recipes/findByIngredients?apiKey=" +
         process.env.SPOON_API_KEY +
@@ -449,12 +448,16 @@ router.get(
       return;
     }
 
-    jwt.verify(req.cookies.token, env, async (err, data) => {
-      const db = client.db();
-      req.user = await db
-        .collection("Users")
-        .findOne({ _id: ObjectId(data.id) });
-    });
+    jwt.verify(
+      req.cookies.token,
+      process.env.LOGIN_TOKEN_SECRET,
+      async (err, data) => {
+        const db = client.db();
+        req.user = await db
+          .collection("Users")
+          .findOne({ _id: ObjectId(data.id) });
+      }
+    );
 
     const db = client.db();
     //const user = await db.collection("Users").findOne({ _id: req.user._id });
