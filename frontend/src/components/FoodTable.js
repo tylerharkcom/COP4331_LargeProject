@@ -202,7 +202,6 @@ const FoodTable = () => {
     let res = JSON.parse(await resp.text());
     if (resp.status != 200) {
       setLoading(false);
-      alert("Ope, something went wrong!");
     } else {
       setResults({ results: [res.results[0], res.results[1]] });
       setSearch(name);
