@@ -179,7 +179,8 @@ const Feed = () => {
                     marginBottom: "auto",
                   }}
                 >
-                  {<FormattedDate date={p.date} />}
+                  {/* {<FormattedDate date={p.date} />} */}
+                  {p.date}
                 </label>
               </Col>
             </Row>
