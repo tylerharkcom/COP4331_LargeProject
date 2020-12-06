@@ -26,19 +26,19 @@ const Feed = () => {
     loadFeedData();
   }, []);
 
-  const getPicture = (event) => {
-    if (picturePlaceholder.length == 0) {
-      picturePlaceholder.push(1);
-      return Placeholder1;
-    } else if (picturePlaceholder.length == 1) {
-      picturePlaceholder.push(2);
-      return Placeholder2;
-    } else {
-      picturePlaceholder.pop();
-      picturePlaceholder.pop();
-      return Placeholder3;
-    }
-  };
+  // const getPicture = (event) => {
+  //   if (picturePlaceholder.length == 0) {
+  //     picturePlaceholder.push(1);
+  //     return Placeholder1;
+  //   } else if (picturePlaceholder.length == 1) {
+  //     picturePlaceholder.push(2);
+  //     return Placeholder2;
+  //   } else {
+  //     picturePlaceholder.pop();
+  //     picturePlaceholder.pop();
+  //     return Placeholder3;
+  //   }
+  // };
 
   const loadFeedData = async () => {
     try {
@@ -95,7 +95,7 @@ const Feed = () => {
               alt="ffff"
             />
           </Col>
-          <Col xs={6} style={{ marginTop: "auto", marginBottom: "auto" }}>
+          {/* <Col xs={6} style={{ marginTop: "auto", marginBottom: "auto" }}>
             <label
               style={{
                 fontSize: "2em",
@@ -126,7 +126,7 @@ const Feed = () => {
             >
               {dateN}
             </label>
-          </Col>
+          </Col> */}
         </Row>
         {/* <Card.Footer style={{ backgroundColor: "#464646", borderTopWidth: 0 }}>
         <label style={{ fontSize: "1rem", color: "#DADADA", float: "right" }}>
@@ -156,7 +156,7 @@ const Feed = () => {
             <Row xs="3">
               <Col xs={1}>
                 <Image
-                  src={getPicture}
+                  src={Placeholder1}
                   roundedCircle
                   align="left"
                   style={{
@@ -239,7 +239,7 @@ const Feed = () => {
   };
 
   return <div>{printFeed}</div>;
-  // { printFeed };
+  // return <FeedTemplate />;
   // };
 };
 export default Feed;
