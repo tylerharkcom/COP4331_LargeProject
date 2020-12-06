@@ -214,6 +214,9 @@ const FoodTable = () => {
   const getSelectedRecipes = (event) => {
     event.preventDefault();
     let name = "";
+    if (selectedCount == 0){
+      return;
+    }
     checkmark.map((p, index) => {
       if (p) {
         if (name === "") {
