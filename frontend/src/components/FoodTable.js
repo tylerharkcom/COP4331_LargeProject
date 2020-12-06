@@ -301,7 +301,7 @@ const FoodTable = () => {
     })
     console.log(items);
 
-    let obj = { foodarray: items };
+    let obj = { foodArray: items };
     console.log(obj);
     let js = JSON.stringify(obj);
 
