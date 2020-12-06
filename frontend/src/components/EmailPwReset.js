@@ -11,7 +11,7 @@ import EmailPic from "../images/kiwis.jpg";
 // TODO Make a temp password
 // Set font family
 
-const EmailTemplate = () => (
+const EmailTemplate = ({ emailLink }) => (
   <Email title="Password reset">
     <Item align="center">
       <h1 className="title" style={{ fontSize: "5rem", color: "#049A9E" }}>
@@ -44,19 +44,7 @@ const EmailTemplate = () => (
               marginRight: "2.5rem",
             }}
           >
-            Please log in using your new temporary password :
-          </body>
-          <mark style={{ fontSize: "1.25rem", backgroundColor: "#049A9E" }}>
-            MeTheTempPass!
-          </mark>
-          <body
-            style={{
-              fontSize: "1.25rem",
-              marginLeft: "2.5rem",
-              marginRight: "2.5rem",
-            }}
-          >
-            And update your password on the account page.
+            Please change your password by clicking this link.
           </body>
         </Item>
 
@@ -66,18 +54,19 @@ const EmailTemplate = () => (
           style={{
             backgroundColor: "#049A9E",
             outlineColor: "#049A9E",
-            marginLeft: "15rem",
-            marginTop: "1rem",
+            marginTop: "6rem",
             marginBottom: "1rem",
-            maxWidth: "10rem",
+            marginLeft: "auto",
+            marginRight: "auto",
+            maxWidth: "20rem",
           }}
         >
           <A
             color="#0B2B53"
             style={{ padding: "10", textDecorationLine: "none" }}
-            href="group1largeproject.herokuapp.com/"
+            href={emailLink}
           >
-            Take me to log in!
+            Reset Password!
           </A>
         </Button>
       </Card>
