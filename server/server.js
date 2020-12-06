@@ -458,7 +458,7 @@ router.get(
           .findOne({ _id: ObjectId(data.id) });
       }
     );
-
+    console.log(req.user);
     const db = client.db();
     //const user = await db.collection("Users").findOne({ _id: req.user._id });
     await db.collection("Feed").insertOne({
