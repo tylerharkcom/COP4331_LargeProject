@@ -447,19 +447,21 @@ router.get(
       res.status(400).json();
       return;
     }
-
+    const db = client.db();
     jwt.verify(
       req.cookies.token,
       process.env.LOGIN_TOKEN_SECRET,
       async (err, data) => {
-        const db = client.db();
+        if (err) {
+          console.log(err);
+        }
         req.user = await db
           .collection("Users")
           .findOne({ _id: ObjectId(data.id) });
       }
     );
     console.log(req.user);
-    const db = client.db();
+
     //const user = await db.collection("Users").findOne({ _id: req.user._id });
     await db.collection("Feed").insertOne({
       eventType: "found a recipe for",
