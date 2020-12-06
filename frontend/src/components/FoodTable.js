@@ -190,8 +190,9 @@ const FoodTable = () => {
     event.preventDefault();
     setLoading(true);
     let resp = await fetchWithTimeout("/api/getRecipes?search=" + name, {
-      method: "GET",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
+      body: null,
       timeout: 30000,
     });
 
