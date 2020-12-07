@@ -30,15 +30,17 @@ function MyAccount() {
   var currPassword;
 
   const pwRequirements = " ";
-
+  // Modal show/hide
   const [pwShow, setPwShow] = useState(false);
   const [infoShow, setInfoShow] = useState(false);
-  const [didUpdateAcct, setDidUpdateAcct] = useState(false);
   const [delMShow, setDelShow] = useState(false);
   const [delFinal, setDelFinalShow] = useState(false);
   // PW msg
   const [messageCurr, setMessageCurr] = useState("");
   const [messageNewPW, setMessageNewPW] = useState("");
+  // Post MSGs
+  const [didUpdateAcct, setDidUpdateAcct] = useState(false);
+  const [didUpdatePass, setDidUpdatePass] = useState(false);
 
   const pwHandleClose = (event) => {
     event.preventDefault();
@@ -58,18 +60,25 @@ function MyAccount() {
     event.preventDefault();
     setInfoShow(true);
   };
-  const toggleUpdateMsg = (event) => {
+  const toggleUpdatePassMsg = (event) => {
+    if (didUpdatePass == true) {
+      setPwShow(false);
+      setDidUpdatePass(false);
+    } else setDidUpdateAcct(true);
+  };
+  const toggleUpdateAcctMsg = (event) => {
     // event.preventDefault();
-    {
-      setTimeout(() => {
-        foo();
-      }, 1000);
-    }
+    // {
+    //   setTimeout(() => {
+    //     foo();
+    //   }, 1000);
+    // }
     if (didUpdateAcct == true) {
       setInfoShow(false);
       setDidUpdateAcct(false);
     } else setDidUpdateAcct(true);
   };
+
   const delHandleClose = (event) => {
     setDelShow(false);
   };
@@ -82,6 +91,9 @@ function MyAccount() {
     setDelFinalShow(true);
   };
   const genderNameChange = (event) => {
+    console.log(gender.localeCompare);
+    console.log(gender);
+    console.log(user.gender);
     if (gender.localeCompare("prefNoSay") == 1) setGender("Prefer not to say");
     else setGender(gender);
   };
@@ -240,7 +252,7 @@ function MyAccount() {
       } else {
         // ADD REPLACEMENT FOR ALERT
         alert("Password change successful!");
-        pwHandleClose();
+        toggleUpdatePassMsg();
       }
     } catch (e) {
       console.log(e.toString());
@@ -285,17 +297,17 @@ function MyAccount() {
     };
     // Testing Vals
     //
-    console.log(newFName.value.concat(" ", newLName.value));
-    console.log("Value check");
-    console.log(newFName.value);
-    console.log(newLName.value);
-    console.log(newEmail.value);
-    console.log(newUsername.value);
-    console.log(newBDay.value);
-    console.log(newGender.value);
-    console.log(newCountry.value);
-    console.log(newLang.value);
-    console.log(updatedUser);
+    // console.log(newFName.value.concat(" ", newLName.value));
+    // console.log("Value check");
+    // console.log(newFName.value);
+    // console.log(newLName.value);
+    // console.log(newEmail.value);
+    // console.log(newUsername.value);
+    // console.log(newBDay.value);
+    // console.log(newGender.value);
+    // console.log(newCountry.value);
+    // console.log(newLang.value);
+    // console.log(updatedUser);
 
     console.log("End of Value check");
 
@@ -331,10 +343,11 @@ function MyAccount() {
         setLoginName(user.loginName);
         setBday(user.birthday);
         setGender(user.gender);
+        genderNameChange();
         setCountry(user.country);
         setLang(user.language);
         localStorage.setItem("user_data", JSON.stringify(user));
-        toggleUpdateMsg();
+        toggleUpdateAcctMsg();
         // infoHandleClose();
       }
     } catch (e) {
@@ -713,7 +726,7 @@ function MyAccount() {
                     >
                       Update Info.
                     </Button>
-                    {/* infoHandleClose toggleUpdateMsg */}
+                    {/* infoHandleClose toggleUpdateAcctMsg */}
                     <Button variant="secondary" onClick={infoHandleClose}>
                       Close
                     </Button>
@@ -744,70 +757,103 @@ function MyAccount() {
               </div>
               <div style={{ color: "#DADADA" }}>
                 {setTimeout(() => {
-                  toggleUpdateMsg();
-                }, 6000)}
+                  toggleUpdateAcctMsg();
+                }, 7000)}
               </div>
             </div>
           )}
         </Modal>
         {/* Update password Modal */}
         <Modal centered show={pwShow} onHide={pwHandleClose}>
-          <div style={{ backgroundColor: "#DADADA", padding: "10px" }}>
-            <Modal.Header>
-              <h1 style={{ marginLeft: "5rem", marginRight: "3rem" }}>
-                Update password
-              </h1>
-            </Modal.Header>
-            <Form>
-              <Form.Group controlId="currentPassword">
-                <Form.Label>Current password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Please enter your current password"
-                  ref={(c) => (currPassword = c)}
-                />
-                <Form.Text className="text-muted"></Form.Text>
-                <span id="currPasswordMSG">{messageCurr}</span>
-              </Form.Group>
-              <Form.Label htmlFor="newPassword1">New password</Form.Label>
-              <OverlayTrigger placement="bottom" overlay={renderPwReqTooltip}>
-                <Form.Control
-                  type="password"
-                  id="newPassword1"
-                  placeholder="Please enter your new password"
-                  aria-describedby={pwRequirements}
-                  ref={(c) => (newPassword1 = c)}
-                />
-              </OverlayTrigger>
-              <Form.Group controlId="newPassword2">
-                <Form.Label style={{ marginTop: "1rem" }}>
-                  Confirm new password
-                </Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Please enter your new password again"
-                  ref={(c) => (newPassword2 = c)}
-                />
-                <span id="newPasswordMSG">{messageNewPW}</span>
-              </Form.Group>
-              <Modal.Footer>
-                <div className="form-group align-right">
-                  <Button
-                    id="updatePWBut"
-                    variant="primary"
-                    type="submit"
-                    style={{ margin: "5px" }}
-                    onClick={updatePasswordCheck}
-                  >
-                    Update Password
-                  </Button>
-                  <Button variant="secondary" onClick={pwHandleClose}>
-                    Close
-                  </Button>
+          {didUpdatePass && (
+            <div style={{ backgroundColor: "#DADADA", padding: "10px" }}>
+              <Modal.Header>
+                <h1
+                  style={{
+                    textAlign: "center",
+                    marginLeft: "5rem",
+                    marginRight: "3rem",
+                  }}
+                >
+                  Update password
+                </h1>
+              </Modal.Header>
+              <Form>
+                <Form.Group controlId="currentPassword">
+                  <Form.Label>Current password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Please enter your current password"
+                    ref={(c) => (currPassword = c)}
+                  />
+                  <Form.Text className="text-muted"></Form.Text>
+                  <span id="currPasswordMSG">{messageCurr}</span>
+                </Form.Group>
+                <Form.Label htmlFor="newPassword1">New password</Form.Label>
+                <OverlayTrigger placement="bottom" overlay={renderPwReqTooltip}>
+                  <Form.Control
+                    type="password"
+                    id="newPassword1"
+                    placeholder="Please enter your new password"
+                    aria-describedby={pwRequirements}
+                    ref={(c) => (newPassword1 = c)}
+                  />
+                </OverlayTrigger>
+                <Form.Group controlId="newPassword2">
+                  <Form.Label style={{ marginTop: "1rem" }}>
+                    Confirm new password
+                  </Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Please enter your new password again"
+                    ref={(c) => (newPassword2 = c)}
+                  />
+                  <span id="newPasswordMSG">{messageNewPW}</span>
+                </Form.Group>
+                <Modal.Footer>
+                  <div className="form-group align-right">
+                    <Button
+                      id="updatePWBut"
+                      variant="primary"
+                      type="submit"
+                      style={{ margin: "5px" }}
+                      onClick={updatePasswordCheck}
+                    >
+                      Update Password
+                    </Button>
+                    <Button variant="secondary" onClick={pwHandleClose}>
+                      Close
+                    </Button>
+                  </div>
+                </Modal.Footer>
+              </Form>
+              <div
+                id="PassUpdtMsg"
+                show={didUpdatePass}
+                style={{
+                  backgroundColor: "#DADADA",
+                  padding: "10px",
+                }}
+              >
+                <div style={{ color: "#DADADA" }}>
+                  {setTimeout(() => {
+                    foo();
+                  }, 7000)}
                 </div>
-              </Modal.Footer>
-            </Form>
-          </div>
+                <h1 fontSize="5rem" style={{ textAlign: "center" }}>
+                  Password Updated!
+                </h1>
+                <div style={{ textAlign: "center" }}>
+                  Wait, or click anywhere to continue
+                </div>
+                <div style={{ color: "#DADADA" }}>
+                  {setTimeout(() => {
+                    toggleUpdatePassMsg();
+                  }, 7000)}
+                </div>
+              </div>
+            </div>
+          )}
         </Modal>
         {/* Delete Account Modal */}
         <Modal
@@ -836,7 +882,7 @@ function MyAccount() {
               }}
               alt="ffff"
             />
-            <h6 style={{ margin: "5px" }}>
+            <h6 style={{ margin: "5px", fontSize: "" }}>
               How did it come to this. Was there just too many cooks in the
               kitchen? Well if you're sure about deleting your account go ahead,
               we can't stop you. We're not cops, we're FoodBuddy.{" "}
