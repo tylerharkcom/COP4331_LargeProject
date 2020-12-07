@@ -5,7 +5,6 @@ import UserNavBar from '../components/UserNavBar';
 import FoodTable from '../components/FoodTable';
 import Feed from '../components/Feed';
 import Row from 'react-bootstrap/Row';
-import Scrollbar from 'react-smooth-scrollbar';
 
 const DashboardPage = () =>
 {
