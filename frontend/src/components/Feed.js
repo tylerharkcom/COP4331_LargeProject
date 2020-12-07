@@ -27,6 +27,7 @@ const Feed = () => {
   }, []);
 
   // const getPicture = (event) => {
+  //   console.log(picturePlaceholder.length);
   //   if (picturePlaceholder.length == 0) {
   //     picturePlaceholder.push(1);
   //     return Placeholder1;
@@ -62,16 +63,33 @@ const Feed = () => {
   };
 
   const FormattedDate = (props) => {
-    let newDate = new Date(props.date);
-    let day = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
+    let actionDate = new Date(props.date);
+    let currDate = new Date();
+    let newDate = new Date(actionDate.getTime() - currDate.getTime());
+    let day = newDate.getDate() - currDate.getDate();
+    let month = newDate.getMonth() - currDate.getMonth();
     let rVal = "";
-    rVal += month;
-    rVal += "/";
-    rVal += day;
-    rVal += "/";
-    rVal += year;
+
+    if (month > 0) {
+      rVal += month;
+      rVal += " month";
+      if (month > 1) {
+        rVal += "s";
+      }
+
+      if (day > 0) {
+        rVal += ", ";
+      }
+    }
+    if (day > 0) {
+      rVal += day;
+      rVal += " day";
+      if (day > 1) {
+        rVal += "s";
+      }
+      rVal += " ago";
+    }
+    rVal += " ago";
     return rVal;
   };
 
@@ -94,7 +112,7 @@ const Feed = () => {
             <Row xs="3">
               <Col xs={1}>
                 <Image
-                  src={Placeholder1}
+                  src={Placeholder2}
                   roundedCircle
                   align="left"
                   style={{
