@@ -69,6 +69,10 @@ code {
   text-decoration: underline;
 }
 
+.foodColumn {
+  overflow-y: scroll;
+}
+
 #loginButton, #resetPassButton, #changePassButton{
   display: flex;
   justify-content: center;

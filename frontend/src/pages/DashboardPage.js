@@ -16,9 +16,7 @@ const DashboardPage = () =>
         <Container fluid>
           <Row>
             <Col xs={7}>
-              <Scrollbar>
-                <FoodTable />
-              </Scrollbar>
+              <FoodTable className="foodColumn"/>
             </Col>
             <Col>
               <div id="feedDiv">
