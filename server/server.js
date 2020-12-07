@@ -743,7 +743,7 @@ router.post(
         .collection("Feed")
         .find()
         .sort({ date: -1 })
-        .limit(20)
+        .limit(10)
         .toArray();
     } catch (e) {
       console.log(e);
