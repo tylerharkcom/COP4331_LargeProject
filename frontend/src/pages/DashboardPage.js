@@ -15,9 +15,7 @@ const DashboardPage = () =>
         <Container fluid>
           <Row>
             <Col xs={7}>
-              <Container style={{height: "100vh"}}>
                 <FoodTable className="foodColumn"/>
-              </Container>
             </Col>
             <Col>
               <div id="feedDiv">
