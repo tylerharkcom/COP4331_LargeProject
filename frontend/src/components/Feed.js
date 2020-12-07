@@ -1,6 +1,7 @@
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Icon from "react-crud-icons";
 import Placeholder1 from "../images/orangeSliceCrop.jpg";
 import Placeholder2 from "../images/happyToast.png";
 import Placeholder3 from "../images/happyToast.png";
@@ -61,7 +62,18 @@ const Feed = () => {
       return;
     }
   };
-
+  const GetPicture = (props) => {
+    let event = props.eventType;
+    if (props.eventType === "threw out") {
+      return <Icon name="remove" size="medium" theme="dark" />;
+    }
+    if (props.eventType === "bought") {
+      return <Icon name="add" size="medium" theme="dark" />;
+    }
+    if (props.eventType === "found a recipe for") {
+      return <Icon name="browse" size="medium" theme="dark" />;
+    }
+  };
   const FormattedDate = (props) => {
     let propsDate = new Date(props.date);
     let expDate = new Date(
@@ -77,13 +89,13 @@ const Feed = () => {
     if (timeDiff == 0) {
       timeDiffString = "today";
     } else if (timeDiff == 1) {
-      timeDiffString = timeDiff + " day";
+      timeDiffString = timeDiff + " day ago";
     } else if (timeDiff > 1) {
-      timeDiffString = timeDiff + " days";
+      timeDiffString = timeDiff + " days ago";
     } else {
-      timeDiffString = "expired";
+      timeDiffString = "A time long ago";
     }
-    return (timeDiffString += " ago");
+    return timeDiffString;
     // return timeDiffString;
     //   // let actionDate = new Date(props.date);
     //   let actionDate = new Date("12/5/2020");
@@ -153,8 +165,9 @@ const Feed = () => {
           >
             <Row xs="3">
               <Col xs={1}>
-                <Image
-                  src={Placeholder2}
+                {<GetPicture eventType={"found a recipe for"} />}
+                {/* <Image
+                  src={getPicture(p.eventType)}
                   roundedCircle
                   align="left"
                   style={{
@@ -163,7 +176,7 @@ const Feed = () => {
                     margin: "1em",
                   }}
                   alt="ffff"
-                />
+                /> */}
               </Col>
               <Col xs={6} style={{ marginTop: "auto", marginBottom: "auto" }}>
                 <label
@@ -173,8 +186,10 @@ const Feed = () => {
                     marginLeft: "1em",
                     marginTop: "auto",
                     marginBottom: "auto",
+                    minWidth: "10rem",
                   }}
                 >
+                  Stacey found a recipe for Cheesy Potato Casserole
                   <strong>{p.name} </strong>
                   {p.eventType} {p.item}
                 </label>
