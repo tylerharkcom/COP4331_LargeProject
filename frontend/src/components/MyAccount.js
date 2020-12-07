@@ -90,13 +90,6 @@ function MyAccount() {
     event.preventDefault();
     setDelFinalShow(true);
   };
-  const genderNameChange = (event) => {
-    console.log(gender.localeCompare);
-    console.log(gender);
-    console.log(user.gender);
-    if (gender.localeCompare("prefNoSay") == 1) setGender("Prefer not to say");
-    else setGender(gender);
-  };
 
   var user = JSON.parse(localStorage.getItem("user_data"));
   const [fName, setfName] = useState("");
@@ -129,6 +122,14 @@ function MyAccount() {
     //  setLang("user.language");
   }, []);
   // Empty dependecy array means useEffect will only run once
+
+  const genderNameChange = (event) => {
+    console.log(gender.localeCompare);
+    console.log(gender);
+    console.log(user.gender);
+    if (gender.localeCompare("prefNoSay") == 1) setGender("Prefer not to say");
+    else setGender(gender);
+  };
 
   const renderPwReqTooltip = (props) => (
     <Tooltip id="passwordReqTooltip" style={{ minWidth: "200" }} {...props}>
