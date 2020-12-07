@@ -14,7 +14,7 @@ const DashboardPage = () =>
         <UserNavBar />
         <Container fluid>
           <Row>
-            <Col xs={8}>
+            <Col xs={7}>
               <FoodTable />
             </Col>
             <Col>
