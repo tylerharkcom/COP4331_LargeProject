@@ -26,6 +26,11 @@ code {
   text-align: center;
 }
 
+.feedTitle {
+  color: #0B2B53;
+  text-align: center;
+}
+
 .lightText {
   color: #DADADA;
 }
@@ -82,10 +87,18 @@ code {
   padding: 10px;
   border: 1px solid #DADADA;
 }
+
+#feedWrapper {
+  background-color: #049A9E;
+  padding: 10px;
+  border: 1px solid #DADADA;
+}
+
 #accountWrapper {
   background-color: #464646;
   padding: 10px;
 }
+
 #accountModalWrapper, #addFoodWrapper, #editFoodWrapper {
   background-color: #DADADA;
 }
@@ -117,7 +130,7 @@ code {
   background-color: #DADADA;
 }
 
-#fridgeTable {
+#fridgeTable, #feedDiv {
   padding-top: 25px;
 }
 
