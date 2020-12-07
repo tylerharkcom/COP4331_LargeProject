@@ -371,12 +371,12 @@ const FoodTable = () => {
               Show expired
             </button>
           </div>
-          <div style={{ marginLeft: "5px" }}>
+          <div style={{ marginLeft: "5px"}}>
             <button className="btn btn-secondary" onClick={showAllHandler}>
               Show all
             </button>
           </div>
-          <div style={{ marginLeft: "5px" }}>
+          <div style={{ marginLeft: "5px"}}>
             <button
               className="btn btn-secondary"
               onClick={(event) => {
@@ -391,7 +391,7 @@ const FoodTable = () => {
               Selected recipes
             </button>
           </div>
-          <div style={{ marginLeft: "5px" }}>
+          <div style={{ marginLeft: "5px"}}>
             <button 
               className="btn btn-secondary" 
               onClick={confirmDelete}
@@ -399,20 +399,22 @@ const FoodTable = () => {
               Delete
             </button>
           </div>
-          <FormControl
-            style={{ marginLeft: "5px" }}
-            type="text"
-            placeholder="Search"
-            className=" mr-sm-2"
-            onChange={searchValChange}
-          />
-          <button
-            className="btn btn-secondary"
-            type="submit"
-            onClick={searchFood}
-          >
-            Search
-          </button>
+          <div>
+            <FormControl
+              style={{ marginLeft: "5px"}}
+              type="text"
+              placeholder="Search"
+              className=" mr-sm-2"
+              onChange={searchValChange}
+            />
+            <button
+              className="btn btn-secondary"
+              type="submit"
+              onClick={searchFood}
+            >
+              Search
+            </button>
+          </div>
         </Form>
       </div>
       <Table striped bordered hover variant="dark">
