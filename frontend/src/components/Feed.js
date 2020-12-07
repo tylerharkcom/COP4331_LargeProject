@@ -26,19 +26,19 @@ const Feed = () => {
     loadFeedData();
   }, []);
 
-  // const getPicture = (event) => {
-  //   if (picturePlaceholder.length == 0) {
-  //     picturePlaceholder.push(1);
-  //     return Placeholder1;
-  //   } else if (picturePlaceholder.length == 1) {
-  //     picturePlaceholder.push(2);
-  //     return Placeholder2;
-  //   } else {
-  //     picturePlaceholder.pop();
-  //     picturePlaceholder.pop();
-  //     return Placeholder3;
-  //   }
-  // };
+  const getPicture = (event) => {
+    if (picturePlaceholder.length == 0) {
+      picturePlaceholder.push(1);
+      return Placeholder1;
+    } else if (picturePlaceholder.length == 1) {
+      picturePlaceholder.push(2);
+      return Placeholder2;
+    } else {
+      picturePlaceholder.pop();
+      picturePlaceholder.pop();
+      return Placeholder3;
+    }
+  };
 
   const loadFeedData = async () => {
     try {
@@ -71,7 +71,7 @@ const Feed = () => {
     if (month > 0) {
       rVal += month;
       rVal += " month";
-      if (month == 1) {
+      if (month > 1) {
         rVal += "s";
       }
       rVal += " ago";
@@ -81,8 +81,8 @@ const Feed = () => {
     }
     if (day > 0) {
       rVal += day;
-      rVal += "day";
-      if (day == 1) {
+      rVal += " day";
+      if (day > 1) {
         rVal += "s";
       }
       rVal += " ago";
@@ -109,7 +109,7 @@ const Feed = () => {
             <Row xs="3">
               <Col xs={1}>
                 <Image
-                  src={Placeholder1}
+                  src={getPicture}
                   roundedCircle
                   align="left"
                   style={{
