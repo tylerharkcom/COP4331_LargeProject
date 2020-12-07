@@ -130,7 +130,11 @@ code {
   background-color: #DADADA;
 }
 
-#fridgeTable, #feedDiv {
+#fridgeTable {
+  padding: 25px;
+}
+
+#feedDiv {
   padding-top: 25px;
 }
 
