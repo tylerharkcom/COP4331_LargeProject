@@ -3,6 +3,10 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  background-image: url(/src/images/dill.jpg);
+  background-size: contain;
+  background-attachment: fixed; 
+  height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -26,18 +30,13 @@ code {
   text-align: center;
 }
 
+.feedTitle {
+  color: #0B2B53;
+  text-align: center;
+}
+
 .lightText {
   color: #DADADA;
-}
-
-.backgroundPage {
-  background-image: url(/src/images/dill.jpg);
-  background-size: contain;
-  background-attachment: fixed; 
-}
-
-.fillBackground {
-  height: 100vh;
 }
 
 .link-button-dark {
@@ -82,10 +81,18 @@ code {
   padding: 10px;
   border: 1px solid #DADADA;
 }
+
+#feedWrapper {
+  background-color: #049A9E;
+  padding: 10px;
+  border: 1px solid #DADADA;
+}
+
 #accountWrapper {
   background-color: #464646;
   padding: 10px;
 }
+
 #accountModalWrapper, #addFoodWrapper, #editFoodWrapper {
   background-color: #DADADA;
 }
@@ -118,6 +125,10 @@ code {
 }
 
 #fridgeTable {
+  padding: 25px;
+}
+
+#feedDiv {
   padding-top: 25px;
 }
 

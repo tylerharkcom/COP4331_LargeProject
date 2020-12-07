@@ -202,7 +202,6 @@ const FoodTable = () => {
     let res = JSON.parse(await resp.text());
     if (resp.status != 200) {
       setLoading(false);
-      alert("Ope, something went wrong!");
     } else {
       setResults({ results: [res.results[0], res.results[1]] });
       setSearch(name);
@@ -214,6 +213,9 @@ const FoodTable = () => {
   const getSelectedRecipes = (event) => {
     event.preventDefault();
     let name = "";
+    if (selectedCount == 0){
+      return;
+    }
     checkmark.map((p, index) => {
       if (p) {
         if (name === "") {
@@ -282,12 +284,14 @@ const FoodTable = () => {
       for (let i = 0; i < food.foods.length; i++) {
         initializeChecks = [...initializeChecks, true];
       }
+      setSelectedCount(food.foods.length);
       setCheckmark([...initializeChecks]);
     } else {
       let initializeChecks = [];
       for (let i = 0; i < food.foods.length; i++) {
         initializeChecks = [...initializeChecks, false];
       }
+      setSelectedCount(0);
       setCheckmark([...initializeChecks]);
     }
   };
@@ -312,11 +316,9 @@ const FoodTable = () => {
         headers: { "Content-Type": "application/json" }
       });
 
-      let res = JSON.parse(await response.text());
-
       if (response.status !== 200) {
         alert('There was an issue deleting the food');
-      } 
+      }
     } catch (e) {
       alert(e.toString());
       return;
@@ -340,7 +342,10 @@ const FoodTable = () => {
       buttons: [
         {
           label: 'Confirm',
-          onClick: () => deleteMultiple()
+          onClick: async () => {
+            await deleteMultiple();
+            await loadFridgeHandler();
+          }
         },
         {
           label: 'No',
