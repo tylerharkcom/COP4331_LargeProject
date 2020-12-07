@@ -66,7 +66,7 @@ const Feed = () => {
     let actionDate = new Date(props.date);
     let currDate = new Date();
     let newDate = new Date(actionDate.getTime() - currDate.getTime());
-    let day = newDate.getDate() - currDate.getDate();
+    let day = Math.abs(newDate.getDate() - currDate.getDate());
     let month = newDate.getMonth() - currDate.getMonth();
     let rVal = "";
 
@@ -88,6 +88,26 @@ const Feed = () => {
         rVal += "s";
       }
       rVal += " ago";
+    }
+    if (day < 0 && month < 0) {
+      let seconds = newDate.getSeconds();
+      if (seconds > 3600) {
+        rVal += seconds / 3600;
+        if (seconds / 3600 > 1) {
+          rVal += " hours";
+        } else rVal += " hour";
+      }
+      let min = seconds % 3600;
+      if (seconds % 3600 >= 60) {
+        rVal += seconds % 3600;
+        if (seconds % 3600 > 60) {
+          rVal += " minutes";
+        } else rVal += " minute";
+      }
+      if (seconds < 60) {
+        rVal += seconds;
+        rVal += " seconds";
+      }
     }
     rVal += " ago";
     return rVal;
