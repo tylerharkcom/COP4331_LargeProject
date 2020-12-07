@@ -26,19 +26,20 @@ const Feed = () => {
     loadFeedData();
   }, []);
 
-  const getPicture = (event) => {
-    if (picturePlaceholder.length == 0) {
-      picturePlaceholder.push(1);
-      return Placeholder1;
-    } else if (picturePlaceholder.length == 1) {
-      picturePlaceholder.push(2);
-      return Placeholder2;
-    } else {
-      picturePlaceholder.pop();
-      picturePlaceholder.pop();
-      return Placeholder3;
-    }
-  };
+  // const getPicture = (event) => {
+  //   console.log(picturePlaceholder.length);
+  //   if (picturePlaceholder.length == 0) {
+  //     picturePlaceholder.push(1);
+  //     return Placeholder1;
+  //   } else if (picturePlaceholder.length == 1) {
+  //     picturePlaceholder.push(2);
+  //     return Placeholder2;
+  //   } else {
+  //     picturePlaceholder.pop();
+  //     picturePlaceholder.pop();
+  //     return Placeholder3;
+  //   }
+  // };
 
   const loadFeedData = async () => {
     try {
@@ -62,10 +63,11 @@ const Feed = () => {
   };
 
   const FormattedDate = (props) => {
-    let newDate = new Date(props.date);
-    let day = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
+    let actionDate = new Date(props.date);
+    let currDate = new Date();
+    let newDate = new Date(actionDate.getTime() - currDate.getTime());
+    let day = newDate.getDate() - currDate.getDate();
+    let month = newDate.getMonth() - currDate.getMonth();
     let rVal = "";
 
     if (month > 0) {
@@ -74,9 +76,9 @@ const Feed = () => {
       if (month > 1) {
         rVal += "s";
       }
-      rVal += " ago";
+
       if (day > 0) {
-        rVal += " ";
+        rVal += ", ";
       }
     }
     if (day > 0) {
@@ -87,6 +89,7 @@ const Feed = () => {
       }
       rVal += " ago";
     }
+    rVal += " ago";
     return rVal;
   };
 
@@ -109,7 +112,7 @@ const Feed = () => {
             <Row xs="3">
               <Col xs={1}>
                 <Image
-                  src={getPicture}
+                  src={Placeholder2}
                   roundedCircle
                   align="left"
                   style={{
