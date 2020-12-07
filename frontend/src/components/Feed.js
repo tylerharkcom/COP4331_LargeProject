@@ -72,7 +72,7 @@ const Feed = () => {
     }
     if (props.eventType === "found a recipe for") {
       return <Icon name="browse" size="medium" theme="dark" />;
-    }
+    } else return null;
   };
   const FormattedDate = (props) => {
     let propsDate = new Date(props.date);
@@ -165,7 +165,7 @@ const Feed = () => {
           >
             <Row xs="3">
               <Col xs={1}>
-                {<GetPicture eventType={"found a recipe for"} />}
+                {<GetPicture eventType={p.eventType} />}
                 {/* <Image
                   src={getPicture(p.eventType)}
                   roundedCircle
@@ -189,7 +189,6 @@ const Feed = () => {
                     minWidth: "10rem",
                   }}
                 >
-                  Stacey found a recipe for Cheesy Potato Casserole
                   <strong>{p.name} </strong>
                   {p.eventType} {p.item}
                 </label>
