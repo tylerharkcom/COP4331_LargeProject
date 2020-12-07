@@ -69,7 +69,8 @@ const FoodTable = () => {
         let today = new Date();
         if (res.fridge) {
           res.fridge.map((p) => {
-            let exp = new Date(p.expDate);
+            let date = new Date(p.expDate);
+            let exp = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
             if (exp < today) {
               expired = [...expired, p];
             }
