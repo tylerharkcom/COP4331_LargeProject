@@ -83,6 +83,7 @@ const Feed = () => {
     } else {
       timeDiffString = "expired";
     }
+    return timeDiffString;
     // return timeDiffString;
     //   // let actionDate = new Date(props.date);
     //   let actionDate = new Date("12/5/2020");
