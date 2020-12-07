@@ -63,54 +63,75 @@ const Feed = () => {
   };
 
   const FormattedDate = (props) => {
-    let actionDate = new Date(props.date);
-    let currDate = new Date();
-    let newDate = new Date(actionDate.getTime() - currDate.getTime());
-    let day = Math.abs(newDate.getDate() - currDate.getDate());
-    let month = newDate.getMonth() - currDate.getMonth();
-    let rVal = "";
+    let propsDate = new Date(props.date);
+    let expDate = new Date(
+      propsDate.getTime() + propsDate.getTimezoneOffset() * 60000
+    );
+    expDate.setHours(23, 59, 59, 999);
+    let current = new Date();
+    let timeDiff = Math.round(
+      (expDate.getTime() - current.getTime()) / (1000 * 60 * 60 * 24)
+    );
+    let timeDiffString = "";
 
-    if (month > 0) {
-      rVal += month;
-      rVal += " month";
-      if (month > 1) {
-        rVal += "s";
-      }
+    if (timeDiff == 0) {
+      timeDiffString = "today";
+    } else if (timeDiff == 1) {
+      timeDiffString = timeDiff + " day";
+    } else if (timeDiff > 1) {
+      timeDiffString = timeDiff + " days";
+    } else {
+      timeDiffString = "expired";
+    }
+    // return timeDiffString;
+    //   // let actionDate = new Date(props.date);
+    //   let actionDate = new Date("12/5/2020");
+    //   let currDate = new Date();
+    //   let newDate = new Date(currDate.getTime() - actionDate.getTime());
+    //   let day = Math.abs(currDate.getDate() - newDate.getDate());
+    //   let month = Math.abs(currDate.getMonth() - newDate.getMonth());
+    //   let rVal = "";
 
-      if (day > 0) {
-        rVal += ", ";
-      }
-    }
-    if (day > 0) {
-      rVal += day;
-      rVal += " day";
-      if (day > 1) {
-        rVal += "s";
-      }
-      rVal += " ago";
-    }
-    if (day < 0 && month < 0) {
-      let seconds = newDate.getSeconds();
-      if (seconds > 3600) {
-        rVal += seconds / 3600;
-        if (seconds / 3600 > 1) {
-          rVal += " hours";
-        } else rVal += " hour";
-      }
-      let min = seconds % 3600;
-      if (seconds % 3600 >= 60) {
-        rVal += seconds % 3600;
-        if (seconds % 3600 > 60) {
-          rVal += " minutes";
-        } else rVal += " minute";
-      }
-      if (seconds < 60) {
-        rVal += seconds;
-        rVal += " seconds";
-      }
-    }
-    rVal += " ago";
-    return rVal;
+    //   if (month > 0) {
+    //     rVal += month;
+    //     rVal += " month";
+    //     if (month > 1) {
+    //       rVal += "s";
+    //     }
+
+    //     if (day > 0) {
+    //       rVal += ", ";
+    //     }
+    //   }
+    //   if (day > 0) {
+    //     rVal += day;
+    //     rVal += " day";
+    //     if (day > 1) {
+    //       rVal += "s";
+    //     }
+    //   }
+    //   if (day < 0 && month < 0) {
+    //     let seconds = newDate.getSeconds();
+    //     if (seconds > 3600) {
+    //       rVal += seconds / 3600;
+    //       if (seconds / 3600 > 1) {
+    //         rVal += " hours";
+    //       } else rVal += " hour";
+    //     }
+    //     let min = seconds % 3600;
+    //     if (seconds % 3600 >= 60) {
+    //       rVal += seconds % 3600;
+    //       if (seconds % 3600 > 60) {
+    //         rVal += " minutes";
+    //       } else rVal += " minute";
+    //     }
+    //     if (seconds < 60) {
+    //       rVal += seconds;
+    //       rVal += " seconds";
+    //     }
+    //   }
+    //   rVal += " ago";
+    //   return rVal;
   };
 
   let printFeed = (
