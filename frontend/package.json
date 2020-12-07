@@ -20,8 +20,10 @@
     "react-html-email": "^3.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
+    "react-smooth-scrollbar": "^8.0.6",
     "react-spinners": "^0.9.0",
     "react-tooltip": "^4.2.10",
+    "smooth-scrollbar": "^8.5.3",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

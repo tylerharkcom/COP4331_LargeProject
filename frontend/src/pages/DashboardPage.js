@@ -5,6 +5,7 @@ import UserNavBar from '../components/UserNavBar';
 import FoodTable from '../components/FoodTable';
 import Feed from '../components/Feed';
 import Row from 'react-bootstrap/Row';
+import Scrollbar from 'react-smooth-scrollbar';
 
 const DashboardPage = () =>
 {
@@ -15,7 +16,9 @@ const DashboardPage = () =>
         <Container fluid>
           <Row>
             <Col xs={7}>
-              <FoodTable />
+              <Scrollbar>
+                <FoodTable />
+              </Scrollbar>
             </Col>
             <Col>
               <div id="feedDiv">
