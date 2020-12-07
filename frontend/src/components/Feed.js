@@ -67,11 +67,26 @@ const Feed = () => {
     let month = newDate.getMonth() + 1;
     let year = newDate.getFullYear();
     let rVal = "";
-    rVal += month;
-    rVal += "/";
-    rVal += day;
-    rVal += "/";
-    rVal += year;
+
+    if (month > 0) {
+      rVal += month;
+      rVal += " month";
+      if (month == 1) {
+        rVal += "s";
+      }
+      rVal += " ago";
+      if (day > 0) {
+        rVal += " ";
+      }
+    }
+    if (day > 0) {
+      rVal += day;
+      rVal += "day";
+      if (day == 1) {
+        rVal += "s";
+      }
+      rVal += " ago";
+    }
     return rVal;
   };
 
