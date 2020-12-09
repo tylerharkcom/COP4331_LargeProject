@@ -341,8 +341,9 @@ function MyAccount() {
         setEmail(user.email);
         setLoginName(user.loginName);
         setBday(user.birthday);
-        setGender(user.gender);
-        genderNameChange();
+        if (user.gender.localeCompare("prefNoSay") == 0)
+          setGender("Prefer not to say");
+        else setGender(user.gender);
         setCountry(user.country);
         setLang(user.language);
         localStorage.setItem("user_data", JSON.stringify(user));
