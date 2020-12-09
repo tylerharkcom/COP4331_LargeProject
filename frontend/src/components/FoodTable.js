@@ -409,7 +409,7 @@ const FoodTable = () => {
               onChange={searchValChange}
             />
             <button
-              className="btn btn-secondary"
+              className="btn btn-primary"
               type="submit"
               onClick={searchFood}
             >
