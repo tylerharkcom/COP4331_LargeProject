@@ -363,22 +363,23 @@ const FoodTable = () => {
       <div id="fridgeCRUD">
         <Form inline>
           <div style={{ marginLeft: "5px" }}>
-            <button className="btn btn-secondary" onClick={addFood}>
+            <button type="button" className="btn btn-secondary" onClick={addFood}>
               Add food
             </button>
           </div>
           <div style={{ marginLeft: "5px" }}>
-            <button className="btn btn-secondary" onClick={getExpired}>
+            <button type="button" className="btn btn-secondary" onClick={getExpired}>
               Show expired
             </button>
           </div>
           <div style={{ marginLeft: "5px"}}>
-            <button className="btn btn-secondary" onClick={showAllHandler}>
+            <button type="button" className="btn btn-secondary" onClick={showAllHandler}>
               Show all
             </button>
           </div>
           <div style={{ marginLeft: "5px"}}>
             <button
+              type="button"
               className="btn btn-secondary"
               onClick={(event) => {
                 try {
@@ -394,6 +395,7 @@ const FoodTable = () => {
           </div>
           <div style={{ marginLeft: "5px"}}>
             <button 
+              type="button"
               className="btn btn-secondary" 
               onClick={confirmDelete}
             >
