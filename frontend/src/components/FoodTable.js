@@ -488,7 +488,7 @@ const FoodTable = () => {
         <Modal.Body>
           <CardDeck>
             <Card bg="light" text="dark">
-              <Card.Title>
+              <Card.Title style={{marginLeft: "10px"}}>
                 <a href={results.results[0].sourceUrl} target="_blank">
                   {results.results[0].title}
                 </a>
