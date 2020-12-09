@@ -13,6 +13,7 @@ import sha256 from "../sha256";
 import Container from "react-bootstrap/Container";
 import delAcctImg from "../images/sadFruit.png";
 import UpdtAcctImg from "../images/happy-banana.png";
+import UpdtPassImg from "../images/strawberry.png";
 
 import Image from "react-bootstrap/Image";
 
@@ -864,6 +865,15 @@ function MyAccount() {
                   <div style={{ textAlign: "center" }}>
                     Wait, or click anywhere to continue
                   </div>
+                  <Image
+                    src={UpdtPassImg}
+                    style={{
+                      width: "10em",
+                      height: "10em",
+                      // margin: "1em",
+                    }}
+                    alt="ffff"
+                  />
                   <div style={{ color: "#DADADA" }}>
                     {setTimeout(() => {
                       toggleUpdatePassMsg();
