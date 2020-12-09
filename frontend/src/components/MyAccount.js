@@ -64,7 +64,7 @@ function MyAccount() {
     if (didUpdatePass == true) {
       setPwShow(false);
       setDidUpdatePass(false);
-    } else setDidUpdateAcct(true);
+    } else setDidUpdatePass(true);
   };
   const toggleUpdateAcctMsg = (event) => {
     // event.preventDefault();
@@ -123,16 +123,11 @@ function MyAccount() {
   }, []);
   // Empty dependecy array means useEffect will only run once
 
-  const genderNameChange = (event) => {
+  const genderNameChange = () => {
     console.log(gender.localeCompare);
     console.log(gender);
     console.log(user.gender);
-    if (!user.gender) {
-      setGender(user.gender);
-    }
-    if (gender.localeCompare("") == 0) setGender("Prefer not to say");
     if (gender.localeCompare("prefNoSay") == 0) setGender("Prefer not to say");
-    else setGender(gender);
   };
 
   const renderPwReqTooltip = (props) => (
@@ -279,7 +274,6 @@ function MyAccount() {
       if (response.status !== 200) {
         console.log(res.error);
       } else {
-        alert("Account Deleted. Goodbye!");
         window.location.href = "/";
       }
     } catch (e) {
@@ -352,6 +346,7 @@ function MyAccount() {
         setCountry(user.country);
         setLang(user.language);
         localStorage.setItem("user_data", JSON.stringify(user));
+
         toggleUpdateAcctMsg();
         // infoHandleClose();
       }
