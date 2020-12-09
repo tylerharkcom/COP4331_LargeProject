@@ -768,7 +768,7 @@ function MyAccount() {
         </Modal>
         {/* Update password Modal */}
         <Modal centered show={pwShow} onHide={pwHandleClose}>
-          {didUpdatePass && (
+          {!didUpdatePass && (
             <div style={{ backgroundColor: "#DADADA", padding: "10px" }}>
               <Modal.Header>
                 <h1
@@ -830,31 +830,33 @@ function MyAccount() {
                   </div>
                 </Modal.Footer>
               </Form>
-              <div
-                id="PassUpdtMsg"
-                show={didUpdatePass}
-                style={{
-                  backgroundColor: "#DADADA",
-                  padding: "10px",
-                }}
-              >
-                <div style={{ color: "#DADADA" }}>
-                  {setTimeout(() => {
-                    foo();
-                  }, 7000)}
+              {didUpdatePass && (
+                <div
+                  id="PassUpdtMsg"
+                  // show={didUpdatePass}
+                  style={{
+                    backgroundColor: "#DADADA",
+                    padding: "10px",
+                  }}
+                >
+                  <div style={{ color: "#DADADA" }}>
+                    {setTimeout(() => {
+                      foo();
+                    }, 7000)}
+                  </div>
+                  <h1 fontSize="5rem" style={{ textAlign: "center" }}>
+                    Password Updated!
+                  </h1>
+                  <div style={{ textAlign: "center" }}>
+                    Wait, or click anywhere to continue
+                  </div>
+                  <div style={{ color: "#DADADA" }}>
+                    {setTimeout(() => {
+                      toggleUpdatePassMsg();
+                    }, 7000)}
+                  </div>
                 </div>
-                <h1 fontSize="5rem" style={{ textAlign: "center" }}>
-                  Password Updated!
-                </h1>
-                <div style={{ textAlign: "center" }}>
-                  Wait, or click anywhere to continue
-                </div>
-                <div style={{ color: "#DADADA" }}>
-                  {setTimeout(() => {
-                    toggleUpdatePassMsg();
-                  }, 7000)}
-                </div>
-              </div>
+              )}
             </div>
           )}
         </Modal>
