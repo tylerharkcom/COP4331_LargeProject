@@ -63,17 +63,17 @@ const Feed = () => {
     }
   };
   const GetPicture = (props) => {
-    let event = props.eventType;
     if (props.eventType === "threw out") {
       return <Icon name="remove" size="medium" theme="dark" />;
-    }
-    if (props.eventType === "bought") {
+    } else if (props.eventType === "bought") {
       return <Icon name="add" size="medium" theme="dark" />;
-    }
-    if (props.eventType === "found a recipe for") {
+    } else if (props.eventType === "found a recipe for") {
       return <Icon name="browse" size="medium" theme="dark" />;
-    } else return null;
+    } else if (props.eventType === "registered account") {
+      return <Icon name="account" size="medium" theme="dark" />;
+    } else return <Icon name="check" size="medium" theme="dark" />;
   };
+
   const FormattedDate = (props) => {
     let propsDate = new Date(props.date);
     let expDate = new Date(
