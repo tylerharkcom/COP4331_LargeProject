@@ -70,12 +70,6 @@ function MyAccount() {
     } else setDidUpdatePass(true);
   };
   const toggleUpdateAcctMsg = (event) => {
-    // event.preventDefault();
-    // {
-    //   setTimeout(() => {
-    //     foo();
-    //   }, 1000);
-    // }
     if (didUpdateAcct == true) {
       setInfoShow(false);
       setDidUpdateAcct(false);
@@ -259,7 +253,6 @@ function MyAccount() {
         console.log(res.error);
       } else {
         // ADD REPLACEMENT FOR ALERT
-        alert("Password change successful!");
         toggleUpdatePassMsg();
       }
     } catch (e) {
@@ -845,42 +838,42 @@ function MyAccount() {
                   </div>
                 </Modal.Footer>
               </Form>
-              {didUpdatePass && (
-                <div
-                  id="PassUpdtMsg"
-                  // show={didUpdatePass}
-                  style={{
-                    backgroundColor: "#DADADA",
-                    padding: "10px",
-                  }}
-                >
-                  <div style={{ color: "#DADADA" }}>
-                    {setTimeout(() => {
-                      foo();
-                    }, 7000)}
-                  </div>
-                  <h1 fontSize="5rem" style={{ textAlign: "center" }}>
-                    Password Updated!
-                  </h1>
-                  <div style={{ textAlign: "center" }}>
-                    Wait, or click anywhere to continue
-                  </div>
-                  <Image
-                    src={UpdtPassImg}
-                    style={{
-                      width: "10em",
-                      height: "10em",
-                      // margin: "1em",
-                    }}
-                    alt="ffff"
-                  />
-                  <div style={{ color: "#DADADA" }}>
-                    {setTimeout(() => {
-                      toggleUpdatePassMsg();
-                    }, 7000)}
-                  </div>
-                </div>
-              )}
+            </div>
+          )}
+          {didUpdatePass && (
+            <div
+              id="PassUpdtMsg"
+              // show={didUpdatePass}
+              style={{
+                backgroundColor: "#DADADA",
+                padding: "10px",
+              }}
+            >
+              <div style={{ color: "#DADADA" }}>
+                {setTimeout(() => {
+                  foo();
+                }, 7000)}
+              </div>
+              <h1 fontSize="5rem" style={{ textAlign: "center" }}>
+                Password Updated!
+              </h1>
+              <div style={{ textAlign: "center" }}>
+                Wait, or click anywhere to continue
+              </div>
+              <Image
+                src={UpdtPassImg}
+                style={{
+                  width: "10em",
+                  height: "10em",
+                  // margin: "1em",
+                }}
+                alt="ffff"
+              />
+              <div style={{ color: "#DADADA" }}>
+                {setTimeout(() => {
+                  toggleUpdatePassMsg();
+                }, 7000)}
+              </div>
             </div>
           )}
         </Modal>
