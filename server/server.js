@@ -22,6 +22,8 @@ const { userInfo } = require("os");
 // const EmailVerify = require("../components/EmailVerify");
 // const renderEmail = require("react-html-email");
 // const React = require("react");
+const template = require(projectRoot + '/server/mysanityback');
+
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -111,6 +113,7 @@ function generateAccessToken(id) {
 router.post(
   `/register`,
   wrapAsync(async (req, res) => {
+    console.log("made it here?");
     const { username, password, fName, lName, email } = req.body;
     const userInfo = {
       fName,
@@ -163,23 +166,31 @@ router.post(
       process.env.EMAIL_TOKEN_SECRET,
       { expiresIn: "15m" },
       (err, emailToken) => {
+
+        if (err) {
+          console.log(err);
+          return;
+        }
         // DEBUG
         // const url = `http://localhost:5000/api/confirmation/emailConf/${emailToken}`;
+
         const url = `https://group1largeproject.herokuapp.com/api/confirmation/emailConf/${emailToken}`;
 
         const text = `A request was sent to confirm your FoodBuddy email as part of your account\
         for registration. To complete your account registration, visit the following link: ${url}`;
-        const html = `<h3>A request was sent to confirm your FoodBuddy email as part of your\
-        account for registration.<br /></h3><h4>To complete your account registration, visit\
-        the following link: <a href="${url}">${url}</a></h4>`;
+        // const html = `<h3>A request was sent to confirm your FoodBuddy email as part of your\
+        // account for registration.<br /></h3><h4>To complete your account registration, visit\
+        // the following link: <a href="${url}">${url}</a></h4>`;
         // const html2 = renderEmail(<EmailVerify emailLink={url} />);
         // const html3 = renderEmail(Yaaa);
+        const html = template(url);
+
         sgMail.send({
           from: "yousefeid707@gmail.com",
           to: email,
           subject: "FoodBuddy Email Confirmation",
           text,
-          html,
+          html
         });
       }
     );
@@ -202,8 +213,7 @@ router.get(
     };
 
     const { endpoint, token } = req.params;
-    console.log("endpoint", endpoint);
-    console.log("token", token);
+
     try {
       const { id } = jwt.verify(token, process.env.EMAIL_TOKEN_SECRET);
       const db = client.db();
