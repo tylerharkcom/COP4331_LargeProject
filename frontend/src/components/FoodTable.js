@@ -502,7 +502,7 @@ const FoodTable = () => {
               <Card.Img variant="bottom" src={results.results[0].image} />
             </Card>
             <Card bg="light" text="dark">
-              <Card.Title>
+              <Card.Title style={{ marginLeft: "10px" }}>
                 <a href={results.results[1].sourceUrl} target="_blank">
                   {results.results[1].title}
                 </a>
