@@ -62,10 +62,10 @@ function UserNavBar() {
     window.location.href = "/account";
   };
 
-  const goToFeed = (event) => {
-    event.preventDefault();
-    window.location.href = "/feed";
-  };
+  // const goToFeed = (event) => {
+  //   event.preventDefault();
+  //   window.location.href = "/feed";
+  // };
 
   const goToRecipes = (event) => {
     event.preventDefault();
@@ -95,7 +95,7 @@ function UserNavBar() {
               onClick={goToAccount}
             />
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <input
               name="feed"
               type="button"
@@ -103,7 +103,7 @@ function UserNavBar() {
               value="My Feed"
               onClick={goToFeed}
             />
-          </li>
+          </li> */}
         </ul>
         <NavMsg />
         {/* <span className="navbar-text" style={{ marginRight: "10px" }}>
