@@ -107,10 +107,12 @@ function MyAccount() {
     setEmail(user.email);
     setLoginName(user.loginName);
     setBday(user.birthday);
-    setGender(user.gender);
+    user.gender.localeCompare("prefNoSay") == 0
+      ? setGender("Prefer not to say")
+      : setGender(user.gender);
+
     setCountry(user.country);
     setLang(user.language);
-    genderNameChange();
     // Testing for localmachine use
     //  setfName("user.firstName");
     //  setlName("user.lastName");
