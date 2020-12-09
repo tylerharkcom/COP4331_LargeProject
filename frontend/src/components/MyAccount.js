@@ -127,7 +127,11 @@ function MyAccount() {
     console.log(gender.localeCompare);
     console.log(gender);
     console.log(user.gender);
-    if (gender.localeCompare("prefNoSay") == 1) setGender("Prefer not to say");
+    if (!user.gender) {
+      setGender(user.gender);
+    }
+    if (gender.localeCompare("") == 0) setGender("Prefer not to say");
+    if (gender.localeCompare("prefNoSay") == 0) setGender("Prefer not to say");
     else setGender(gender);
   };
 
