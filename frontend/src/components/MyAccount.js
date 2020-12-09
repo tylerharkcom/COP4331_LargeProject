@@ -107,9 +107,12 @@ function MyAccount() {
     setEmail(user.email);
     setLoginName(user.loginName);
     setBday(user.birthday);
-    user.gender.localeCompare("prefNoSay") == 0
-      ? setGender("Prefer not to say")
-      : setGender(user.gender);
+    if (!user.gender) {
+      setGender("Prefer not to say");
+    } else
+      user.gender.localeCompare("prefNoSay") == 0
+        ? setGender("Prefer not to say")
+        : setGender(user.gender);
 
     setCountry(user.country);
     setLang(user.language);
