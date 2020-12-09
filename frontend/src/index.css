@@ -87,8 +87,10 @@ code {
 }
 
 #feedWrapper {
-  background-color: #049A9E;
+  /* background-color:rgba(70, 70, 70, .95); */
+  background-color:rgba(52, 58, 64,1);
   padding: 10px;
+  
   border: 1px solid #DADADA;
 }
 
