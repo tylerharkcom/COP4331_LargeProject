@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const sha256 = pwd => {
-    // pwd = pwd.concat(process.env.REACT_APP_SALT_SECRET);
+    pwd = pwd.concat('beepboop');
     function rightRotate(value, amount) {
         return (value>>>amount) | (value<<(32 - amount));
     };
