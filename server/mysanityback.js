@@ -144,11 +144,11 @@ module.exports = (
         </td>
       </tr>
     </tbody>
-  </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="1da69523-2b12-4c87-8a84-3df8872ec86d.1" data-mc-module-version="2019-10-22">
+  </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="600" style="table-layout: fixed;" data-muid="1da69523-2b12-4c87-8a84-3df8872ec86d.1" data-mc-module-version="2019-10-22">
     <tbody>
 
       <tr>
-        <td style="padding:18px 56px 10px 56px; line-height:NaNpx; text-align:center; background-color:white;" height="100%" valign="top" bgcolor="white" role="module-content"><div><h2 style="text-align: center"><span style="font-family: -apple-system, arial, helvetica, sans-serif; font-size: 32px; color:#464646" >Welcome to FoodBuddy!</span></h2>
+        <td style="padding:18px 56px 10px 56px; width="600" line-height:NaNpx; text-align:center; background-color:white;" height="100%" valign="top" bgcolor="white" role="module-content"><div><h2 style="text-align: center"><span style="font-family: -apple-system, arial, helvetica, sans-serif; font-size: 32px; color:#464646" >Welcome to FoodBuddy!</span></h2>
 <h2 style="text-align: center; font-family: inherit"><span style="font-family: -apple-system, arial, helvetica, sans-serif; font-size: 28px">Please verify your account by clicking this link!</span></h2>
 
 <div style="font-family: inherit; text-align: center"><br></div><div></div></div></td>
