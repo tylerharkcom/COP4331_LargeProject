@@ -1,14 +1,14 @@
 import React from "react";
 import { renderEmail } from "react-html-email";
-import EmailTemplate from "../components/EmailVerify";
+import EmailVerify from "../components/EmailVerify";
 
-const messageHtml = renderEmail(<EmailTemplate />); // HTML code
-const EmailResetPage = () => {
+// const messageHtml = renderEmail(<EmailVerify />); // HTML code
+const EmailVerifyPage = () => {
   return (
     <div id="testPage" className="emailTemplateBackground fillBackground">
-      <EmailTemplate emailLink={"sample"} />
+      <EmailVerify emailLink={"sample"} />
     </div>
   );
 };
 
-export default EmailResetPage;
+export default EmailVerifyPage;
